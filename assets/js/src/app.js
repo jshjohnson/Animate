@@ -27,8 +27,8 @@
             offset: 0, 
         };
 
-        this.animationComplete = 'animated',
         this.options = this.extend(userOptions, defaultOptions); 
+        this.init();
     };
 
     Animate.prototype.extend = function() {
@@ -36,9 +36,9 @@
             length = arguments.length;
 
         var merge = function(obj) {
-            for(var prop in obg) {
-                obj[prop] = extended[prop];
-            };
+            for(var prop in obj) {
+                extended[prop] = obj[prop];
+            }
         };
 
         for(var i = 0; i < length; i++) {
@@ -49,15 +49,47 @@
         return extended;
     };
 
-    Animate.prototype.defaultOptions =  
+    Animate.prototype.whichAnimationEvent = function(){
+        var t,
+        el = document.createElement("fakeelement");
 
-    Animate.prototype.init = function(){};
+        var animations = {
+            "animation"      : "animationend",
+            "OAnimation"     : "oAnimationEnd",
+            "MozAnimation"   : "animationend",
+            "WebkitAnimation": "webkitAnimationEnd"
+        };
+
+        for (t in animations){
+            if (el.style[t] !== undefined){
+                return animations[t];
+            }
+        }
+    };
+
+    Animate.prototype.init = function(){
+        root.addEventListener('scroll', function(){
+            this.handleScroll();
+        }.bind(this));
+    };
+
+    Animate.prototype.isInView = function(el){
+        var rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+        );
+    };
+
+    Animate.prototype.handleScroll = function(){
+        console.log('Working');
+    };
 
     Animate.prototype.kill = function(){};
 
-    Animate.prototype.addAnimation = function(){};
-
-    Animate.prototype.addAnimation = function(){};
+    Animate.prototype.addAnimation = function(el){};
 
     return Animate;
 });
