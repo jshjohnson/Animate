@@ -1,11 +1,12 @@
 /**
 
     TODO:
-    - Add scroll event listener
-    - Determine whether element is in view
+    - Init - Done
+    - Add scroll event listener - Done
+    - Determine whether element is in view - Done
     - Determine whether element is in view minus offset
-    - 
-    - Add animation
+    - Add animation - Done
+    - Kill - Done
 
  */
 
@@ -23,31 +24,17 @@
 
     var Animate = function(userOptions){
         var defaultOptions = {
-            animationComplete: 'animated',
+            animationComplete: 'js-animated',
             offset: 0, 
-            target: '.js-animate',
+            target: '[data-animate]',
             reverse: false,
             debug: false,
         };
 
         this.options = this.extend(defaultOptions, userOptions); 
         this.elements = root.document.querySelectorAll(this.options.target);
+        this.initialised = false;
         this.init();
-    };
-
-    /**
-     * Test whether an object is of a give type
-     * @param  {String}  type Type to test for e.g. 'String', 'Array'
-     * @param  {Object}  obj  Object to test type against
-     * @return {Boolean}      Whether object is of type
-     */
-    Animate.prototype.isType = function(type, obj) {
-        var test = Object.prototype.toString.call(obj).slice(8,-1);
-        if(test !== null && test !== undefined && test === type) {
-            return true;
-        } else {
-            return false;
-        }
     };
 
     /**
@@ -69,7 +56,7 @@
             if(this.isType('Object', obj)) {
                 merge(obj);
             } else {
-                console.warn('Custom options must be within an object');
+                console.warn('Custom options must be an object');
             }
         }
 
@@ -99,14 +86,19 @@
         if(this.options.debug === true) {
             console.log('Animate.js successfully initialised');
             if(this.elements.length !== 0) {
-                console.log('Found elements to animate');
+                console.log('Found ' + this.elements.length + ' elements to animate');
             } else {
                 console.warn('No elements to animate');
             }
         }
-        root.addEventListener('scroll', function(){
+
+        this.scrollListener = function(){
             this.handleScroll();
-        }.bind(this));
+        }.bind(this);
+
+        root.addEventListener('scroll', this.scrollListener);
+
+        this.initialised = true;
     };
 
     /**
@@ -119,16 +111,36 @@
         return (
             rect.top >= 0 &&
             rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
         );
+    };
+
+    Animate.prototype.isVisible = function(el){
+        var visibility = el.getAttribute('data-visibility');
+        return true ? visibility === 'true' : '';
+    };
+
+    /**
+     * Test whether an object is of a give type
+     * @param  {String}  type Type to test for e.g. 'String', 'Array'
+     * @param  {Object}  obj  Object to test type against
+     * @return {Boolean}      Whether object is of type
+     */
+    Animate.prototype.isType = function(type, obj) {
+        var test = Object.prototype.toString.call(obj).slice(8,-1);
+        if(test !== null && test !== undefined && test === type) {
+            return true;
+        } else {
+            return false;
+        }
     };
 
     Animate.prototype.handleScroll = function(){
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
             var el = els[i];
-            if(this.isInView(el)) {
+            if(this.isInView(el) && this.isVisible(el) !== true) {
                 this.addAnimation(el);
             } else {
                 if(this.options.reverse === true) {
@@ -139,7 +151,17 @@
         }
     };
 
-    Animate.prototype.kill = function(){};
+    Animate.prototype.kill = function(){
+        // Test to see whether we have actually initialised
+        if (!this.initialised) return;
+
+        // Remove event listener
+        root.removeEventListener('scroll', this.scrollListener);
+
+        // Reset settings
+        this.settings = null;
+        this.eventTimeout = null;
+    };
 
     /**
      * Add animation to given element 

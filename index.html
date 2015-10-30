@@ -5,17 +5,30 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/app.min.css">
     <style>
-        .js-animate { opacity: 0;}
+        .box { 
+            height: 500px; 
+            width: 100%; 
+            margin-top: 20px;
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="test animated js-animate" style="margin-top: 1000px; width: 500px; height: 500px; background: red;" data-animation="fadeIn" data-animation></div>
+        <div class="box animated" style="background: red;" data-animation="fadeIn" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="fadeInUp" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="fadeInDown" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="bounceIn" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="bounceInUp" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="bounceInDown" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="zoomIn" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="zoomInUp" data-animate></div>
+        <div class="box animated" style="background: red;" data-animation="zoomInDown" data-animate></div>
     </div>
     <script type="text/javascript" src="/assets/js/dist/app.js"></script>
     <script>
         var animate = new Animate({
-            reverse: true,
+            // reverse: true,
             debug: true,
         });
         console.log(animate);
