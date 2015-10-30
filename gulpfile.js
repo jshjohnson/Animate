@@ -39,7 +39,7 @@ gulp.task('connect', function() {
         livereload: true
     });
 
-    opn('/test/results/unit-tests.html');
+    opn('http://localhost:8000/test/results/unit-tests.html');
     opn('http://localhost:8000');
 });
 

@@ -36,6 +36,12 @@
         this.init();
     };
 
+    /**
+     * Test whether an object is of a give type
+     * @param  {String}  type Type to test for e.g. 'String', 'Array'
+     * @param  {Object}  obj  Object to test type against
+     * @return {Boolean}      Whether object is of type
+     */
     Animate.prototype.isType = function(type, obj) {
         var test = Object.prototype.toString.call(obj).slice(8,-1);
         if(test !== null && test !== undefined && test === type) {
@@ -64,12 +70,13 @@
             if(this.isType('Object', obj)) {
                 merge(obj);
             } else {
-                console.warn('Custom options must be within an object')
+                console.warn('Custom options must be within an object');
             }
         }
 
         return extended;
     };
+
 
     Animate.prototype.whichAnimationEvent = function(){
         var t,
@@ -95,7 +102,7 @@
             if(this.elements.length !== 0) {
                 console.log('Found elements to animate');
             } else {
-                console.warn('No elements to animate')
+                console.warn('No elements to animate');
             }
         }
         root.addEventListener('scroll', function(){
@@ -103,6 +110,11 @@
         }.bind(this));
     };
 
+    /**
+     * Tests whether give DOM node is within viewport boundaries
+     * @param  {Node}  el Element to test for 
+     * @return {Boolean}
+     */
     Animate.prototype.isInView = function(el){
         var rect = el.getBoundingClientRect();
         return (
@@ -130,18 +142,26 @@
 
     Animate.prototype.kill = function(){};
 
+    /**
+     * Add animation to given element 
+     * @param {Node} el Element to target
+     */
     Animate.prototype.addAnimation = function(el){
         if(this.options.debug === true) {
-            console.log('Animation added')
+            console.log('Animation added');
         }
         var animation = el.getAttribute('data-animation');
         el.setAttribute('data-visibility', true);
         el.classList.add(animation);
     };
 
+    /**
+     * Remove animation from given element 
+     * @param {Node} el Element to target
+     */
     Animate.prototype.removeAnimation = function(el){
         if(this.options.debug === true) {
-            console.log('Animation removed')
+            console.log('Animation removed');
         }
         var animation = el.getAttribute('data-animation');
         el.setAttribute('data-visibility', false);
