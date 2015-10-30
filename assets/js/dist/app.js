@@ -30,6 +30,8 @@
             target: '[data-animate]',
             reverse: false,
             debug: false,
+            onLoad: true,
+            onScroll: true
         };
 
         this.options = this.extend(defaultOptions, userOptions); 
@@ -93,11 +95,17 @@
             }
         }
 
-        this.scrollListener = function(){
-            this.handleScroll();
+        this.animateListener = function(){
+            this.handleEvent();
         }.bind(this);
 
-        root.addEventListener('scroll', this.scrollListener);
+        if(this.options.onScroll) {
+            root.addEventListener('scroll', this.animateListener);
+        }
+
+        if(this.options.onLoad) {
+            root.addEventListener('DOMContentLoaded', this.animateListener);
+        }
 
         this.initialised = true;
     };
@@ -137,7 +145,7 @@
         }
     };
 
-    Animate.prototype.handleScroll = function(){
+    Animate.prototype.handleEvent = function(){
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
             var el = els[i];
@@ -156,11 +164,16 @@
     };
 
     Animate.prototype.kill = function(){
+        if(this.options.debug) {
+            console.log('Animation K.O');
+        }
+
         // Test to see whether we have actually initialised
         if (!this.initialised) return;
 
-        // Remove event listener
-        root.removeEventListener('scroll', this.scrollListener);
+        // Remove event listeners
+        root.removeEventListener('scroll', this.animateListener);
+        root.removeEventListener('DOMContentLoaded', this.animateListener);
 
         // Reset settings
         this.settings = null;
