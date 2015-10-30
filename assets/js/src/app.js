@@ -25,9 +25,11 @@
         var defaultOptions = {
             animationComplete: 'animated',
             offset: 0, 
+            target: '.js-animate'
         };
 
         this.options = this.extend(userOptions, defaultOptions); 
+        this.elements = root.document.querySelectorAll(this.options.target);
         this.init();
     };
 
@@ -84,7 +86,15 @@
     };
 
     Animate.prototype.handleScroll = function(){
-        console.log('Working');
+        var els = this.elements;
+        for (var i = els.length - 1; i >= 0; i--) {
+            var el = els[i];
+            var animation = el.getAttribute('data-animation');
+            if(this.isInView(el)) {
+                el.setAttribute('data-visibility', true);
+                el.classList.add(animation);
+            }
+        };
     };
 
     Animate.prototype.kill = function(){};

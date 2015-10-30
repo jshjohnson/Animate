@@ -4,10 +4,13 @@
     <title>Animate.js</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/app.min.css">
+    <style>
+        .js-animate { opacity: 0; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <img src="http://placehold.it/750x750" class="test" style="margin-top: 1000px;" data-animation="fadeIn" data-animation>
+        <div class="test animated js-animate" style="margin-top: 1000px; width: 500px; height: 500px; background: red;" data-animation="fadeIn" data-animation></div>
     </div>
     <script type="text/javascript" src="/assets/js/dist/app.js"></script>
     <script>
