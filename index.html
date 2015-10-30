@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/app.min.css">
     <style>
-        .js-animate { opacity: 0; }
+        .js-animate { opacity: 0;}
     </style>
 </head>
 <body>
@@ -14,7 +14,10 @@
     </div>
     <script type="text/javascript" src="/assets/js/dist/app.js"></script>
     <script>
-        var animate = new Animate();
+        var animate = new Animate({
+            reverse: true,
+            debug: true,
+        });
         console.log(animate);
     </script>
 </body>
