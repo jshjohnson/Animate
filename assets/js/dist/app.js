@@ -84,7 +84,7 @@
     };
 
     Animate.prototype.init = function(){
-        if(this.options.debug === true) {
+        if(this.options.debug) {
             console.log('Animate.js successfully initialised');
             if(this.elements.length !== 0) {
                 console.log('Found ' + this.elements.length + ' elements to animate');
@@ -141,10 +141,13 @@
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
             var el = els[i];
-            if(this.isInView(el) && this.isVisible(el) !== true) {
-                this.addAnimation(el);
+            // If element is in view and is not set to visible
+            if(this.isInView(el)) {
+                if(this.isVisible(el) === false){
+                    this.addAnimation(el);
+                }
             } else {
-                if(this.options.reverse === true) {
+                if(this.options.reverse && this.isVisible(el) === true) {
                     // This runs everytime the user scrolls, it shouldn't. Hmm
                     this.removeAnimation(el);
                 }
@@ -169,9 +172,10 @@
      * @param {Node} el Element to target
      */
     Animate.prototype.addAnimation = function(el){
-        if(this.options.debug === true) {
+        if(this.options.debug) {
             console.log('Animation added');
         }
+
         var animation = el.getAttribute('data-animation');
         el.setAttribute('data-visibility', true);
         el.classList.add(animation);
@@ -182,7 +186,7 @@
      * @param {Node} el Element to target
      */
     Animate.prototype.removeAnimation = function(el){
-        if(this.options.debug === true) {
+        if(this.options.debug) {
             console.log('Animation removed');
         }
         var animation = el.getAttribute('data-animation');
