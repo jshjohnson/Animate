@@ -124,6 +124,11 @@
         );
     };
 
+    /**
+     * Tests whether a DOM node's visibility attribute is set to true
+     * @param  {Node}  el Element to test
+     * @return {Boolean}
+     */
     Animate.prototype.isVisible = function(el){
         var visibility = el.getAttribute('data-visibility');
         return true ? visibility === 'true' : '';
@@ -144,6 +149,10 @@
         }
     };
 
+    /**
+     * Toggles animations on an event
+     * @return {}
+     */
     Animate.prototype.handleEvent = function(){
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
@@ -162,9 +171,13 @@
         }
     };
 
+    /**
+     * Stop all running event listeners & resets options
+     * @return {[type]} [description]
+     */
     Animate.prototype.kill = function(){
         if(this.options.debug) {
-            console.log('Animation K.O');
+            console.log('Animation.js nuked');
         }
 
         // Test to see whether we have actually initialised
