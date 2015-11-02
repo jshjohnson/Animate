@@ -14,7 +14,7 @@
         }
         .box:first-child { margin-top: 0; }
 
-        .js-animated {
+        .js-animate-complete {
             opacity: 1;
             visibility: visible;
         }
@@ -38,6 +38,9 @@
         var animate = new Animate({
             // reverse: true,
             debug: true,
+            callback: function(){
+                console.log('woot woot');
+            }
         });
     </script>
 </body>

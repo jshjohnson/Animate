@@ -31,7 +31,8 @@
             reverse: false,
             debug: false,
             onLoad: true,
-            onScroll: true
+            onScroll: true,
+            callback: function(){}
         };
 
         this.options = this.extend(defaultOptions, userOptions); 
@@ -66,7 +67,10 @@
         return extended;
     };
 
-
+    /**
+     * Determines when an animation has completed
+     * @return {[type]} [description]
+     */
     Animate.prototype.whichAnimationEvent = function(){
         var t,
         el = document.createElement("fakeelement");
@@ -85,6 +89,9 @@
         }
     };
 
+    /**
+     * Initalises event listeners
+     */
     Animate.prototype.init = function(){
         if(this.options.debug) {
             console.log('Animate.js successfully initialised');
@@ -108,6 +115,16 @@
         }
 
         this.initialised = true;
+
+        this.callback();
+    };
+
+    /**
+     * Callback method to run on initialisation
+     * @return {Function} Passed function
+     */
+    Animate.prototype.callback = function(){
+        return this.options.callback();
     };
 
     /**
@@ -173,8 +190,7 @@
     };
 
     /**
-     * Stop all running event listeners & resets options
-     * @return {[type]} [description]
+     * Stop all running event listeners & resets options to null
      */
     Animate.prototype.kill = function(){
         if(this.options.debug) {
@@ -193,6 +209,10 @@
         this.eventTimeout = null;
     };
 
+    /**
+     * Add class & data attribute to element on animation completion
+     * @param  {Node} el Element to target
+     */
     Animate.prototype.completeAnimation = function(el){
         if(this.options.debug) {
             console.log('Animation completed');
@@ -221,6 +241,8 @@
             el.classList.add(animation);
         });
 
+
+        // This seems out of place. Hmmm
         var animationEvent = this.whichAnimationEvent();
         el.addEventListener(animationEvent, function() {
             this.completeAnimation(el);
