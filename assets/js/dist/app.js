@@ -26,7 +26,10 @@
     var Animate = function(userOptions){
         var defaultOptions = {
             animationComplete: 'js-animated',
-            offset: 0, 
+            offsetTop: 0, 
+            offsetRight: (window.innerWidth || document.documentElement.clientWidth),
+            offsetBottom: (window.innerHeight || document.documentElement.clientHeight),
+            offsetLeft: 0,
             target: '[data-animate]',
             reverse: false,
             debug: false,
@@ -135,10 +138,10 @@
     Animate.prototype.isInView = function(el){
         var rect = el.getBoundingClientRect();
         return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            rect.top >= this.options.offsetTop &&
+            rect.left >= this.options.offsetLeft &&
+            rect.bottom <= this.options.offsetBottom &&
+            rect.right <= this.options.offsetRight
         );
     };
 
@@ -248,8 +251,6 @@
             this.completeAnimation(el);
         }.bind(this));
     };
-
-
 
     /**
      * Remove animation from given element 
