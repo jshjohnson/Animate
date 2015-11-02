@@ -23,9 +23,9 @@
 
 <body>
     <div class="container">
-        <div class="box" style="background: red;" data-animation="animated fadeIn" data-animate></div>
-        <div class="box" style="background: red;" data-animation="animated bounceIn" data-animate></div>
-        <div class="box" style="background: red;" data-animation="animated zoomIn" data-animate></div>
+        <div class="box" style="background: red;" data-animate data-animation-classes="animated fadeIn"></div>
+        <div class="box" style="background: red;" data-animate data-animation-classes="animated bounceIn"></div>
+        <div class="box" style="background: red;" data-animate data-animation-classes="animated zoomIn"></div>
     </div>
     <script type="text/javascript" src="/assets/js/dist/app.js"></script>
     <script>
@@ -33,7 +33,7 @@
             // reverse: true,
             debug: true,
             callback: function(){
-                console.log('woot woot');
+                console.log('Callback loaded');
             }
         });
     </script>

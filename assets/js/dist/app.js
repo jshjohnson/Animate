@@ -8,6 +8,7 @@
     - Determine whether element is in view minus offset
     - Add animation - Done
     - Kill - Done
+    - Throttle scroll event listener
 
  */
 
@@ -105,21 +106,20 @@
             }
         }
 
-        this.animateListener = function(){
-            this.handleEvent();
-        }.bind(this);
-
         if(this.options.onScroll) {
-            root.addEventListener('scroll', this.animateListener);
+            root.addEventListener('scroll', function(){
+                this.handleEvent();
+            }.bind(this));
         }
 
         if(this.options.onLoad) {
-            root.addEventListener('DOMContentLoaded', this.animateListener);
+            root.addEventListener('DOMContentLoaded', function(){
+                this.handleEvent();
+            }.bind(this));
         }
 
         this.initialised = true;
 
-        this.callback();
     };
 
     /**
@@ -163,11 +163,7 @@
      */
     Animate.prototype.isType = function(type, obj) {
         var test = Object.prototype.toString.call(obj).slice(8,-1);
-        if(test !== null && test !== undefined && test === type) {
-            return true;
-        } else {
-            return false;
-        }
+        return obj !== null && obj !== undefined && test === type;
     };
 
     /**
@@ -223,6 +219,7 @@
 
         el.classList.add('js-animate-complete');
         el.setAttribute('data-animated', true);
+        this.callback();
         if(this.options.reverse) {
             this.removeAnimation(el);
         }
@@ -238,7 +235,7 @@
         }
 
         el.setAttribute('data-visibility', true);
-        var animations = el.getAttribute('data-animation').split(' ');
+        var animations = el.getAttribute('data-animation-classes').split(' ');
         
         animations.forEach(function(animation){
             el.classList.add(animation);
@@ -262,7 +259,7 @@
         }
 
         el.setAttribute('data-visibility', false);
-        var animations = el.getAttribute('data-animation').split(' ');
+        var animations = el.getAttribute('data-animation-classes').split(' ');
         animations.forEach(function(animation){
             el.classList.remove(animation);
         });
