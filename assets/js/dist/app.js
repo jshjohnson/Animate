@@ -193,6 +193,18 @@
         this.eventTimeout = null;
     };
 
+    Animate.prototype.completeAnimation = function(el){
+        if(this.options.debug) {
+            console.log('Animation completed');
+        }
+
+        el.classList.add('js-animate-complete');
+        el.setAttribute('data-animated', true);
+        if(this.options.reverse) {
+            this.removeAnimation(el);
+        }
+    };
+
     /**
      * Add animation to given element 
      * @param {Node} el Element to target
@@ -202,10 +214,20 @@
             console.log('Animation added');
         }
 
-        var animation = el.getAttribute('data-animation');
         el.setAttribute('data-visibility', true);
-        el.classList.add(animation);
+        var animations = el.getAttribute('data-animation').split(' ');
+        
+        animations.forEach(function(animation){
+            el.classList.add(animation);
+        });
+
+        var animationEvent = this.whichAnimationEvent();
+        el.addEventListener(animationEvent, function() {
+            this.completeAnimation(el);
+        }.bind(this));
     };
+
+
 
     /**
      * Remove animation from given element 
@@ -215,9 +237,13 @@
         if(this.options.debug) {
             console.log('Animation removed');
         }
-        var animation = el.getAttribute('data-animation');
+
         el.setAttribute('data-visibility', false);
-        el.classList.remove(animation);
+        var animations = el.getAttribute('data-animation').split(' ');
+        animations.forEach(function(animation){
+            el.classList.remove(animation);
+        });
+        
     };
 
     return Animate;

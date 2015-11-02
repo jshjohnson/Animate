@@ -8,22 +8,30 @@
         .box { 
             height: 500px; 
             width: 100%; 
-            margin-top: 20px;
+            margin-top: 50px;
             opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .box:first-child { margin-top: 0; }
+
+        .js-animated {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <div class="box animated" style="background: red;" data-animation="fadeIn" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="fadeInUp" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="fadeInDown" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="bounceIn" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="bounceInUp" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="bounceInDown" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="zoomIn" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="zoomInUp" data-animate></div>
-        <div class="box animated" style="background: red;" data-animation="zoomInDown" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated fadeIn" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated fadeInUp" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated fadeInDown" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated bounceIn" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated bounceInUp" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated bounceInDown" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated zoomIn" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated zoomInUp" data-animate></div>
+        <div class="box" style="background: red;" data-animation="animated zoomInDown" data-animate></div>
     </div>
     <script type="text/javascript" src="/assets/js/dist/app.js"></script>
     <script>
@@ -31,7 +39,6 @@
             // reverse: true,
             debug: true,
         });
-        console.log(animate);
     </script>
 </body>
 </html>
