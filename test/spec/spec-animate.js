@@ -26,20 +26,25 @@ describe('Animate', function () {
         };
     }
 
-    describe('Should initialize plugin', function () {
+    describe('Should initialize Animate', function () {
         beforeEach(function () {
-            animateTest = new Animate();
+            this.animate = new Animate();
         });
-        it('Document should include the Animate module', function () {
-            expect(!!animateTest).toBe(true);
+        it('document should include the Animate module', function () {
+            expect(!!this.animate).toBe(true);
         });
-        it("has options object", function() {
-            expect(animateTest.options).toBeDefined();
+        it("should have options object", function() {
+            expect(this.animate.options).toBeDefined();
         });
         it("calls the init() function", function() {
-            spyOn(animateTest, "init");
-            animateTest.init();
-            expect(animateTest.init).toHaveBeenCalled();
+            spyOn(this.animate, "init");
+            this.animate.init();
+            expect(this.animate.init).toHaveBeenCalled();
+        });
+        it('should expose public functions', function () {
+            expect(this.animate.init).toEqual(jasmine.any(Function));
+            expect(this.animate.kill).toEqual(jasmine.any(Function));
+            expect(this.animate.handleEvent).toEqual(jasmine.any(Function));
         });
     });
 });
