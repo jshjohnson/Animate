@@ -26,7 +26,7 @@
 
     var Animate = function(userOptions){
         var defaultOptions = {
-            animationComplete: 'js-animated',
+            animatedClass: 'js-animated',
             offset: 0, 
             target: '[data-animate]',
             reverse: false,
@@ -235,7 +235,7 @@
         }
 
         var throttledEvent = this._debounce(function() {
-            this.handleEvent();
+            this.resolveAnimations();
         }.bind(this), 15);
 
         if(this.options.onLoad) {
@@ -278,7 +278,7 @@
      * @public
      * @return {}
      */
-    Animate.prototype.handleEvent = function(){
+    Animate.prototype.resolveAnimations = function(){
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
             var el = els[i];
