@@ -41,6 +41,28 @@
         this.init();
     };
 
+    // Returns a function, that, as long as it continues to be invoked, will not
+    // be triggered. The function will be called after it stops being called for
+    // N milliseconds. If `immediate` is passed, trigger the function on the
+    // leading edge, instead of the trailing.
+    // @private
+    // @author David Walsh
+    // @link https://davidwalsh.name/javascript-debounce-function
+    Animate.prototype._debounce = function(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+
     /**
      * Merges unspecified amount of objects into new object
      * @private
@@ -70,6 +92,8 @@
 
     /**
      * Determines when an animation has completed
+     * @author  David Walsh
+     * @link https://davidwalsh.name/css-animation-callback
      * @private
      * @return {[type]} [description]
      */
@@ -209,16 +233,18 @@
             }
         }
 
-        if(this.options.onScroll) {
-            root.addEventListener('scroll', function(){
-                this.handleEvent();
-            }.bind(this));
-        }
+        var throttledEvent = this._debounce(function() {
+            this.handleEvent();
+        }.bind(this), 15);
 
         if(this.options.onLoad) {
-            root.addEventListener('DOMContentLoaded', function(){
-                this.handleEvent();
-            }.bind(this));
+            root.addEventListener('DOMContentLoaded', throttledEvent());
+        }
+
+        if(this.options.onScroll) {
+            root.addEventListener('scroll', function(){
+                throttledEvent();
+            }, false);
         }
 
         this.initialised = true;
