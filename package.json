@@ -30,7 +30,7 @@
     "gulp-uglify": "~0.3.0",
     "jasmine-core": "^2.3.4",
     "jshint-stylish": "^0.2.0",
-    "karma": "^0.13.14",
+    "karma": "^0.13.15",
     "karma-coverage": "^0.5.3",
     "karma-htmlfile-reporter": "^0.2.2",
     "karma-jasmine": "^0.3.6",

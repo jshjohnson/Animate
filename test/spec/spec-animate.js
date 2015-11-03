@@ -27,15 +27,16 @@ describe('Animate', function () {
     }
 
     describe('Should initialize plugin', function () {
-        it('should export the Animate module', function () {
-            expect(Animate).toBeDefined();
+        beforeEach(function () {
+            animateTest = new Animate();
+        });
+        it('Document should include the Animate module', function () {
+            expect(!!animateTest).toBe(true);
         });
         it("has options object", function() {
-            var animateTest = new Animate();
             expect(animateTest.options).toBeDefined();
         });
         it("calls the init() function", function() {
-            var animateTest = new Animate();
             spyOn(animateTest, "init");
             animateTest.init();
             expect(animateTest.init).toHaveBeenCalled();
