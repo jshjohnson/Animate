@@ -7,7 +7,7 @@
     - Determine whether element is in view minus offset
     - Add animation - Done
     - Kill - Done
-    - Throttle scroll event listener
+    - Throttle scroll event listener - For testing
 
  */
 

@@ -2,9 +2,12 @@
 
 Trigger animations on elements when they are in view
 
+##Installation
 ```
-npm install
-gulp dev
+<script type="text/javascript" src="/assets/js/dist/animate.js"></script>
+<script>
+    var animate = new Animate();
+</script>
 ```
 
 ##Options
@@ -28,5 +31,5 @@ Type: `Function` Default: `function(){}`
 ##Methods
 ####init();
 ####kill();
-####handleEvent();
+####resolveAnimations();
 ####getAnimatedElements();
