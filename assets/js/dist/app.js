@@ -44,6 +44,7 @@
 
     /**
      * Merges unspecified amount of objects into new object
+     * @private
      * @return {Object} Merged object of arguments
      */
     Animate.prototype._extend = function() {
@@ -70,6 +71,7 @@
 
     /**
      * Determines when an animation has completed
+     * @private
      * @return {[type]} [description]
      */
     Animate.prototype._whichAnimationEvent = function(){
@@ -92,6 +94,7 @@
 
     /**
      * Tests whether give DOM node is within viewport boundaries
+     * @private
      * @param  {Node}  el Element to test for 
      * @return {Boolean}
      */
@@ -107,6 +110,7 @@
 
     /**
      * Tests whether a DOM node's visibility attribute is set to true
+     * @private
      * @param  {Node}  el Element to test
      * @return {Boolean}
      */
@@ -117,6 +121,7 @@
 
     /**
      * Test whether an object is of a give type
+     * @private
      * @param  {String}  type Type to test for e.g. 'String', 'Array'
      * @param  {Object}  obj  Object to test type against
      * @return {Boolean}      Whether object is of type
@@ -127,28 +132,8 @@
     };
 
     /**
-     * Add class & data attribute to element on animation completion
-     * @param  {Node} el Element to target
-     */
-    Animate.prototype._completeAnimation = function(el){
-        if(this.options.debug) {
-            console.log('Animation completed');
-        }
-
-        el.classList.add('js-animate-complete');
-        el.setAttribute('data-animated', true);
-
-        if(this._isType('Function', this.options.callback)) {
-            this.options.callback();
-        }
-
-        if(this.options.reverse) {
-            this._removeAnimation(el);
-        }
-    };
-
-    /**
-     * Add animation to given element 
+     * Add animation to given element
+     * @private
      * @param {Node} el Element to target
      */
     Animate.prototype._addAnimation = function(el){
@@ -172,7 +157,30 @@
     };
 
     /**
+     * Add class & data attribute to element on animation completion
+     * @private
+     * @param  {Node} el Element to target
+     */
+    Animate.prototype._completeAnimation = function(el){
+        if(this.options.debug) {
+            console.log('Animation completed');
+        }
+
+        el.classList.add('js-animate-complete');
+        el.setAttribute('data-animated', true);
+
+        if(this._isType('Function', this.options.callback)) {
+            this.options.callback();
+        }
+
+        if(this.options.reverse) {
+            this._removeAnimation(el);
+        }
+    };
+
+    /**
      * Remove animation from given element 
+     * @private
      * @param {Node} el Element to target
      */
     Animate.prototype._removeAnimation = function(el){
@@ -190,6 +198,7 @@
 
     /**
      * Initalises event listeners
+     * @public
      */
     Animate.prototype.init = function(){
         if(this.options.debug) {
@@ -219,6 +228,7 @@
 
     /**
      * Stop all running event listeners & resets options to null
+     * @public
      */
     Animate.prototype.kill = function(){
         if(this.options.debug) {
@@ -239,6 +249,7 @@
 
     /**
      * Toggles animations on an event
+     * @public
      * @return {}
      */
     Animate.prototype.handleEvent = function(){
@@ -258,6 +269,23 @@
             }
         }
     };
+
+    /**
+     * Get elements that have been animated
+     * @public
+     * @return {Array} Array of nodes
+     */
+    Animate.prototype.getAnimatedElements = function() {
+        var animatedEls = [];
+        for (var i = this.elements.length - 1; i >= 0; i--) {
+            var el = this.elements[i];
+            if(el.getAttribute('data-animated') === 'true' || true) {
+                animatedEls.push(el);
+            }
+        }
+        return animatedEls;
+    };
+
 
     return Animate;
 });

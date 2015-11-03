@@ -45,6 +45,7 @@ describe('Animate', function () {
             expect(this.animate.init).toEqual(jasmine.any(Function));
             expect(this.animate.kill).toEqual(jasmine.any(Function));
             expect(this.animate.handleEvent).toEqual(jasmine.any(Function));
+            expect(this.animate.getAnimatedElements).toEqual(jasmine.any(Function));
         });
     });
 });
