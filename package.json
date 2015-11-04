@@ -1,21 +1,17 @@
 {
-  "name": "to-do-app",
+  "name": "animate.js",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Tiny (4KB) vanilla JS script to trigger animations on elements when they are within the viewport",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/jshjohnson/to-do-list-app.git"
+    "url": "git+ssh://git@github.com:jshjohnson/animate.js.git"
   },
   "author": "Josh Johnson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jshjohnson/to-do-list-app/issues"
+    "url": "https://github.com/jshjohnson/animate.js/issues"
   },
-  "homepage": "https://github.com/jshjohnson/to-do-list-app#readme",
+  "homepage": "https://github.com/jshjohnson/animate.js#readme",
   "devDependencies": {
     "gulp": "~3.9.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -39,7 +35,6 @@
     "opn": "^3.0.2"
   },
   "dependencies": {
-    "handlebars": "^4.0.3",
     "opn": "^3.0.2"
   }
 }
