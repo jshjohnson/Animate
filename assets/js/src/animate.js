@@ -261,7 +261,7 @@
         }
 
         var throttledEvent = this._debounce(function() {
-            this._resolveAnimations();
+            this.render();
         }.bind(this), 15);
 
         if(this.options.onLoad) {
@@ -301,7 +301,7 @@
      * @public
      * @return {}
      */
-    Animate.prototype._resolveAnimations = function(){
+    Animate.prototype.render = function(){
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
             var el = els[i];
