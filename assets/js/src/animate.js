@@ -144,6 +144,17 @@
     };
 
     /**
+     * Tests whether a DOM node has already been animated
+     * @private
+     * @param  {Node}  el Element to test
+     * @return {Boolean}
+     */
+    Animate.prototype._hasAnimated = function(el){
+        var animated = el.getAttribute('data-animated');
+        return true ? animated === 'true' : '';
+    };
+
+    /**
      * Test whether an object is of a give type
      * @private
      * @param  {String}  type Type to test for e.g. 'String', 'Array'
@@ -162,7 +173,7 @@
      */
     Animate.prototype._addAnimation = function(el){
         if(this.options.debug) {
-            console.log('Animation added');
+            console.debug('animate.js: Animation added');
         }
 
         el.setAttribute('data-visibility', true);
@@ -170,7 +181,6 @@
         var animationDelay = parseInt(el.getAttribute('data-animation-delay'));
 
         if(animationDelay && this._isType('Number', animationDelay)) {
-            console.log('true');
             setTimeout(function() { 
                 animations.forEach(function(animation) {
                     el.classList.add(animation);
@@ -182,30 +192,7 @@
            }); 
         }
 
-        // This seems out of place. Hmmm
-        var animationEvent = this._whichAnimationEvent();
-        el.addEventListener(animationEvent, function() {
-            this._completeAnimation(el);
-        }.bind(this));
-    };
-
-    /**
-     * Add class & data attribute to element on animation completion
-     * @private
-     * @param  {Node} el Element to target
-     */
-    Animate.prototype._completeAnimation = function(el){
-        if(this.options.debug) {
-            console.log('Animation completed');
-        }
-
-        el.classList.add('js-animate-complete');
-        el.setAttribute('data-animated', true);
-
-        if(this._isType('Function', this.options.callback)) {
-            this.options.callback();
-        }
-
+        this._completeAnimation(el);
     };
 
     /**
@@ -215,16 +202,48 @@
      */
     Animate.prototype._removeAnimation = function(el){
         if(this.options.debug) {
-            console.log('Animation removed');
+            console.debug('animate.js: Animation removed');
         }
 
         el.setAttribute('data-visibility', false);
+        el.removeAttribute('data-animated');
         var animations = el.getAttribute('data-animation-classes').split(' ');
+        var animationDelay = parseInt(el.getAttribute('data-animation-delay'));
         animations.push('js-animate-complete');
-        animations.forEach(function(animation){
-            el.classList.remove(animation);
-        });
+
+        if(animationDelay && this._isType('Number', animationDelay)) {
+            setTimeout(function() { 
+                animations.forEach(function(animation) {
+                    el.classList.remove(animation);
+                }); 
+            }, animationDelay);
+        } else {
+           animations.forEach(function(animation){
+               el.classList.remove(animation);
+           }); 
+        }
         
+    };
+
+    /**
+     * Add class & data attribute to element on animation completion
+     * @private
+     * @param  {Node} el Element to target
+     */
+    Animate.prototype._completeAnimation = function(el){
+        var animationEvent = this._whichAnimationEvent();
+        el.addEventListener(animationEvent, function() {
+            if(this.options.debug) {
+                console.debug('animate.js: Animation completed');
+            }
+
+            el.classList.add('js-animate-complete');
+            el.setAttribute('data-animated', true);
+
+            if(this._isType('Function', this.options.callback)) {
+                this.options.callback();
+            }
+        }.bind(this));
     };
 
     /**
@@ -233,9 +252,9 @@
      */
     Animate.prototype.init = function(){
         if(this.options.debug) {
-            console.log('Animate.js successfully initialised');
+            console.debug('animate.js: Animate.js successfully initialised');
             if(this.elements.length !== 0) {
-                console.log('Found ' + this.elements.length + ' elements to animate');
+                console.debug('animate.js: Found ' + this.elements.length + ' elements to animate');
             } else {
                 console.warn('No elements to animate');
             }
@@ -265,7 +284,7 @@
      */
     Animate.prototype.kill = function(){
         if(this.options.debug) {
-            console.log('Animation.js nuked');
+            console.debug('animate.js: Animation.js nuked');
         }
 
         // Test to see whether we have actually initialised
@@ -294,7 +313,7 @@
                 if(!this._isVisible(el)){
                     this._addAnimation(el);
                 }
-            } else if(!this._isInView(el) && el.getAttribute('data-animated') === 'true') {
+            } else if(!this._isInView(el) && this._hasAnimated(el)) {
                 if(this.options.reverse) {
                     // This runs everytime the user scrolls, it shouldn't. Hmm
                     this._removeAnimation(el);
@@ -312,7 +331,7 @@
         var animatedEls = [];
         for (var i = this.elements.length - 1; i >= 0; i--) {
             var el = this.elements[i];
-            if(el.getAttribute('data-animated') === 'true' || true) {
+            if(this._hasAnimated(el)) {
                 animatedEls.push(el);
             }
         }

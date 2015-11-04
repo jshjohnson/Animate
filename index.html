@@ -10,6 +10,11 @@
             .container { padding: 5rem; }
         }
 
+        .fade { 
+            opacity: 0; 
+            transition: all .2s ease-in-out;
+        }
+
         .box { 
             height: 500px; 
             width: 100%; 
@@ -22,14 +27,14 @@
 
         .js-animate-complete {
             opacity: 1;
-            visibility: visible;
+            transition: all .2s ease-in-out;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <img src="/assets/images/logo.svg" style="opacity: 0;" alt="Animate.js logo" data-animate data-animation-classes="animated fadeIn">
+        <img src="/assets/images/logo.svg" class="fade" alt="Animate.js logo" data-animate data-animation-classes="animated fadeIn">
         <div class="box box--nudge-top" data-animate data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box" style="opacity: 1;" data-animate data-animation-classes="animated tada"></div>
