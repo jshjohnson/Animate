@@ -8,6 +8,7 @@
     - Add animation - Done
     - Kill - Done
     - Throttle scroll event listener - For testing
+    - Animation delays
 
  */
 
@@ -166,11 +167,20 @@
 
         el.setAttribute('data-visibility', true);
         var animations = el.getAttribute('data-animation-classes').split(' ');
-        
-        animations.forEach(function(animation){
-            el.classList.add(animation);
-        });
+        var animationDelay = parseInt(el.getAttribute('data-animation-delay'));
 
+        if(animationDelay && this._isType('Number', animationDelay)) {
+            console.log('true');
+            animations.forEach(function(animation){
+                setTimeout(function() { 
+                    el.classList.add(animation);
+                }, animationDelay);
+            }); 
+        } else {
+           animations.forEach(function(animation){
+               el.classList.add(animation);
+           }); 
+        }
 
         // This seems out of place. Hmmm
         var animationEvent = this._whichAnimationEvent();
