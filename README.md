@@ -48,6 +48,8 @@ Function to run once animation has completed
 
 ##Methods
 ####init();
+Initialises event listeners
 ####kill();
-####resolveAnimations();
+Kills event listeners and resets options
 ####getAnimatedElements();
+Returns an array of elements that have been animated
