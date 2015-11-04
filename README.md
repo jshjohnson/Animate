@@ -4,7 +4,7 @@ Trigger animations on elements when they are in view
 
 ##Installation
 ```html
-<script type="text/javascript" src="/assets/js/dist/animate.js"></script>
+<script src="/assets/js/dist/animate.js"></script>
 <script>
     var animate = new Animate();
 </script>
