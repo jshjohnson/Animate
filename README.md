@@ -15,13 +15,14 @@ Trigger animations on elements when they are in view
 Type: `String` Default: `[data-animate]`
 
 Element/s to target. Once this element is in view, add animations
+
+####offset (still in development)
+Type: `Number` Default: `0`
+
 ####animatedClass
 Type: `String` Default: `js-animated`
 
 Class to be added to element once animation has completed
-
-####offset (still in development)
-Type: `Number` Default: `0`
 
 ####reverse
 Type: `Boolean` Default: `false`
