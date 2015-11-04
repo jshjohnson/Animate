@@ -29,7 +29,7 @@
 
 <body>
     <div class="container">
-        <img src="/assets/images/logo.svg" alt="Animate.js logo" data-animate data-animation-classes="animated fadeIn">
+        <img src="/assets/images/logo.svg" style="opacity: 0;" alt="Animate.js logo" data-animate data-animation-classes="animated fadeIn">
         <div class="box box--nudge-top" data-animate data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box" style="opacity: 1;" data-animate data-animation-classes="animated tada"></div>
@@ -38,7 +38,7 @@
     <script type="text/javascript" src="/assets/js/dist/animate.js"></script>
     <script>
         var animate = new Animate({
-            // reverse: true,
+            reverse: true,
             debug: true,
             callback: function(){
                 console.log('Callback loaded');

@@ -207,9 +207,6 @@
             this.options.callback();
         }
 
-        if(this.options.reverse) {
-            this._removeAnimation(el);
-        }
     };
 
     /**
@@ -224,6 +221,7 @@
 
         el.setAttribute('data-visibility', false);
         var animations = el.getAttribute('data-animation-classes').split(' ');
+        animations.push('js-animate-complete');
         animations.forEach(function(animation){
             el.classList.remove(animation);
         });
@@ -294,11 +292,11 @@
             var el = els[i];
             // If element is in view and is not set to visible
             if(this._isInView(el)) {
-                if(this._isVisible(el) === false){
+                if(!this._isVisible(el)){
                     this._addAnimation(el);
                 }
-            } else {
-                if(this.options.reverse && this._isVisible(el) === true) {
+            } else if(!this._isInView(el) && el.getAttribute('data-animated') === 'true') {
+                if(this.options.reverse) {
                     // This runs everytime the user scrolls, it shouldn't. Hmm
                     this._removeAnimation(el);
                 }
