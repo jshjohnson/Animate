@@ -44,7 +44,6 @@ describe('Animate', function () {
         it('should expose public functions', function () {
             expect(this.animate.init).toEqual(jasmine.any(Function));
             expect(this.animate.kill).toEqual(jasmine.any(Function));
-            expect(this.animate.resolveAnimations).toEqual(jasmine.any(Function));
             expect(this.animate.getAnimatedElements).toEqual(jasmine.any(Function));
         });
     });

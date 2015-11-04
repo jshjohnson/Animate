@@ -55,12 +55,16 @@
             var context = this, args = arguments;
             var later = function() {
                 timeout = null;
-                if (!immediate) func.apply(context, args);
+                if (!immediate) {
+                    func.apply(context, args);
+                }
             };
             var callNow = immediate && !timeout;
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
+            if (callNow) {
+                func.apply(context, args);
+            }
         };
     };
 
@@ -172,9 +176,6 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._addAnimation = function(el){
-        if(this.options.debug) {
-            console.debug('animate.js: Animation added');
-        }
 
         el.setAttribute('data-visibility', true);
         var animations = el.getAttribute('data-animation-classes').split(' ');
@@ -182,14 +183,16 @@
 
         if(animationDelay && this._isType('Number', animationDelay)) {
             setTimeout(function() { 
+                if(this.options.debug) console.debug('animate.js: Animation added');
                 animations.forEach(function(animation) {
                     el.classList.add(animation);
                 }); 
-            }, animationDelay);
+            }.bind(this), animationDelay);
         } else {
-           animations.forEach(function(animation){
+            if(this.options.debug) console.debug('animate.js: Animation added');
+            animations.forEach(function(animation){
                el.classList.add(animation);
-           }); 
+            }); 
         }
 
         this._completeAnimation(el);
@@ -201,26 +204,25 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._removeAnimation = function(el){
-        if(this.options.debug) {
-            console.debug('animate.js: Animation removed');
-        }
 
         el.setAttribute('data-visibility', false);
         el.removeAttribute('data-animated');
         var animations = el.getAttribute('data-animation-classes').split(' ');
         var animationDelay = parseInt(el.getAttribute('data-animation-delay'));
-        animations.push('js-animate-complete');
+        animations.push(this.options.animatedClass);
 
         if(animationDelay && this._isType('Number', animationDelay)) {
-            setTimeout(function() { 
+            setTimeout(function() {
+                if(this.options.debug) console.debug('animate.js: Animation removed');
                 animations.forEach(function(animation) {
                     el.classList.remove(animation);
                 }); 
-            }, animationDelay);
+            }.bind(this), animationDelay);
         } else {
-           animations.forEach(function(animation){
+            if(this.options.debug) console.debug('animate.js: Animation removed');
+            animations.forEach(function(animation){
                el.classList.remove(animation);
-           }); 
+            }); 
         }
         
     };
@@ -233,11 +235,9 @@
     Animate.prototype._completeAnimation = function(el){
         var animationEvent = this._whichAnimationEvent();
         el.addEventListener(animationEvent, function() {
-            if(this.options.debug) {
-                console.debug('animate.js: Animation completed');
-            }
+            if(this.options.debug) console.debug('animate.js: Animation completed');
 
-            el.classList.add('js-animate-complete');
+            el.classList.add(this.options.animatedClass);
             el.setAttribute('data-animated', true);
 
             if(this._isType('Function', this.options.callback)) {
@@ -261,7 +261,7 @@
         }
 
         var throttledEvent = this._debounce(function() {
-            this.resolveAnimations();
+            this._resolveAnimations();
         }.bind(this), 15);
 
         if(this.options.onLoad) {
@@ -283,9 +283,7 @@
      * @public
      */
     Animate.prototype.kill = function(){
-        if(this.options.debug) {
-            console.debug('animate.js: Animation.js nuked');
-        }
+        if(this.options.debug) console.debug('animate.js: Animation.js nuked');
 
         // Test to see whether we have actually initialised
         if (!this.initialised) return;
@@ -296,7 +294,6 @@
 
         // Reset settings
         this.settings = null;
-        this.eventTimeout = null;
     };
 
     /**
@@ -304,7 +301,7 @@
      * @public
      * @return {}
      */
-    Animate.prototype.resolveAnimations = function(){
+    Animate.prototype._resolveAnimations = function(){
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
             var el = els[i];
@@ -313,11 +310,8 @@
                 if(!this._isVisible(el)){
                     this._addAnimation(el);
                 }
-            } else if(!this._isInView(el) && this._hasAnimated(el)) {
-                if(this.options.reverse) {
-                    // This runs everytime the user scrolls, it shouldn't. Hmm
-                    this._removeAnimation(el);
-                }
+            } else if(!this._isInView(el) && this._hasAnimated(el) && this.options.reverse) {
+                this._removeAnimation(el);
             }
         }
     };
