@@ -171,11 +171,11 @@
 
         if(animationDelay && this._isType('Number', animationDelay)) {
             console.log('true');
-            animations.forEach(function(animation){
-                setTimeout(function() { 
+            setTimeout(function() { 
+                animations.forEach(function(animation) {
                     el.classList.add(animation);
-                }, animationDelay);
-            }); 
+                }); 
+            }, animationDelay);
         } else {
            animations.forEach(function(animation){
                el.classList.add(animation);
