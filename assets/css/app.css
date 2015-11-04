@@ -384,7 +384,8 @@ html {
   width: 100%;
   height: 100%;
   position: relative;
-  overflow-x: hidden; }
+  overflow-x: hidden;
+  background: linear-gradient(to left top, #2164B9, #53A0FD); }
 
 body {
   position: relative;
@@ -392,6 +393,7 @@ body {
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 1.6rem;
   background-color: #f2f2f2;
+  background: linear-gradient(to left top, #2164B9, #53A0FD);
   color: #222222;
   overflow-x: hidden; }
   @media screen and (max-width: 768px) {
