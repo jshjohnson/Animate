@@ -4,12 +4,11 @@
     - Init - Done
     - Add scroll event listener - Done
     - Determine whether element is in view - Done
-    - Determine whether element is in view minus offset:
-        (height of the element minus the distance from top) divided by element height * 100
+    - Determine whether element is in view minus offset - Done
     - Add animation - Done
     - Kill - Done
-    - Throttle scroll event listener - For testing
-    - Animation delays
+    - Throttle scroll event listener - Done
+    - Animation delays - Done
 
  */
 
@@ -28,7 +27,7 @@
     var Animate = function(userOptions){
         var defaultOptions = {
             animatedClass: 'js-animated',
-            offset: 0.2, 
+            offset: 0.5, 
             target: '[data-animate]',
             reverse: false,
             debug: false,
@@ -40,7 +39,7 @@
         this.options = this._extend(defaultOptions, userOptions || {}); 
         this.elements = root.document.querySelectorAll(this.options.target);
         this.initialised = false;
-        this.init();
+        // this.init();
     };
 
     // Returns a function, that, as long as it continues to be invoked, will not

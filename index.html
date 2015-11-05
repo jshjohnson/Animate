@@ -10,10 +10,7 @@
             .container { padding: 5rem; }
         }
 
-        .fade { 
-            opacity: 0; 
-            transition: all .2s ease-in-out;
-        }
+        .fade { opacity: 0; }
 
         .box { 
             height: 500px; 
@@ -25,10 +22,6 @@
 
         .box--nudge-top { margin-top: 5rem; }
 
-        .js-animated {
-            opacity: 1;
-            transition: all .2s ease-in-out;
-        }
     </style>
 </head>
 
@@ -49,6 +42,8 @@
                 console.log('Callback loaded');
             }
         });
+
+        animate.init();
     </script>
 </body>
 </html>
