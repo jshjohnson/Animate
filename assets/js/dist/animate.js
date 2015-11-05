@@ -1,4 +1,4 @@
-/*! to-do-app v1.0.0 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/to-do-list-app#readme */
+/*! animate.js v1.0.0 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js#readme */
 /**
 
     TODO:
@@ -122,12 +122,12 @@
     };
 
     /**
-     * Tests whether give DOM node is within viewport boundaries
+     * Tests whether give DOM node is entirely within viewport boundaries
      * @private
      * @param  {Node}  el Element to test for 
      * @return {Boolean}
      */
-    Animate.prototype._isInView = function(el){
+    Animate.prototype._isInViewport = function(el){
         var rect = el.getBoundingClientRect();
         return (
             rect.top >= 0 &&
@@ -135,6 +135,41 @@
             rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
             rect.right <= (window.innerWidth || document.documentElement.clientWidth)
         );
+    };
+
+    /**
+     * Get an the height of the viewport
+     * @private
+     * @return {Number} Height of viewport
+     */
+    Animate.prototype._getViewportHeight = function() {
+        return Math.max(window.innerHeight + window.scrollY);
+    };
+
+    /**
+     * Get an element's distance from the top of the page
+     * @private
+     * @param  {Node} elem Element to test for
+     * @return {Number} Elements Distance from top of page
+     */
+    Animate.prototype._getElemDistance = function(el) {
+        var location = 0;
+        if (el.offsetParent) {
+            do {
+                location += el.offsetTop;
+                el = el.offsetParent;
+            } while (el);
+        }
+        return location >= 0 ? location : 0;
+    };
+
+    /**
+     * Determine whether an element is within the viewport
+     * @param  {[type]}  el [description]
+     * @return {Boolean}    [description]
+     */
+    Animate.prototype._isInView = function(el) {
+        return this._getElemDistance(el) < this._getViewportHeight()  ? true : false;
     };
 
     /**
@@ -311,7 +346,7 @@
                 if(!this._isVisible(el)){
                     this._addAnimation(el);
                 }
-            } else if(!this._isInView(el) && this._hasAnimated(el) && this.options.reverse) {
+            } else if(!this._isInViewport(el) && this._hasAnimated(el) && this.options.reverse) {
                 this._removeAnimation(el);
             }
         }

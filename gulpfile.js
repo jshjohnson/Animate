@@ -121,6 +121,6 @@ gulp.task('watch', function() {
 });
 
 
-gulp.task('dev', ['connect', 'watch']);
+gulp.task('dev', ['test', 'connect', 'watch']);
 gulp.task('build', ['lint', 'scripts', 'test']);
 gulp.task('default', ['dev']);
