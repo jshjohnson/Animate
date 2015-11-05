@@ -17,7 +17,9 @@ Type: `String` Default: `[data-animate]`
 Element/s to target. Once this element is in view, add animations
 
 ####offset (still in development)
-Type: `Number` Default: `0`
+Type: `Number` Default: `0.5` (50%)
+
+Percentage of element that needs to be in the viewport before the animation triggers
 
 ####animatedClass
 Type: `String` Default: `js-animated`
