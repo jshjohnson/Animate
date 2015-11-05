@@ -6,7 +6,17 @@ Trigger animations on elements when they are in view
 ```html
 <script src="/assets/js/dist/animate.js"></script>
 <script>
-    var animate = new Animate();
+    var animate = new Animate({
+        animatedClass: 'js-animated',
+        offset: 0.5, 
+        target: '[data-animate]',
+        reverse: false,
+        debug: false,
+        onLoad: true,
+        onScroll: true,
+        callback: function(){}
+    });
+    animate.init();
 </script>
 ```
 
