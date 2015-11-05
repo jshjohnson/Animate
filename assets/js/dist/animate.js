@@ -5,7 +5,8 @@
     - Init - Done
     - Add scroll event listener - Done
     - Determine whether element is in view - Done
-    - Determine whether element is in view minus offset
+    - Determine whether element is in view minus offset:
+        (height of the element minus the distance from top) divided by element height * 100
     - Add animation - Done
     - Kill - Done
     - Throttle scroll event listener - For testing
@@ -28,7 +29,7 @@
     var Animate = function(userOptions){
         var defaultOptions = {
             animatedClass: 'js-animated',
-            offset: 0, 
+            offset: 0.2, 
             target: '[data-animate]',
             reverse: false,
             debug: false,
@@ -143,7 +144,7 @@
      * @return {Number} Height of viewport
      */
     Animate.prototype._getViewportHeight = function() {
-        return Math.max(window.innerHeight + window.scrollY);
+        return Math.max((root.innerHeight || document.documentElement.clientHeight) + root.scrollY);
     };
 
     /**
@@ -163,13 +164,17 @@
         return location >= 0 ? location : 0;
     };
 
+    Animate.prototype._getElementOffset = function(el) {
+        return Math.max(el.offsetHeight*this.options.offset);
+    };
+
     /**
      * Determine whether an element is within the viewport
      * @param  {[type]}  el [description]
      * @return {Boolean}    [description]
      */
     Animate.prototype._isInView = function(el) {
-        return this._getElemDistance(el) < this._getViewportHeight()  ? true : false;
+        return this._getElemDistance(el) < (this._getViewportHeight() - this._getElementOffset(el))  ? true : false;
     };
 
     /**
@@ -341,6 +346,7 @@
         var els = this.elements;
         for (var i = els.length - 1; i >= 0; i--) {
             var el = els[i];
+
             // If element is in view and is not set to visible
             if(this._isInView(el)) {
                 if(!this._isVisible(el)){
