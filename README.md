@@ -20,6 +20,15 @@ Trigger animations on elements when they are in view
 </script>
 ```
 
+##Animating elements
+
+To animate an element, it will need a target data attribute set to it - by default this is `data-animate`. Assign animations via the `data-animation-classes` attribute (seperated by a comma). Optionally set a milisecond delay via the `data-animation-delay` attribute - by default there is no delay. 
+
+####Examples
+```html
+<div data-animate data-animation-classes="animated fadeIn" data-animation-delay="1000"></div>
+```
+
 ##Options
 ####target
 Type: `String` Default: `[data-animate]`
