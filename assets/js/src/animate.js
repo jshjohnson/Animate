@@ -12,7 +12,7 @@
 
  */
 
- (function (root, factory) {
+(function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(function() {
             return factory(root);
@@ -22,7 +22,7 @@
     } else {
         root.Animate = factory(root);
     }
- })(this, function (root) {
+})(this, function (root) {
 
     'use strict';
 
