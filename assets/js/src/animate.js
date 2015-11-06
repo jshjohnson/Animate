@@ -12,22 +12,24 @@
 
  */
 
-(function(root, factory) {
-    if ( typeof define === 'function' && define.amd ) {
-        define([], factory(root));
-    } else if ( typeof exports === 'object' ) {
-        module.exports = factory(root);
+ (function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(function() {
+            return factory(root);
+        });
+    } else if (typeof exports === 'object') {
+        module.exports = factory;
     } else {
         root.Animate = factory(root);
     }
-})(typeof global !== 'undefined' ? global : this.window || this.global, function (root) {
+ })(this, function (root) {
 
     'use strict';
 
     var Animate = function(userOptions){
         var defaultOptions = {
             animatedClass: 'js-animated',
-            offset: 0.5, 
+            offset: 0.5,
             target: '[data-animate]',
             reverse: false,
             debug: false,
@@ -37,7 +39,7 @@
         };
 
         this.supports = 'querySelector' in document && 'addEventListener' in root;
-        this.options = this._extend(defaultOptions, userOptions || {}); 
+        this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
         this.initialised = false;
         // this.init();
@@ -206,24 +208,24 @@
         var animationDelay = parseInt(el.getAttribute('data-animation-delay'));
 
         if(animationDelay && this._isType('Number', animationDelay)) {
-            setTimeout(function() { 
+            setTimeout(function() {
                 if(this.options.debug) console.debug('animate.js: Animation added');
                 animations.forEach(function(animation) {
                     el.classList.add(animation);
-                }); 
+                });
             }.bind(this), animationDelay);
         } else {
             if(this.options.debug) console.debug('animate.js: Animation added');
             animations.forEach(function(animation){
                el.classList.add(animation);
-            }); 
+            });
         }
 
         this._completeAnimation(el);
     };
 
     /**
-     * Remove animation from given element 
+     * Remove animation from given element
      * @private
      * @param {Node} el Element to target
      */
@@ -240,15 +242,15 @@
                 if(this.options.debug) console.debug('animate.js: Animation removed');
                 animations.forEach(function(animation) {
                     el.classList.remove(animation);
-                }); 
+                });
             }.bind(this), animationDelay);
         } else {
             if(this.options.debug) console.debug('animate.js: Animation removed');
             animations.forEach(function(animation){
                el.classList.remove(animation);
-            }); 
+            });
         }
-        
+
     };
 
     /**
@@ -358,4 +360,3 @@
 
     return Animate;
 });
-
