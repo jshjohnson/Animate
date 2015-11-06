@@ -278,11 +278,7 @@
     Animate.prototype.init = function(){
         if(this.options.debug) {
             console.debug('animate.js: Animate.js successfully initialised');
-            if(this.elements.length !== 0) {
-                console.debug('animate.js: Found ' + this.elements.length + ' elements to animate');
-            } else {
-                console.warn('No elements to animate');
-            }
+            console.debug('animate.js: Found ' + this.elements.length + ' elements to animate');
         }
 
         if(!this.supports) return;

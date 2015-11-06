@@ -36,6 +36,7 @@
             callback: function(){}
         };
 
+        this.supports = 'querySelector' in document && 'addEventListener' in root;
         this.options = this._extend(defaultOptions, userOptions || {}); 
         this.elements = root.document.querySelectorAll(this.options.target);
         this.initialised = false;
@@ -118,22 +119,6 @@
                 return animations[t];
             }
         }
-    };
-
-    /**
-     * Tests whether give DOM node is entirely within viewport boundaries
-     * @private
-     * @param  {Node}  el Element to test for 
-     * @return {Boolean}
-     */
-    Animate.prototype._isInViewport = function(el){
-        var rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
     };
 
     /**
@@ -292,12 +277,10 @@
     Animate.prototype.init = function(){
         if(this.options.debug) {
             console.debug('animate.js: Animate.js successfully initialised');
-            if(this.elements.length !== 0) {
-                console.debug('animate.js: Found ' + this.elements.length + ' elements to animate');
-            } else {
-                console.warn('No elements to animate');
-            }
+            console.debug('animate.js: Found ' + this.elements.length + ' elements to animate');
         }
+
+        if(!this.supports) return;
 
         var throttledEvent = this._debounce(function() {
             this.render();
@@ -350,7 +333,7 @@
                 if(!this._isVisible(el)){
                     this._addAnimation(el);
                 }
-            } else if(!this._isInViewport(el) && this._hasAnimated(el) && this.options.reverse) {
+            } else if(!this._isInView(el) && this._hasAnimated(el) && this.options.reverse) {
                 this._removeAnimation(el);
             }
         }
