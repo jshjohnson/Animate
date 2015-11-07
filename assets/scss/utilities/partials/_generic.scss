@@ -7,3 +7,10 @@
 .zero-right { margin-right: 0 !important; }
 .zero-bottom { margin-bottom: 0 !important; }
 .zero-left { margin-left: 0 !important; }
+
+.visible { 
+    opacity: 1; 
+    visibility: visible;
+}
+
+.invisible { opacity: 0; }

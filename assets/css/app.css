@@ -492,7 +492,10 @@ img {
 .container {
   max-width: 50em;
   margin: auto;
-  padding: 2.4rem; }
+  padding: 10rem; }
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 5rem; } }
 
 /**
  * Name: Lists
@@ -537,6 +540,20 @@ ol {
 /**     
  * Component specific styling
  */
+/**
+ * Name: Box
+ * Purpose: Placeholder content
+ */
+.box {
+  height: 500px;
+  width: 100%;
+  margin-top: 10rem;
+  background-color: white;
+  opacity: 0; }
+
+.box--nudge-top {
+  margin-top: 5rem; }
+
 /**     
  * Utilities
  */
@@ -555,3 +572,10 @@ ol {
 
 .zero-left {
   margin-left: 0 !important; }
+
+.visible {
+  opacity: 1;
+  visibility: visible; }
+
+.invisible {
+  opacity: 0; }

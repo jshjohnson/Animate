@@ -2,44 +2,41 @@
 <html>
 <head>
     <title>Animate.js</title>
-    <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/app.min.css">
-    <style>
-        .container { padding: 10rem; }
-        @media only screen and (max-width:620px) {
-            .container { padding: 5rem; }
-        }
-
-        .fade { opacity: 0; }
-
-        .box { 
-            height: 500px; 
-            width: 100%; 
-            margin-top: 10rem;
-            background-color: white;
-            opacity: 0;
-        }
-
-        .box--nudge-top { margin-top: 5rem; }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
 </head>
 
 <body>
     <div class="container">
-        <img src="/assets/images/logo.svg" class="fade" alt="Animate.js logo" data-animate data-animation-classes="animated fadeIn">
-        <div class="box box--nudge-top" data-animate data-animation-classes="animated fadeIn"></div>
+        <img src="/assets/images/logo.svg" class="invisible" alt="Animate.js logo" data-animate data-animation-classes="animated fadeIn">
+        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
-        <div class="box" style="opacity: 1;" data-animate data-animation-classes="animated tada"></div>
+        <div class="box visible" data-animate data-animation-classes="animated tada"></div>
+        <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
+        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
+        <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
+        <div class="box visible" data-animate data-animation-classes="animated tada"></div>
+        <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
+        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
+        <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
+        <div class="box visible" data-animate data-animation-classes="animated tada"></div>
+        <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
+        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
+        <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
+        <div class="box visible" data-animate data-animation-classes="animated tada"></div>
+        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
+        <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
+        <div class="box visible" data-animate data-animation-classes="animated tada"></div>
+        <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
     </div>
     <script type="text/javascript" src="/assets/js/dist/animate.js"></script>
     <script>
         var animate = new Animate({
-            // reverse: true,
+            reverse: true,
             debug: true,
-            callback: function(){
-                console.log('Callback loaded');
+            callback: function (element) {
+              console.log(element)
             }
         });
 

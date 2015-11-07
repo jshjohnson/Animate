@@ -43,7 +43,6 @@
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
         this.initialised = false;
-        // this.init();
     };
 
     // Returns a function, that, as long as it continues to be invoked, will not
@@ -66,7 +65,7 @@
             var callNow = immediate && !timeout;
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
-            if (callNow) {
+            if(callNow) {
                 func.apply(context, args);
             }
         };
@@ -159,7 +158,7 @@
      * @param  {[type]}  el [description]
      * @return {Boolean}    [description]
      */
-    Animate.prototype._isInView = function(el) {
+    Animate.prototype._isInView = function(el, direction) {
         return this._getElemDistance(el) < (this._getViewportHeight() - this._getElementOffset(el))  ? true : false;
     };
 
@@ -268,7 +267,7 @@
             el.setAttribute('data-animated', true);
 
             if(this._isType('Function', this.options.callback)) {
-                this.options.callback();
+                this.options.callback(el);
             }
         }.bind(this));
     };

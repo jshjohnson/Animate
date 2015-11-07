@@ -14,7 +14,9 @@ Trigger animations on elements when they are in view
         debug: false,
         onLoad: true,
         onScroll: true,
-        callback: function(){}
+        callback: function (element) {
+            console.log(element)
+        }
     });
     animate.init();
 </script>
