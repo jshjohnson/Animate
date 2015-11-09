@@ -128,7 +128,7 @@
      * @private
      * @return {Number} Height of viewport
      */
-    Animate.prototype._getViewportHeight = function() {
+    Animate.prototype._getScrollPosition = function() {
         return Math.max((root.innerHeight || document.documentElement.clientHeight) + root.scrollY);
     };
 
@@ -151,11 +151,14 @@
 
     /**
      * Determine element height multiplied by any offsets
+     * @private
      * @param  {Node} el Element to test for
      * @return {Number}    Height of element
      */
     Animate.prototype._getElementHeight = function(el) {
         var elOffset = parseFloat(el.getAttribute('data-animation-offset'));
+        if(elOffset > 1) elOffset = 1; 
+
         if(!isNaN(elOffset)) {
             return Math.max(el.offsetHeight*elOffset);
         } else {
@@ -165,11 +168,11 @@
 
     /**
      * Determine whether an element is within the viewport
-     * @param  {[type]}  el [description]
+     * @param  {Node}  el [description]
      * @return {Boolean}    [description]
      */
-    Animate.prototype._isInView = function(el, direction) {
-        return this._getElemDistance(el) < (this._getViewportHeight() - this._getElementHeight(el))  ? true : false;
+    Animate.prototype._isInView = function(el) {
+        return this._getScrollPosition() > (this._getElemDistance(el) + this._getElementHeight(el))  ? true : false;
     };
 
     /**
