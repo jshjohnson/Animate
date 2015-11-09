@@ -37,7 +37,7 @@ Animations to be added to element when it is in view. To add multiple classes, s
 ###Optional element overrides
 #####`data-animation-delay`
 
-Overide the plugin `delay` per element
+Overide the plugin `delay` per element.
 
 #####`data-animation-offset`
 
