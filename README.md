@@ -24,11 +24,20 @@ Trigger animations on elements when they are in view
 
 ##Animating elements
 
-To animate an element, it will need a target data attribute set to it - by default this is `data-animate`. Assign animations via the `data-animation-classes` attribute (seperated by a comma). Optionally set a milisecond delay via the `data-animation-delay` attribute - by default there is no delay. 
+To animate an element, it will need a target data attribute set to it - by default this is `data-animate`. Assign animations via the `data-animation-classes` attribute (seperated by a comma).
+
+###Optional element overrides
+#####`data-animation-delay`
+
+ Set a milisecond delay before an animation is triggered
+
+#####`data-animation-offset`
+
+ Override the plugin offset per element.
 
 ####Examples
 ```html
-<div data-animate data-animation-classes="animated fadeIn" data-animation-delay="1000"></div>
+<div data-animate data-animation-classes="animated fadeIn" data-animation-delay="1000" data-animation-offset="0.2"></div>
 ```
 
 ##Options
