@@ -28,7 +28,7 @@ Trigger animations on elements when they are in view
 ##Animating elements
 #####`data-animate`
 
-Default way of targeting an element to animate. This can be overridden to be a custom attribute or class.
+Default way of targeting an element to animate (no value required). This can be overridden to be a custom attribute or class.
 
 #####`data-animation-classes`
 
