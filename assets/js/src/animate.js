@@ -90,7 +90,7 @@
             if(this._isType('Object', obj)) {
                 merge(obj);
             } else {
-                console.warn('Custom options must be an object');
+                console.error('Custom options must be an object');
             }
         }
 
