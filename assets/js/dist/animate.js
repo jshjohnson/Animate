@@ -13,6 +13,7 @@
     - Improve reverse method to trigger when element leaves viewport from top
     - Classlist polyfill?
     - Support in readme
+    - Use object for data attribute options?
 
  */
 
