@@ -135,7 +135,7 @@
     /**
      * Get an element's distance from the top of the page
      * @private
-     * @param  {Node} elem Element to test for
+     * @param  {Node} el Element to test for
      * @return {Number} Elements Distance from top of page
      */
     Animate.prototype._getElemDistance = function(el) {
@@ -149,8 +149,18 @@
         return location >= 0 ? location : 0;
     };
 
-    Animate.prototype._getElementOffset = function(el) {
-        return Math.max(el.offsetHeight*this.options.offset);
+    /**
+     * Determine element height multiplied by any offsets
+     * @param  {Node} el Element to test for
+     * @return {Number}    Height of element
+     */
+    Animate.prototype._getElementHeight = function(el) {
+        var elOffset = parseFloat(el.getAttribute('data-animation-offset'));
+        if(!isNaN(elOffset)) {
+            return Math.max(el.offsetHeight*elOffset);
+        } else {
+            return Math.max(el.offsetHeight*this.options.offset);
+        }
     };
 
     /**
@@ -159,7 +169,7 @@
      * @return {Boolean}    [description]
      */
     Animate.prototype._isInView = function(el, direction) {
-        return this._getElemDistance(el) < (this._getViewportHeight() - this._getElementOffset(el))  ? true : false;
+        return this._getElemDistance(el) < (this._getViewportHeight() - this._getElementHeight(el))  ? true : false;
     };
 
     /**
@@ -205,7 +215,7 @@
 
         el.setAttribute('data-visibility', true);
         var animations = el.getAttribute('data-animation-classes').split(' ');
-        var animationDelay = parseInt(el.getAttribute('data-animation-delay'));
+        var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10);
 
         if(animationDelay && this._isType('Number', animationDelay)) {
             setTimeout(function() {
@@ -234,7 +244,7 @@
         el.setAttribute('data-visibility', false);
         el.removeAttribute('data-animated');
         var animations = el.getAttribute('data-animation-classes').split(' ');
-        var animationDelay = parseInt(el.getAttribute('data-animation-delay'));
+        var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10);
         animations.push(this.options.animatedClass);
 
         if(animationDelay && this._isType('Number', animationDelay)) {
