@@ -112,3 +112,12 @@ Kills event listeners and resets options
 Adds/removes animations without the need for event listeners
 ####getAnimatedElements();
 Returns an array of elements that have been animated
+
+##Development
+To setup a local environment, clone this repo, navigate into the directory and run the following commands in a terminal windows:
+* ``npm install``
+
+###Gulp tasks
+* ``gulp dev``
+* ``gulp test``
+* ``gulp build``
