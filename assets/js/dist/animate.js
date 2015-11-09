@@ -36,7 +36,7 @@
             offset: 0.5,
             delay: 0, 
             target: '[data-animate]',
-            removeOnComplete: true,
+            removeAnimations: true,
             reverse: false,
             debug: false,
             onLoad: true,
@@ -286,7 +286,7 @@
             el.setAttribute('data-animated', true);
         
             var removeOveride = el.getAttribute('data-animate-remove');
-            if(this.options.removeOnComplete && (removeOveride !== "false")) {
+            if(this.options.removeAnimations && (removeOveride !== "false")) {
                 var animations = el.getAttribute('data-animation-classes').split(' ');
                 animations.forEach(function(animation) {
                     el.classList.remove(animation);

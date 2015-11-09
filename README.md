@@ -11,7 +11,7 @@ Trigger animations on elements when they are in view
         offset: 0.5,
         delay: 0,
         target: '[data-animate]',
-        removeOnComplete: true,
+        removeAnimations: true,
         reverse: false,
         debug: false,
         onLoad: true,
@@ -45,7 +45,7 @@ Override the plugin `offset` per element.
 
 #####`data-animate-remove`
 
-Overide the plugin `removeOnComplete` per element.
+Overide the plugin `removeAnimations` per element.
 
 ####Examples
 ```html
