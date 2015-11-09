@@ -56,7 +56,7 @@ Type: `String` Default: `js-animated`
 
 Class to be added to element once animation has completed
 
-####reverse
+####reverse (experimental)
 Type: `Boolean` Default: `false`
 
 Once the element is out of view, remove animations
