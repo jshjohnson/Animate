@@ -8,8 +8,10 @@ Trigger animations on elements when they are in view
 <script>
     var animate = new Animate({
         animatedClass: 'js-animated',
-        offset: 0.5, 
+        offset: 0.5,
+        delay: 0,
         target: '[data-animate]',
+        removeOnComplete: true,
         reverse: false,
         debug: false,
         onLoad: true,
@@ -35,11 +37,15 @@ Animations to be added to element when it is in view. To add multiple classes, s
 ###Optional element overrides
 #####`data-animation-delay`
 
- Set a milisecond delay before an animation is triggered
+Overide the plugin `delay` per element
 
 #####`data-animation-offset`
 
- Override the plugin offset per element.
+Override the plugin `offset` per element.
+
+#####`data-animate-remove`
+
+Overide the plugin `removeOnComplete` per element.
 
 ####Examples
 ```html
@@ -57,6 +63,11 @@ Type: `Number` Default: `0.5` (50%)
 
 Percentage of element that needs to be in the viewport before the animation triggers
 
+####delay
+Type: `Number` Default: `0`
+
+Milisecond delay before animation is added to element in view
+
 ####animatedClass
 Type: `String` Default: `js-animated`
 
@@ -71,18 +82,26 @@ Once the element is out of view, remove animations
 Type: `Boolean` Default: `false`
 
 Debugging information in console
+
 ####onLoad
 Type: `Boolean` Default: `true`
 
 Whether to fire on DOMContentLoaded
+
 ####onScroll
 Type: `Boolean` Default: `true`
 
 Whether to fire on scroll
+
+####onResize
+Type: `Boolean` Default: `false`
+
+Whether to fire on resize
+
 ####callback
 Type: `Function` Default: `function(){}`
 
-Function to run once animation has completed
+Function to run once animation has completed (pass parameter to access the animated element)
 
 ##Methods
 ####init();

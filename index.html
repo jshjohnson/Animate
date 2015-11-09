@@ -5,15 +5,14 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/app.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
 </head>
-
 <body>
     <div class="container">
-        <img src="/assets/images/logo.svg" class="invisible" alt="Animate.js logo" data-animate data-animation-classes="animated fadeIn">
+        <img src="/assets/images/logo.svg" class="invisible" alt="Animate.js logo" data-animate data-animate-remove="false" data-animation-classes="animated fadeIn">
         <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box visible" data-animate data-animation-classes="animated tada" data-animation-offset="0.1"></div>
-        <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
-        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
+        <div class="box visible" data-animate  data-animation-classes="animated flipInX"></div>
+        <div class="box" data-animate data-animation-classes="animated rotateIn" data-animation-delay="500"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box visible" data-animate data-animation-classes="animated tada"></div>
         <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
@@ -21,13 +20,11 @@
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box visible" data-animate data-animation-classes="animated tada"></div>
         <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
-        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box visible" data-animate data-animation-classes="animated tada"></div>
         <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box visible" data-animate data-animation-classes="animated tada"></div>
-        <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate  data-animation-classes="animated fadeIn"></div>
     </div>
     <script type="text/javascript" src="/assets/js/dist/animate.js"></script>
@@ -35,9 +32,10 @@
         var animate = new Animate({
             reverse: false,
             debug: true,
-            // callback: function (element) {
-            //   console.log(element)
-            // }
+            animatedClass: 'visible',
+            callback: function (element) {
+              console.log(element)
+            }
         });
 
         animate.init();

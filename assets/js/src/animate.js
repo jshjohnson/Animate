@@ -30,11 +30,14 @@
         var defaultOptions = {
             animatedClass: 'js-animated',
             offset: 0.5,
+            delay: 0, 
             target: '[data-animate]',
+            removeOnComplete: true,
             reverse: false,
             debug: false,
             onLoad: true,
             onScroll: true,
+            onResize: false,
             callback: function(){}
         };
 
@@ -90,7 +93,7 @@
             if(this._isType('Object', obj)) {
                 merge(obj);
             } else {
-                console.error('Custom options must be an object');
+                console.error('Animate.js: Custom options must be an object');
             }
         }
 
@@ -123,9 +126,9 @@
     };
 
     /**
-     * Get an the height of the viewport
+     * Get scroll position
      * @private
-     * @return {Number} Height of viewport
+     * @return {Number} Position of scroll
      */
     Animate.prototype._getScrollPosition = function() {
         return Math.max((root.innerHeight || document.documentElement.clientHeight) + root.scrollY);
@@ -154,7 +157,7 @@
      * @param  {Node} el Element to test for
      * @return {Number}    Height of element
      */
-    Animate.prototype._getElementHeight = function(el) {
+    Animate.prototype._getElementOffset = function(el) {
         var elOffset = parseFloat(el.getAttribute('data-animation-offset'));
         if(elOffset > 1) elOffset = 1; 
 
@@ -171,7 +174,7 @@
      * @return {Boolean}    [description]
      */
     Animate.prototype._isInView = function(el) {
-        return this._getScrollPosition() > (this._getElemDistance(el) + this._getElementHeight(el))  ? true : false;
+        return this._getScrollPosition() > (this._getElemDistance(el) + this._getElementOffset(el))  ? true : false;
     };
 
     /**
@@ -217,9 +220,9 @@
 
         el.setAttribute('data-visibility', true);
         var animations = el.getAttribute('data-animation-classes').split(' ');
-        var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10);
+        var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10) || this.options.delay;
 
-        if(animationDelay && this._isType('Number', animationDelay)) {
+        if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
             setTimeout(function() {
                 if(this.options.debug) console.debug('animate.js: Animation added');
                 animations.forEach(function(animation) {
@@ -277,6 +280,14 @@
 
             el.classList.add(this.options.animatedClass);
             el.setAttribute('data-animated', true);
+        
+            var removeOveride = el.getAttribute('data-animate-remove');
+            if(this.options.removeOnComplete && (removeOveride !== "false")) {
+                var animations = el.getAttribute('data-animation-classes').split(' ');
+                animations.forEach(function(animation) {
+                    el.classList.remove(animation);
+                });
+            }
 
             if(this._isType('Function', this.options.callback)) {
                 this.options.callback(el);
@@ -304,6 +315,12 @@
             root.addEventListener('DOMContentLoaded', throttledEvent());
         }
 
+        if(this.options.onResize) {
+            root.addEventListener('resize', function(){
+                throttledEvent();
+            }, false);
+        }
+
         if(this.options.onScroll) {
             root.addEventListener('scroll', function(){
                 throttledEvent();
@@ -311,7 +328,6 @@
         }
 
         this.initialised = true;
-
     };
 
     /**
@@ -325,8 +341,17 @@
         if (!this.initialised) return;
 
         // Remove event listeners
-        root.removeEventListener('scroll', this.animateListener);
-        root.removeEventListener('DOMContentLoaded', this.animateListener);
+        if(this.options.onScroll) {
+            root.removeEventListener('scroll', this.animateListener);
+        }
+
+        if(this.options.onResize) {
+            root.removeEventListener('resize', this.animateListener);
+        }
+
+        if(this.options.onLoad) {
+            root.removeEventListener('DOMContentLoaded', this.animateListener);
+        }
 
         // Reset settings
         this.settings = null;
