@@ -23,8 +23,13 @@ Trigger animations on elements when they are in view
 ```
 
 ##Animating elements
+#####`data-animate`
 
-To animate an element, it will need a target data attribute set to it - by default this is `data-animate`. Assign animations via the `data-animation-classes` attribute (seperated by a comma).
+Default way of targeting an element to animate. This can be overridden to be a custom attribute or class.
+
+#####`data-animation-classes`
+
+Animations to be added to element when it is in view. To add multiple classes, seperate each class with a comma.
 
 ###Optional element overrides
 #####`data-animation-delay`
