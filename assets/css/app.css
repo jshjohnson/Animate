@@ -1,4 +1,4 @@
-/*! animate.js v1.0.0 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js#readme */
+/*! animate.js v1.0.0 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
 /**     
  * To do list app
  */
@@ -550,6 +550,9 @@ ol {
   margin-top: 10rem;
   background-color: white;
   opacity: 0; }
+  @media screen and (max-width: 768px) {
+    .box {
+      height: 250px; } }
 
 .box--nudge-top {
   margin-top: 5rem; }

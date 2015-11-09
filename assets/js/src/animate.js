@@ -177,6 +177,15 @@
      * @param  {Node}  el [description]
      * @return {Boolean}    [description]
      */
+    Animate.prototype._isOutView = function(el) {
+        return window.pageYOffset > (this._getElemDistance(el) + this._getElementOffset(el))  ? true : false;
+    };
+
+    /**
+     * Determine whether an element is within the viewport
+     * @param  {Node}  el [description]
+     * @return {Boolean}    [description]
+     */
     Animate.prototype._isInView = function(el) {
         return this._getScrollPosition() > (this._getElemDistance(el) + this._getElementOffset(el))  ? true : false;
     };
@@ -372,11 +381,11 @@
             var el = els[i];
 
             // If element is in view and is not set to visible
-            if(this._isInView(el)) {
+            if(this._isInView(el) && !this._isOutView(el)) {
                 if(!this._isVisible(el)){
                     this._addAnimation(el);
                 }
-            } else if(!this._isInView(el) && this._hasAnimated(el) && this.options.reverse) {
+            } else if(this._isOutView(el) && this._hasAnimated(el) && this.options.reverse) {
                 this._removeAnimation(el);
             }
         }

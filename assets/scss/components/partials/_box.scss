@@ -9,6 +9,7 @@
     margin-top: 10rem;
     background-color: white;
     opacity: 0;
+    @include respond-max($bp-sm) { height: 250px; }
 }   
 
 .box--nudge-top { margin-top: 5rem; }
