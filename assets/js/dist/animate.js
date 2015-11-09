@@ -10,6 +10,9 @@
     - Kill - Done
     - Throttle scroll event listener - Done
     - Animation delays - Done
+    - Improve reverse method to trigger when element leaves viewport from top
+    - Classlist polyfill?
+    - Support in readme
 
  */
 
@@ -205,7 +208,7 @@
      * @private
      * @param  {String}  type Type to test for e.g. 'String', 'Array'
      * @param  {Object}  obj  Object to test type against
-     * @return {Boolean}      Whether object is of type
+     * @return {Boolean}      Whether object is of a type
      */
     Animate.prototype._isType = function(type, obj) {
         var test = Object.prototype.toString.call(obj).slice(8,-1);
