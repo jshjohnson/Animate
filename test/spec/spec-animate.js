@@ -40,7 +40,7 @@ describe('Animate', function () {
         callback: jasmine.any(Function)
     };
 
-    describe('Should initialize Animate', function() {
+    describe('should initialize Animate', function() {
         beforeEach(function() {
             this.animate = new Animate();
         });
@@ -72,7 +72,7 @@ describe('Animate', function () {
         });
     });
 
-    describe('Should kill Animate', function() {
+    describe('should kill Animate', function() {
         beforeEach(function() {
             this.animate = new Animate();
             this.animate.init();
@@ -81,7 +81,7 @@ describe('Animate', function () {
         it('should be uninitialised', function() {
             expect(this.animate.initialised).toEqual(false);
         });
-        it('Should null settings when killed', function() {
+        it('should null settings when killed', function() {
             expect(this.animate.settings).toBe(null);
         });
     });
