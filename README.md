@@ -120,6 +120,9 @@ Kills event listeners and resets options.
 ####render();
 Adds/removes animations without the need for event listeners.
 
+##Browser compatibility
+Standalone support is IE10 and above. To support down to IE9, simply include the very good [`classList.js` polyfill](https://github.com/eligrey/classList.js/).
+
 ##Development
 To setup a local environment: clone this repo, navigate into it's directory in a terminal window and run the following command:
 * ```npm install```
