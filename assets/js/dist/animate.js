@@ -164,7 +164,6 @@
         }
     };
 
-
     /**
      * Get scroll position based on top/bottom position
      * @private

@@ -121,7 +121,7 @@ Kills event listeners and resets options.
 Adds/removes animations without the need for event listeners.
 
 ##Development
-To setup a local environmen: clone this repo, navigate into it's directory in a terminal window and run the following command:
+To setup a local environment: clone this repo, navigate into it's directory in a terminal window and run the following command:
 * ``npm install``
 
 ###Gulp tasks

@@ -17,7 +17,6 @@
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box" data-animate data-animation-classes="animated rotateIn" data-animation-delay="500"></div>
         <div class="box visible" data-animate data-animation-classes="animated tada" data-animation-offset="0"></div>
-        <div class="box visible" data-animate  data-animation-classes="animated flipInX"></div>
         <div class="box visible" data-animate data-animation-classes="animated shake"></div>
         <div class="box visible" data-animate  data-animation-classes="animated jello"></div>
         <div class="box visible" data-animate data-animation-classes="animated wobble"></div>
@@ -28,11 +27,19 @@
     <script type="text/javascript" src="/assets/js/dist/animate.js"></script>
     <script>
         var animate = new Animate({
+            target: '[data-animate]',
+            animatedClass: 'js-animated',
+            offset: 0.5,
+            delay: 0,
+            removeAnimations: true,
             reverse: true,
             debug: true,
-            // callback: function (element) {
-            //   console.log(element)
-            // }
+            onLoad: true,
+            onScroll: true,
+            onResize: false,
+            callback: function (element) {
+                console.log(element)
+            }
         });
         animate.init();
     </script>
