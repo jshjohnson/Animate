@@ -49,7 +49,10 @@ Overide the plugin `removeAnimations` per element.
 
 ####Examples
 ```html
-<div data-animate data-animation-classes="animated fadeIn" data-animation-delay="1000" data-animation-offset="0.2"></div>
+<div data-animate data-animation-classes="animated fadeIn"></div>
+<div data-animate data-animation-classes="animated tada" data-animation-delay="1000"></div>
+<div data-animate data-animation-classes="animated bounce" data-animation-offset="0.2"></div>
+<div data-animate data-animation-classes="animated bounce" data-animation-remove="true"></div>
 ```
 
 ##Options
@@ -79,7 +82,7 @@ Type: `Boolean` Default: `true`
 Whether animation classes set via the `data-animation-classes` attribute should removed when the animations complete.
 
 
-####reverse (experimental)
+####reverse
 Type: `Boolean` Default: `false`
 
 Once the element has left the top of the viewport (by the same offset), reset element.

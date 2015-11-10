@@ -392,22 +392,5 @@
         }
     };
 
-    /**
-     * Get elements that have been animated
-     * @public
-     * @return {Array} Array of nodes
-     */
-    Animate.prototype.getAnimatedElements = function() {
-        var animatedEls = [];
-        for (var i = this.elements.length - 1; i >= 0; i--) {
-            var el = this.elements[i];
-            if(this._hasAnimated(el)) {
-                animatedEls.push(el);
-            }
-        }
-        return animatedEls;
-    };
-
-
     return Animate;
 });
