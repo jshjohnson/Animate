@@ -370,6 +370,7 @@
 
         // Reset settings
         this.settings = null;
+        this.initialised = false;
     };
 
     /**

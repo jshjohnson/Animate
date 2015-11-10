@@ -26,9 +26,26 @@ describe('Animate', function () {
         };
     }
 
-    describe('Should initialize Animate', function () {
-        beforeEach(function () {
+    var optionsTest = {
+        animatedClass: jasmine.any(String),
+        offset: jasmine.any(Number),
+        delay: jasmine.any(Number), 
+        target: jasmine.any(String),
+        removeAnimations: jasmine.any(Boolean),
+        reverse: jasmine.any(Boolean),
+        debug: jasmine.any(Boolean),
+        onLoad: jasmine.any(Boolean),
+        onScroll: jasmine.any(Boolean),
+        onResize: jasmine.any(Boolean),
+        callback: jasmine.any(Function)
+    };
+
+    describe('Should initialize Animate', function() {
+        beforeEach(function() {
             this.animate = new Animate();
+        });
+        afterEach(function() {
+            this.animate.kill();
         });
         it('document should include the Animate module', function () {
             expect(!!this.animate).toBe(true);
@@ -36,15 +53,36 @@ describe('Animate', function () {
         it("should have options object", function() {
             expect(this.animate.options).toBeDefined();
         });
+        it("options object should be correct data types", function(){
+            expect(this.animate.options).toEqual(optionsTest);
+        });
         it("calls the init() function", function() {
             spyOn(this.animate, "init");
             this.animate.init();
             expect(this.animate.init).toHaveBeenCalled();
         });
-        it('should expose public functions', function () {
+        it('should be initialised', function() {
+            this.animate.init();
+            expect(this.animate.initialised).toEqual(true);
+        });
+        it('should expose public functions', function() {
             expect(this.animate.init).toEqual(jasmine.any(Function));
             expect(this.animate.kill).toEqual(jasmine.any(Function));
             expect(this.animate.render).toEqual(jasmine.any(Function));
+        });
+    });
+
+    describe('Should kill Animate', function() {
+        beforeEach(function() {
+            this.animate = new Animate();
+            this.animate.init();
+            this.animate.kill();
+        });
+        it('should be uninitialised', function() {
+            expect(this.animate.initialised).toEqual(false);
+        });
+        it('Should null settings when killed', function() {
+            expect(this.animate.settings).toBe(null);
         });
     });
 });
