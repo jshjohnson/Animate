@@ -45,7 +45,8 @@
             callback: function(){}
         };
 
-        this.supports = 'querySelector' in document && 'addEventListener' in root;
+        var el = document.createElement("fakeelement");
+        this.supports = 'querySelector' in document && 'addEventListener' in root && 'classList' in el;
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
         this.initialised = false;
