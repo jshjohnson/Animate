@@ -122,9 +122,9 @@ Adds/removes animations without the need for event listeners.
 
 ##Development
 To setup a local environment: clone this repo, navigate into it's directory in a terminal window and run the following command:
-* ``npm install``
+* ```npm install```
 
 ###Gulp tasks
-* ``gulp dev``
-* ``gulp test``
-* ``gulp build``
+* ```gulp dev```
+* ```gulp test```
+* ```gulp build```
