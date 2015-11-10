@@ -120,7 +120,7 @@ Adds/removes animations without the need for event listeners
 Returns an array of elements that have been animated
 
 ##Development
-To setup a local environment, clone this repo, navigate into the directory and run the following commands in a terminal windows:
+To setup a local environmen: clone this repo, navigate into it's directory in a terminal window and run the following command:
 * ``npm install``
 
 ###Gulp tasks
