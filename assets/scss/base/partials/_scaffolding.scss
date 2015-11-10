@@ -13,17 +13,14 @@
     }
 }
 
-// html, body { height: 100%; }
+html, body { height: 100%; }
 
 html {
     // Percentage allows rem values to equal pixel values i.e. 1.6rem = 16px
     font-size: 62.5%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     width: 100%;
-    height: 100%;
     position: relative;
-    overflow-x: hidden;
-    background: linear-gradient(to left top, #2164B9, #53A0FD); 
 }
 
 body {
@@ -31,10 +28,11 @@ body {
     line-height: $line-height-base;
     font-family: $font-family-base;
     font-size: $font-size-base;
-    background-color: $brand-body-bg;
-    background: linear-gradient(to left top, #2164B9, #53A0FD); 
     color: $brand-text;
     overflow-x: hidden;
+    background: linear-gradient(to left top,#222222,#333333);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     @include respond-max($bp-sm) { font-size: $font-size-sm; }
 }
 
@@ -95,6 +93,20 @@ h5, .as-h5 {
 h6, .as-h6 {
     font-size: $font-size-h6;
     @include respond-max($bp-sm) { font-size: $font-size-h7; }
+}
+
+a {
+    color: $brand-link-color;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color .25s;
+    &:hover,
+    &:focus {
+        color: $brand-link-hover-color;
+        cursor: pointer;
+        text-decoration: underline;
+        transition: color .25s;
+    }
 }
 
 img {

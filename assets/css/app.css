@@ -378,24 +378,25 @@ th {
   *:before, *:after {
     box-sizing: border-box; }
 
+html, body {
+  height: 100%; }
+
 html {
   font-size: 62.5%;
   -webkit-tap-highlight-color: transparent;
   width: 100%;
-  height: 100%;
-  position: relative;
-  overflow-x: hidden;
-  background: linear-gradient(to left top, #2164B9, #53A0FD); }
+  position: relative; }
 
 body {
   position: relative;
   line-height: 1.6;
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 1.6rem;
-  background-color: #f2f2f2;
-  background: linear-gradient(to left top, #2164B9, #53A0FD);
-  color: #222222;
-  overflow-x: hidden; }
+  color: #FFFFFF;
+  overflow-x: hidden;
+  background: linear-gradient(to left top, #222222, #333333);
+  background-repeat: no-repeat;
+  background-attachment: fixed; }
   @media screen and (max-width: 768px) {
     body {
       font-size: 1.4rem; } }
@@ -481,6 +482,17 @@ h6, .as-h6 {
     h6, .as-h6 {
       font-size: 2rem; } }
 
+a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color .25s; }
+  a:hover, a:focus {
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color .25s; }
+
 img {
   width: 100%;
   max-width: 100%; }
@@ -492,10 +504,10 @@ img {
 .container {
   max-width: 50em;
   margin: auto;
-  padding: 10rem; }
+  padding: 9.6rem; }
   @media screen and (max-width: 768px) {
     .container {
-      padding: 5rem; } }
+      padding: 2.4rem; } }
 
 /**
  * Name: Lists
@@ -547,16 +559,38 @@ ol {
 .box {
   height: 500px;
   width: 100%;
-  margin-top: 10rem;
+  margin-top: 9.6rem;
   background-color: white;
   opacity: 0;
   transition: opacity .2s ease-in-out; }
   @media screen and (max-width: 768px) {
     .box {
-      height: 250px; } }
+      height: 250px;
+      margin-top: 4.8rem; } }
 
 .box--nudge-top {
-  margin-top: 5rem; }
+  margin-top: 4.8rem; }
+
+.box--nudge-bottom {
+  margin-bottom: 4.8rem; }
+
+.box--zero-top {
+  margin-top: 0; }
+
+.box--zero-bottom {
+  margin-bottom: 0; }
+
+/**
+ * Name: Logo
+ * Purpose: Logo image sizing
+ */
+.logo {
+  display: block;
+  max-width: 150px;
+  margin-bottom: 2.4rem; }
+  @media screen and (min-width: 768px) {
+    .logo {
+      max-width: 200px; } }
 
 /**     
  * Utilities
@@ -577,9 +611,30 @@ ol {
 .zero-left {
   margin-left: 0 !important; }
 
+.push-top {
+  margin-top: 2.4rem !important; }
+
+.push-right {
+  margin-right: 2.4rem !important; }
+
+.push-bottom {
+  margin-bottom: 2.4rem !important; }
+
+.push-left {
+  margin-left: 2.4rem !important; }
+
 .visible {
   opacity: 1;
   visibility: visible; }
 
 .invisible {
   opacity: 0; }
+
+.text-left {
+  text-align: left; }
+
+.text-center {
+  text-align: center; }
+
+.text-right {
+  text-align: right; }

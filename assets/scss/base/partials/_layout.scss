@@ -6,6 +6,6 @@
 .container {
     max-width: 50em;
     margin: auto;
-    padding: 10rem;
-    @include respond-max($bp-sm) { padding: 5rem; }
+    padding: $guttering*4;
+    @include respond-max($bp-sm) { padding: $guttering; }
 }

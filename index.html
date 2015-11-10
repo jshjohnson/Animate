@@ -4,16 +4,16 @@
     <title>Animate.js</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/app.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
-    <style>
-        .js-animated { opacity: 1; }
-    </style>
+    <style>.js-animated { opacity: 1; }</style>
 </head>
 <body>
     <div class="container">
-        <a href="https://github.com/jshjohnson/animate" target="_blank">
-            <img src="/assets/images/logo.svg" class="invisible" alt="Animate.js logo" data-animate data-animate-remove="false" data-animation-classes="animated fadeIn">
-        </a>
-        <div class="box" data-animate data-animation-classes="animated fadeIn"></div>
+        <header class="invisible" data-animate data-animate-remove="false" data-animation-classes="animated fadeIn">
+            <a href="https://github.com/jshjohnson/animate" target="_blank" title="Go to repo">
+                <img src="/assets/images/logo.svg" class="logo" alt="Animate.js logo">
+            </a>
+        </header>
+        <div class="box box--zero-top" data-animate data-animation-classes="animated fadeIn"></div>
         <div class="box" data-animate data-animation-classes="animated bounceIn"></div>
         <div class="box" data-animate data-animation-classes="animated rotateIn" data-animation-delay="500"></div>
         <div class="box visible" data-animate data-animation-classes="animated tada" data-animation-offset="0"></div>
@@ -21,8 +21,11 @@
         <div class="box visible" data-animate  data-animation-classes="animated jello"></div>
         <div class="box visible" data-animate data-animation-classes="animated wobble"></div>
         <div class="box visible" data-animate data-animation-classes="animated rubberBand"></div>
-        <div class="box visible" data-animate data-animation-classes="animated swing"></div>
         <div class="box visible" data-animate  data-animation-classes="animated bounce"></div>
+        <div class="box visible" data-animate data-animation-classes="animated swing"></div>
+        <footer class="invisible push-top" alt="Animate.js logo" data-animate data-animate-remove="false" data-animation-classes="animated fadeIn">
+            <a href="http://joshuajohnson.co.uk" class="text-center">joshuajohnson.co.uk</a>
+        </footer>
     </div>
     <script type="text/javascript" src="/assets/js/dist/animate.js"></script>
     <script>

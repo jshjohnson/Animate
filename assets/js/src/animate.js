@@ -155,6 +155,7 @@
     Animate.prototype._getElementOffset = function(el) {
         var elOffset = parseFloat(el.getAttribute('data-animation-offset'));
         if(elOffset > 1) elOffset = 1; 
+        if(elOffset > 0) elOffset = 0;
 
         if(!isNaN(elOffset)) {
             return Math.max(el.offsetHeight*elOffset);
@@ -171,10 +172,10 @@
     Animate.prototype._getScrollPosition = function(position) {
         if(position === 'bottom') {
             // Scroll position from the bottom of the viewport
-            return Math.max(root.pageYOffset + (root.innerHeight || document.documentElement.clientHeight));
+            return Math.max(root.scrollY + (root.innerHeight || document.documentElement.clientHeight));
         } else {
             // Scroll position from the top of the viewport
-            return root.pageYOffset;
+            return root.scrollY;
         }
     };
 
@@ -186,7 +187,7 @@
      */
     Animate.prototype._isInView = function(el, position) {
         // If the user has scrolled further than the distance from the element to the top of its parent
-        return this._getScrollPosition(position) > (this._getElemDistance(el) + this._getElementOffset(el))  ? true : false;
+        return this._getScrollPosition(position) > (this._getElemDistance(el) + this._getElementOffset(el)) ? true : false;
     };
 
     /**

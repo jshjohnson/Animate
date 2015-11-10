@@ -6,11 +6,18 @@
 .box { 
     height: 500px; 
     width: 100%; 
-    margin-top: 10rem;
+    margin-top: $guttering*4;
     background-color: white;
     opacity: 0;
     transition: opacity .2s ease-in-out;
-    @include respond-max($bp-sm) { height: 250px; }
+    @include respond-max($bp-sm) {
+        height: 250px; 
+        margin-top: $guttering*2;
+    }
 }   
 
-.box--nudge-top { margin-top: 5rem; }
+.box--nudge-top { margin-top: $guttering*2; }
+.box--nudge-bottom { margin-bottom: $guttering*2; }
+
+.box--zero-top { margin-top: 0; }
+.box--zero-bottom { margin-bottom: 0; }

@@ -8,9 +8,18 @@
 .zero-bottom { margin-bottom: 0 !important; }
 .zero-left { margin-left: 0 !important; }
 
+.push-top { margin-top: $guttering !important; }
+.push-right { margin-right: $guttering !important; }
+.push-bottom { margin-bottom: $guttering !important; }
+.push-left { margin-left: $guttering !important; }
+
 .visible { 
     opacity: 1; 
     visibility: visible;
 }
 
 .invisible { opacity: 0; }
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
