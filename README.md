@@ -111,13 +111,11 @@ Function to run once animation has completed (pass parameter to access the anima
 
 ##Methods
 ####init();
-Initialises event listeners
+Initialises event listeners.
 ####kill();
-Kills event listeners and resets options
+Kills event listeners and resets options.
 ####render();
-Adds/removes animations without the need for event listeners
-####getAnimatedElements();
-Returns an array of elements that have been animated
+Adds/removes animations without the need for event listeners.
 
 ##Development
 To setup a local environmen: clone this repo, navigate into it's directory in a terminal window and run the following command:

@@ -131,15 +131,6 @@
     };
 
     /**
-     * Get scroll position
-     * @private
-     * @return {Number} Position of scroll
-     */
-    Animate.prototype._getScrollPosition = function() {
-        return Math.max((root.innerHeight || document.documentElement.clientHeight) + root.scrollY);
-    };
-
-    /**
      * Get an element's distance from the top of the page
      * @private
      * @param  {Node} el Element to test for
@@ -173,22 +164,31 @@
         }
     };
 
+
     /**
-     * Determine whether an element is within the viewport
-     * @param  {Node}  el [description]
-     * @return {Boolean}    [description]
+     * Get scroll position based on top/bottom position
+     * @private
+     * @return {String} Position of scroll
      */
-    Animate.prototype._isOutView = function(el) {
-        return window.pageYOffset > (this._getElemDistance(el) + this._getElementOffset(el))  ? true : false;
+    Animate.prototype._getScrollPosition = function(position) {
+        if(position === 'bottom') {
+            // Scroll position from the bottom of the viewport
+            return Math.max(root.pageYOffset + (root.innerHeight || document.documentElement.clientHeight));
+        } else {
+            // Scroll position from the top of the viewport
+            return root.pageYOffset;
+        }
     };
 
     /**
      * Determine whether an element is within the viewport
-     * @param  {Node}  el [description]
-     * @return {Boolean}    [description]
+     * @param  {Node}  el Element to test for
+     * @return {String} Position of scroll
+     * @return {Boolean}
      */
-    Animate.prototype._isInView = function(el) {
-        return this._getScrollPosition() > (this._getElemDistance(el) + this._getElementOffset(el))  ? true : false;
+    Animate.prototype._isInView = function(el, position) {
+        // If the user has scrolled further than the distance from the element to the top of its parent
+        return this._getScrollPosition(position) > (this._getElemDistance(el) + this._getElementOffset(el))  ? true : false;
     };
 
     /**
@@ -382,11 +382,11 @@
             var el = els[i];
 
             // If element is in view and is not set to visible
-            if(this._isInView(el) && !this._isOutView(el)) {
+            if(this._isInView(el, 'bottom') && !this._isInView(el, 'top')) {
                 if(!this._isVisible(el)){
                     this._addAnimation(el);
                 }
-            } else if(this._isOutView(el) && this._hasAnimated(el) && this.options.reverse) {
+            } else if(this._isInView(el, 'top') && this._hasAnimated(el) && this.options.reverse) {
                 this._removeAnimation(el);
             }
         }
