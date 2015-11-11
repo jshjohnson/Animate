@@ -10,6 +10,7 @@
     background-color: white;
     opacity: 0;
     transition: opacity .2s ease-in-out;
+    -webkit-backface-visibility: hidden;
     @include respond-max($bp-sm) {
         height: 250px; 
         margin-top: $guttering*2;

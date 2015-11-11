@@ -6,6 +6,12 @@
     <link rel="stylesheet" type="text/css" href="assets/css/app.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
     <style>.js-animated { opacity: 1; }</style>
+    <noscript>
+        <style>.invisible { opacity: 1; }</style>
+    </noscript>
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 </head>
 <body>
     <div class="container">
@@ -24,7 +30,7 @@
         <div class="box visible" data-animate data-animation-classes="animated rubberBand"></div>
         <div class="box visible" data-animate  data-animation-classes="animated bounce"></div>
         <div class="box visible" data-animate data-animation-classes="animated swing"></div>
-        <footer class="invisible push-top" alt="Animate.js logo" data-animate data-animate-remove="false" data-animation-classes="animated fadeIn">
+        <footer class="invisible push-top" alt="Animate.js logo" data-animate data-animate-remove="false" data-animation-classes="animated fadeIn" data-animation-delay="200">
             <a href="http://joshuajohnson.co.uk" class="text-center">joshuajohnson.co.uk</a>
         </footer>
     </div>

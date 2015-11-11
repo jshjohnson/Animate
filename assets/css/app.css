@@ -562,7 +562,8 @@ ol {
   margin-top: 9.6rem;
   background-color: white;
   opacity: 0;
-  transition: opacity .2s ease-in-out; }
+  transition: opacity .2s ease-in-out;
+  -webkit-backface-visibility: hidden; }
   @media screen and (max-width: 768px) {
     .box {
       height: 250px;
