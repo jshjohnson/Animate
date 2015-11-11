@@ -173,10 +173,10 @@
     Animate.prototype._getScrollPosition = function(position) {
         if(position === 'bottom') {
             // Scroll position from the bottom of the viewport
-            return Math.max(root.scrollY + (root.innerHeight || document.documentElement.clientHeight));
+            return Math.max((root.scrollY || root.pageYOffset) + (root.innerHeight || document.documentElement.clientHeight));
         } else {
             // Scroll position from the top of the viewport
-            return root.scrollY;
+            return (root.scrollY || root.pageYOffset);
         }
     };
 
