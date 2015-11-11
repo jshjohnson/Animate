@@ -13,12 +13,17 @@
 .push-bottom { margin-bottom: $guttering !important; }
 .push-left { margin-left: $guttering !important; }
 
-.visible { 
-    opacity: 1; 
-    visibility: visible;
+
+.invisible { 
+    opacity: 0; 
+    transition: opacity .2s ease-in-out;
 }
 
-.invisible { opacity: 0; }
+.visible { 
+    opacity: 1; 
+    // visibility: visible;
+    transition: opacity .2s ease-in-out;
+}
 
 .text-left { text-align: left; }
 .text-center { text-align: center; }

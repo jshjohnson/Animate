@@ -32,7 +32,7 @@ Default way of targeting an element to animate (no value required). This can be 
 
 #####`data-animation-classes`
 
-Animations to be added to element when it is in view. To add multiple classes, seperate each class with a comma.
+Animations to be added to element when it is in view. To add multiple classes, seperate each class with a space (as you would normally).
 
 ###Optional element overrides
 #####`data-animation-delay`

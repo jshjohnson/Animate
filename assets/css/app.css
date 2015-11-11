@@ -560,10 +560,7 @@ ol {
   height: 500px;
   width: 100%;
   margin-top: 9.6rem;
-  background-color: white;
-  opacity: 0;
-  transition: opacity .2s ease-in-out;
-  -webkit-backface-visibility: hidden; }
+  background-color: white; }
   @media screen and (max-width: 768px) {
     .box {
       height: 250px;
@@ -624,12 +621,13 @@ ol {
 .push-left {
   margin-left: 2.4rem !important; }
 
+.invisible {
+  opacity: 0;
+  transition: opacity .2s ease-in-out; }
+
 .visible {
   opacity: 1;
-  visibility: visible; }
-
-.invisible {
-  opacity: 0; }
+  transition: opacity .2s ease-in-out; }
 
 .text-left {
   text-align: left; }
