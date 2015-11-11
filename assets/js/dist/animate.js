@@ -99,7 +99,7 @@
             if(this._isType('Object', obj)) {
                 merge(obj);
             } else {
-                console.error('Animate.js: Custom options must be an object');
+                console.error('Custom options must be an object');
             }
         }
 
@@ -239,13 +239,13 @@
 
         if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
             setTimeout(function() {
-                if(this.options.debug) console.debug('animate.js: Animation added');
+                if(this.options.debug && root.console.debug) console.debug('Animation added');
                 animations.forEach(function(animation) {
                     el.classList.add(animation);
                 });
             }.bind(this), animationDelay);
         } else {
-            if(this.options.debug) console.debug('animate.js: Animation added');
+            if(this.options.debug && root.console.debug) console.debug('Animation added');
             animations.forEach(function(animation){
                el.classList.add(animation);
             });
@@ -269,13 +269,13 @@
 
         if(animationDelay && this._isType('Number', animationDelay)) {
             setTimeout(function() {
-                if(this.options.debug) console.debug('animate.js: Animation removed');
+                if(this.options.debug && root.console.debug) console.debug('Animation removed');
                 animations.forEach(function(animation) {
                     el.classList.remove(animation);
                 });
             }.bind(this), animationDelay);
         } else {
-            if(this.options.debug) console.debug('animate.js: Animation removed');
+            if(this.options.debug && root.console.debug) console.debug('Animation removed');
             animations.forEach(function(animation){
                el.classList.remove(animation);
             });
@@ -291,7 +291,7 @@
     Animate.prototype._completeAnimation = function(el){
         var animationEvent = this._whichAnimationEvent();
         el.addEventListener(animationEvent, function() {
-            if(this.options.debug) console.debug('animate.js: Animation completed');
+            if(this.options.debug && root.console.debug) console.debug('Animation completed');
 
             el.classList.add(this.options.animatedClass);
             el.setAttribute('data-animated', true);
@@ -315,9 +315,9 @@
      * @public
      */
     Animate.prototype.init = function(){
-        if(this.options.debug) {
-            console.debug('animate.js: Animate.js successfully initialised');
-            console.debug('animate.js: Found ' + this.elements.length + ' elements to animate');
+        if(this.options.debug && root.console.debug) {
+            console.debug('Animate.js successfully initialised');
+            console.debug('Found ' + this.elements.length + ' elements to animate');
         }
 
         if(!this.supports) return;
@@ -350,7 +350,7 @@
      * @public
      */
     Animate.prototype.kill = function(){
-        if(this.options.debug) console.debug('animate.js: Animation.js nuked');
+        if(this.options.debug && root.console.debug) console.debug('Animation.js nuked');
 
         // Test to see whether we have actually initialised
         if (!this.initialised) return;
