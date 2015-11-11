@@ -9,9 +9,8 @@
     - Kill - Done
     - Throttle scroll event listener - Done
     - Animation delays - Done
-    - Improve reverse method to trigger when element leaves viewport from top
+    - Improve reverse method to trigger when element leaves viewport from top - Done
     - Classlist polyfill?
-    - Support in readme
     - Use object for data attribute options?
 
  */
@@ -46,6 +45,9 @@
         };
 
         var el = root.document.createElement("fakeelement");
+        this.throttledEvent = this._debounce(function() {
+            this.render();
+        }.bind(this), 15);
         this.supports = 'querySelector' in root.document && 'addEventListener' in root && 'classList' in el;
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
@@ -160,7 +162,7 @@
 
         if(!isNaN(elOffset)) {
             return Math.max(el.offsetHeight*elOffset);
-        } else {
+        } else if(this.options.offset){
             return Math.max(el.offsetHeight*this.options.offset);
         }
     };
@@ -309,6 +311,7 @@
         }.bind(this));
     };
 
+
     /**
      * Initalises event listeners
      * @public
@@ -321,26 +324,16 @@
 
         if(!this.supports) return;
 
-        var throttledEvent = this._debounce(function() {
-            this.render();
-        }.bind(this), 15);
-
         if(this.options.onLoad) {
-            root.document.addEventListener('DOMContentLoaded', function(){
-                throttledEvent();
-            });
+            root.document.addEventListener('DOMContentLoaded', this.throttledEvent);
         }
 
         if(this.options.onResize) {
-            root.addEventListener('resize', function(){
-                throttledEvent();
-            }, false);
+            root.addEventListener('resize', this.throttledEvent, false);
         }
 
         if(this.options.onScroll) {
-            root.addEventListener('scroll', function(){
-                throttledEvent();
-            }, false);
+            root.addEventListener('scroll', this.throttledEvent, false);
         }
 
         this.initialised = true;
@@ -356,21 +349,20 @@
         // Test to see whether we have actually initialised
         if (!this.initialised) return;
 
-        // Remove event listeners
-        if(this.options.onScroll) {
-            root.removeEventListener('scroll', this.animateListener);
+        if(this.options.onLoad) {
+            root.document.removeEventListener('DOMContentLoaded', this.throttledEvent);
         }
 
         if(this.options.onResize) {
-            root.removeEventListener('resize', this.animateListener);
+            root.removeEventListener('resize', this.throttledEvent, false);
         }
 
-        if(this.options.onLoad) {
-            root.removeEventListener('DOMContentLoaded', this.animateListener);
+        if(this.options.onScroll) {
+            root.removeEventListener('scroll', this.throttledEvent, false);
         }
 
         // Reset settings
-        this.settings = null;
+        this.options = null;
         this.initialised = false;
     };
 

@@ -103,7 +103,7 @@ describe('Animate', function () {
             expect(this.animate.initialised).toEqual(false);
         });
         it('should null settings when killed', function() {
-            expect(this.animate.settings).toBeNull();
+            expect(this.animate.options).toBeNull();
         });
     });
 });
