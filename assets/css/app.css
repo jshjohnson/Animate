@@ -622,11 +622,11 @@ ol {
   margin-left: 2.4rem !important; }
 
 .invisible {
-  opacity: 0;
+  opacity: 0 !important;
   transition: opacity .2s ease-in-out; }
 
 .visible {
-  opacity: 1;
+  opacity: 1 !important;
   transition: opacity .2s ease-in-out; }
 
 .text-left {

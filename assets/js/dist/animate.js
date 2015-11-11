@@ -292,9 +292,6 @@
         var animationEvent = this._whichAnimationEvent();
         el.addEventListener(animationEvent, function() {
             if(this.options.debug && root.console.debug) console.debug('Animation completed');
-
-            el.classList.add(this.options.animatedClass);
-            el.setAttribute('data-animated', true);
         
             var removeOveride = el.getAttribute('data-animate-remove');
             if(this.options.removeAnimations && (removeOveride !== "false")) {
@@ -303,6 +300,9 @@
                     el.classList.remove(animation);
                 });
             }
+
+            el.classList.add(this.options.animatedClass);
+            el.setAttribute('data-animated', true);
 
             if(this._isType('Function', this.options.callback)) {
                 this.options.callback(el);
