@@ -121,7 +121,7 @@ Kills event listeners and resets options.
 Adds/removes animations without the need for event listeners.
 
 ##Browser compatibility
-Animate.js is supported in modern browsers from IE10 and above (i.e. browsers that support CSS animations). I would suggest using Modernizr to feature detect CSS animations/transitions and apply override styling for browsers that do not support those features.
+Animate.js is supported in modern browsers from IE10 and above (i.e. browsers that support CSS animations). Due to discrepencies in support for `Element.classList`, I would recommend including the very good [classList polyfill](https://github.com/eligrey/classList.js/) before you include animate.js. I would also suggest using Modernizr to feature detect CSS animations/transitions and apply override styling for browsers that do not support those features.
 
 Using SCSS, this may look like this:
 ```css
