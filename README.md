@@ -121,7 +121,17 @@ Kills event listeners and resets options.
 Adds/removes animations without the need for event listeners.
 
 ##Browser compatibility
-Standalone support is IE10 and above. To support down to IE9, simply include the very good [`classList.js` polyfill](https://github.com/eligrey/classList.js/).
+Animate.js is supported in modern browsers from IE10 and above (i.e. browsers that support CSS animations). I would suggest using Modernizr to feature detect CSS animations/transitions and apply override styling for browsers that do not support those features.
+
+Using SCSS, this may look like this:
+```css
+.animate {
+    opacity: 0;
+    .no-csstransitions &, .no-cssanimations &  {
+        opacity: 1;
+    }
+}
+```
 
 ##Development
 To setup a local environment: clone this repo, navigate into it's directory in a terminal window and run the following command:
