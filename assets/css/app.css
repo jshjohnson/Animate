@@ -394,7 +394,8 @@ body {
   font-size: 1.6rem;
   color: #FFFFFF;
   overflow-x: hidden;
-  background: linear-gradient(to left top, #222222, #333333);
+  background-color: #333333;
+  background: linear-gradient(to left bottom, #333333, #262626);
   background-repeat: no-repeat;
   background-attachment: fixed; }
   @media screen and (max-width: 768px) {
