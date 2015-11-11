@@ -65,6 +65,27 @@ describe('Animate', function () {
             this.animate.init();
             expect(this.animate.initialised).toEqual(true);
         });
+        it("shoud fire scroll event listener if set", function() {
+            spyOn(window, 'addEventListener');
+            this.animate.init();
+            if(this.animate.options.onScroll === true) {
+                expect(window.addEventListener).toHaveBeenCalledWith('scroll', jasmine.any(Function), false);
+            }
+        });
+        it("shoud fire resize event listener if set", function() {
+            spyOn(window, 'addEventListener');
+            this.animate.init();
+            if(this.animate.options.onResize === true) {
+                expect(window.addEventListener).toHaveBeenCalledWith('resize', jasmine.any(Function), false);
+            }
+        });
+        it("shoud fire DOMContentLoaded event listener if set", function() {
+            spyOn(document, 'addEventListener');
+            this.animate.init();
+            if(this.animate.options.onLoad === true) {
+                expect(document.addEventListener).toHaveBeenCalledWith('DOMContentLoaded', jasmine.any(Function));
+            }
+        });
         it('should expose public functions', function() {
             expect(this.animate.init).toEqual(jasmine.any(Function));
             expect(this.animate.kill).toEqual(jasmine.any(Function));
@@ -82,7 +103,7 @@ describe('Animate', function () {
             expect(this.animate.initialised).toEqual(false);
         });
         it('should null settings when killed', function() {
-            expect(this.animate.settings).toBe(null);
+            expect(this.animate.settings).toBeNull();
         });
     });
 });

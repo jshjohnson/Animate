@@ -46,8 +46,8 @@
             callback: function(){}
         };
 
-        var el = document.createElement("fakeelement");
-        this.supports = 'querySelector' in document && 'addEventListener' in root && 'classList' in el;
+        var el = root.document.createElement("fakeelement");
+        this.supports = 'querySelector' in root.document && 'addEventListener' in root && 'classList' in el;
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
         this.initialised = false;
@@ -114,8 +114,8 @@
      * @return {[type]} [description]
      */
     Animate.prototype._whichAnimationEvent = function(){
-        var t,
-        el = document.createElement("fakeelement");
+        var t;
+        var el = root.document.createElement("fakeelement");
 
         var animations = {
             "animation"      : "animationend",
@@ -174,7 +174,7 @@
     Animate.prototype._getScrollPosition = function(position) {
         if(position === 'bottom') {
             // Scroll position from the bottom of the viewport
-            return Math.max((root.scrollY || root.pageYOffset) + (root.innerHeight || document.documentElement.clientHeight));
+            return Math.max((root.scrollY || root.pageYOffset) + (root.innerHeight || root.document.documentElement.clientHeight));
         } else {
             // Scroll position from the top of the viewport
             return (root.scrollY || root.pageYOffset);
@@ -327,7 +327,9 @@
         }.bind(this), 15);
 
         if(this.options.onLoad) {
-            root.addEventListener('DOMContentLoaded', throttledEvent());
+            root.document.addEventListener('DOMContentLoaded', function(){
+                throttledEvent();
+            });
         }
 
         if(this.options.onResize) {
