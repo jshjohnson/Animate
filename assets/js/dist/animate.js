@@ -326,7 +326,9 @@
         if(!this.supports) return;
 
         if(this.options.onLoad) {
-            root.document.addEventListener('DOMContentLoaded', this.throttledEvent);
+            root.document.addEventListener('DOMContentLoaded', function(){
+                this.render();
+            }.bind(this));
         }
 
         if(this.options.onResize) {
@@ -349,10 +351,6 @@
 
         // Test to see whether we have actually initialised
         if (!this.initialised) return;
-
-        if(this.options.onLoad) {
-            root.document.removeEventListener('DOMContentLoaded', this.throttledEvent);
-        }
 
         if(this.options.onResize) {
             root.removeEventListener('resize', this.throttledEvent, false);
