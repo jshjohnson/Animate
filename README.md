@@ -2,7 +2,7 @@
 
 Trigger animations on elements when they are in view.
 
-##Installation
+##Setup
 ```html
 <script src="/assets/js/dist/animate.js"></script>
 <script>
@@ -24,6 +24,8 @@ Trigger animations on elements when they are in view.
     animate.init();
 </script>
 ```
+##Installation
+To install via NPM, run `npm install --save-dev animate.js` 
 
 ##Animating elements
 #####`data-animate`
