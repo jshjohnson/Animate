@@ -39,15 +39,19 @@ Animations to be added to element when it is in view. To add multiple classes, s
 ###Optional element overrides
 #####`data-animation-delay`
 
-Overide the plugin `delay` per element.
+Overide the plugin `delay` option per element.
 
 #####`data-animation-offset`
 
-Override the plugin `offset` per element.
+Override the plugin `offset` option per element.
 
 #####`data-animate-remove`
 
-Overide the plugin `removeAnimations` per element.
+Overide the plugin `removeAnimations` option per element.
+
+#####`data-animate-reverse`
+
+Overide the plugin `reverse` option per element.
 
 ####Examples
 ```html
@@ -87,7 +91,7 @@ Whether animation classes set via the `data-animation-classes` attribute should 
 ####reverse
 Type: `Boolean` Default: `false`
 
-Once the element has left the top of the viewport (by the same offset), reset element.
+Once the element has left the top of the viewport (by the same offset), remove the animations from element. When the element comes back into view, it will animate again.
 
 ####debug
 Type: `Boolean` Default: `false`
