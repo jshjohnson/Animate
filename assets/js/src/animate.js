@@ -44,10 +44,11 @@
             callback: function(){}
         };
 
-        var el = root.document.createElement("fakeelement");
         this.throttledEvent = this._debounce(function() {
             this.render();
         }.bind(this), 15);
+
+        var el = root.document.createElement("fakeelement");
         this.supports = 'querySelector' in root.document && 'addEventListener' in root && 'classList' in el;
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
@@ -86,17 +87,25 @@
      * @return {Object} Merged object of arguments
      */
     Animate.prototype._extend = function() {
-        var extended = {},
-            length = arguments.length;
+        var extended = {};
+        var length = arguments.length;
 
+        /**
+         * Merge one object into another
+         * @param  {Object} obj  Object to merge into extended object
+         */
         var merge = function(obj) {
             for(var prop in obj) {
                 extended[prop] = obj[prop];
             }
         };
 
+        // Loop through each passed argument
         for(var i = 0; i < length; i++) {
+            // Store argument at position i
             var obj = arguments[i];
+
+            // If we are in fact dealing with an object, merge it. Otherwise throw error
             if(this._isType('Object', obj)) {
                 merge(obj);
             } else {
@@ -112,7 +121,7 @@
      * @author  David Walsh
      * @link https://davidwalsh.name/css-animation-callback
      * @private
-     * @return {[type]} [description]
+     * @return {String} Appropriate 'animationEnd' event for browser to handle
      */
     Animate.prototype._whichAnimationEvent = function(){
         var t;
@@ -156,11 +165,13 @@
      * @return {Number}    Height of element
      */
     Animate.prototype._getElementOffset = function(el) {
+        // Get element offset override
         var elOffset = parseFloat(el.getAttribute('data-animation-offset'));
-        if(elOffset > 1) elOffset = 1; 
-        if(elOffset > 0) elOffset = 0;
 
         if(!isNaN(elOffset)) {
+            // If elOffset isn't between 0 and 1, round it up or down
+            if(elOffset > 1) elOffset = 1; 
+            if(elOffset < 0) elOffset = 0;
             return Math.max(el.offsetHeight*elOffset);
         } else if(this.options.offset){
             return Math.max(el.offsetHeight*this.options.offset);
@@ -261,7 +272,6 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._removeAnimation = function(el){
-
         el.setAttribute('data-visibility', false);
         el.removeAttribute('data-animated');
         var animations = el.getAttribute('data-animation-classes').split(' ');
@@ -290,24 +300,38 @@
      * @param  {Node} el Element to target
      */
     Animate.prototype._completeAnimation = function(el){
+        // Store animation event
         var animationEvent = this._whichAnimationEvent();
+
+        // When animation event has finished
         el.addEventListener(animationEvent, function() {
             if(this.options.debug && root.console.debug) console.debug('Animation completed');
         
             var removeOveride = el.getAttribute('data-animate-remove');
+
+            // If remove animations on completon option is turned on
             if(this.options.removeAnimations && (removeOveride !== "false")) {
+                // Seperate each class held in the animation classes attribute
                 var animations = el.getAttribute('data-animation-classes').split(' ');
+
+                // Remove each animation from element
                 animations.forEach(function(animation) {
                     el.classList.remove(animation);
                 });
             }
 
+            // Add animtion complete class
             el.classList.add(this.options.animatedClass);
+            // Set animated attribute to true
             el.setAttribute('data-animated', true);
 
-            if(this._isType('Function', this.options.callback)) {
+            // If valid callback has been passed, run it with the element as a parameter
+            if(this.options.callback && this._isType('Function', this.options.callback)) {
                 this.options.callback(el);
+            } else {
+                console.error('Callback is not a function');
             }
+
         }.bind(this));
     };
 
@@ -318,12 +342,13 @@
      */
     Animate.prototype.init = function(){
         if(this.options.debug && root.console.debug) {
-            console.debug('Animate.js successfully initialised');
-            console.debug('Found ' + this.elements.length + ' elements to animate');
+            console.debug('Animate.js successfully initialised. Found ' + this.elements.length + ' elements to animate');
         }
 
+        // If browser doesn't cut the mustard, let it fail silently
         if(!this.supports) return;
 
+        // Fire up event listeners
         if(this.options.onLoad) {
             root.document.addEventListener('DOMContentLoaded', function(){
                 this.render();
@@ -348,9 +373,10 @@
     Animate.prototype.kill = function(){
         if(this.options.debug && root.console.debug) console.debug('Animation.js nuked');
 
-        // Test to see whether we have actually initialised
+        // If we haven't initialised, there is nothing to kill.
         if (!this.initialised) return;
 
+        // Kill event listeners
         if(this.options.onResize) {
             root.removeEventListener('resize', this.throttledEvent, false);
         }
@@ -370,16 +396,24 @@
      * @return {}
      */
     Animate.prototype.render = function(){
+        // Grab all elements in the DOM with the correct target
         var els = this.elements;
-        for (var i = els.length - 1; i >= 0; i--) {
-            var el = els[i];
 
-            // If element is in view and is not set to visible
+        // Loop through all elements
+        for (var i = els.length - 1; i >= 0; i--) {
+            // Store element at location 'i'
+            var el = els[i];
+            // See whether it has a reverse override
+            var reverseOveride = el.getAttribute('data-animation-reverse');
+
+            // If element is in view from the bottom of the viewport but not from the top
             if(this._isInView(el, 'bottom') && !this._isInView(el, 'top')) {
+                // ..and is not already set to visible
                 if(!this._isVisible(el)){
+                    // Add those snazzy animations
                     this._addAnimation(el);
                 }
-            } else if(this._isInView(el, 'top') && this._hasAnimated(el) && this.options.reverse) {
+            } else if(this._isInView(el, 'top') && this._hasAnimated(el) && (!reverseOveride || this.options.reverse)) {
                 this._removeAnimation(el);
             }
         }
