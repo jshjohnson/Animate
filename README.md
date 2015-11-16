@@ -2,7 +2,7 @@
 
 Trigger animations on elements when they are in view.
 
-##Setup
+## Setup
 ```html
 <script src="/assets/js/dist/animate.js"></script>
 <script>
@@ -24,36 +24,36 @@ Trigger animations on elements when they are in view.
     animate.init();
 </script>
 ```
-##Installation
+## Installation
 To install via NPM, run `npm install --save-dev animate.js` 
 
-##Animating elements
-#####`data-animate`
+## Animating elements
+##### `data-animate`
 
 Default way of targeting an element to animate (no value required). This can be overridden to be a custom attribute or class.
 
-#####`data-animation-classes`
+##### `data-animation-classes`
 
 Animations to be added to element when it is in view. To add multiple classes, seperate each class with a space (as you would normally).
 
-###Optional element overrides
-#####`data-animation-delay`
+### Optional element overrides
+##### `data-animation-delay`
 
 Overide the plugin `delay` option per element.
 
-#####`data-animation-offset`
+##### `data-animation-offset`
 
 Override the plugin `offset` option per element.
 
-#####`data-animate-remove`
+##### `data-animate-remove`
 
 Overide the plugin `removeAnimations` option per element.
 
-#####`data-animate-reverse`
+##### `data-animate-reverse`
 
 Overide the plugin `reverse` option per element.
 
-####Examples
+#### Examples
 ```html
 <div data-animate data-animation-classes="animated fadeIn"></div>
 <div data-animate data-animation-classes="animated tada" data-animation-delay="1000"></div>
@@ -61,71 +61,71 @@ Overide the plugin `reverse` option per element.
 <div data-animate data-animation-classes="animated bounce" data-animation-remove="true"></div>
 ```
 
-##Options
-####target
+## Options
+#### target
 Type: `String` Default: `[data-animate]`
 
 Element/s to target. Once this element is in view, add animations.
 
-####animatedClass
+#### animatedClass
 Type: `String` Default: `js-animated`
 
 Class to be added to element once animation has completed.
 
-####offset
+#### offset
 Type: `Number` Default: `0.5` (50%)
 
 Percentage of element that needs to be in the viewport before the animation triggers.
 
-####delay
+####  delay
 Type: `Number` Default: `0`
 
 Milisecond delay before animation is added to element in view.
 
-####removeAnimations
+####  removeAnimations
 Type: `Boolean` Default: `true`
 
 Whether animation classes set via the `data-animation-classes` attribute should removed when the animations complete.
 
-####reverse
+####  reverse
 Type: `Boolean` Default: `false`
 
 Once the element has left the top of the viewport (by the same offset), remove the animations from element. When the element comes back into view, it will animate again.
 
-####debug
+#### debug
 Type: `Boolean` Default: `false`
 
 Debugging information in console.
 
-####onLoad
+#### onLoad
 Type: `Boolean` Default: `true`
 
 Whether to fire on DOMContentLoaded.
 
-####onScroll
+#### onScroll
 Type: `Boolean` Default: `true`
 
 Whether to fire on scroll.
 
-####onResize
+#### onResize
 Type: `Boolean` Default: `false`
 
 Whether to fire on resize.
 
-####callback
+#### callback
 Type: `Function` Default: `function(){}`
 
 Function to run once animation has completed (pass parameter to access the animated element).
 
-##Methods
-####init();
+## Methods
+#### init();
 Initialises event listeners.
-####kill();
+#### kill();
 Kills event listeners and resets options.
-####render();
+#### render();
 Adds/removes animations without the need for event listeners.
 
-##Browser compatibility
+## Browser compatibility
 Animate.js is supported in modern browsers from IE9 and above (i.e. browsers that support CSS animations). Due to discrepencies in support for `Element.classList`, I would recommend including the very good [classList polyfill](https://github.com/eligrey/classList.js/) before you include animate.js. I would also suggest using Modernizr to feature detect CSS animations/transitions and apply override styling for browsers that do not support those features.
 
 Using SCSS, this may look like this:
@@ -138,11 +138,11 @@ Using SCSS, this may look like this:
 }
 ```
 
-##Development
+## Development
 To setup a local environment: clone this repo, navigate into it's directory in a terminal window and run the following command:
 * ```npm install```
 
-###Gulp tasks
+### Gulp tasks
 * ```gulp dev```
 * ```gulp test```
 * ```gulp build```
