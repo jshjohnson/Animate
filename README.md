@@ -87,7 +87,6 @@ Type: `Boolean` Default: `true`
 
 Whether animation classes set via the `data-animation-classes` attribute should removed when the animations complete.
 
-
 ####reverse
 Type: `Boolean` Default: `false`
 
