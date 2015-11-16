@@ -414,8 +414,10 @@
                     // Add those snazzy animations
                     this._addAnimation(el);
                 }
-            } else if(this._isInView(el, 'top') && this._hasAnimated(el) && (!reverseOveride || this.options.reverse)) {
-                this._removeAnimation(el);
+            } else if(this._isInView(el, 'top') && this._hasAnimated(el)) {
+                if(reverseOveride !== 'false' && this.options.reverse) {
+                    this._removeAnimation(el);
+                }
             }
         }
     };
