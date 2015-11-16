@@ -1,4 +1,4 @@
-/*! animate.js v1.1.1 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.1.2 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
 /**
 
     TODO:
