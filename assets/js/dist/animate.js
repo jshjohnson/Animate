@@ -1,21 +1,4 @@
-/*! animate.js v1.1.2 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
-/**
-
-    TODO:
-    - Init - Done
-    - Add scroll event listener - Done
-    - Determine whether element is in view - Done
-    - Determine whether element is in view minus offset - Done
-    - Add animation - Done
-    - Kill - Done
-    - Throttle scroll event listener - Done
-    - Animation delays - Done
-    - Improve reverse method to trigger when element leaves viewport from top - Done
-    - Classlist polyfill?
-    - Use object for data attribute options?
-
- */
-
+/*! animate.js v1.1.3 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(function() {
