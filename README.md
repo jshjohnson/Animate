@@ -45,11 +45,11 @@ Overide the plugin `delay` option per element.
 
 Override the plugin `offset` option per element.
 
-##### `data-animate-remove`
+##### `data-animation-remove`
 
 Overide the plugin `removeAnimations` option per element.
 
-##### `data-animate-reverse`
+##### `data-animation-reverse`
 
 Overide the plugin `reverse` option per element.
 

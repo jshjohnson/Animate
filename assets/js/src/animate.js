@@ -298,10 +298,10 @@
         el.addEventListener(animationEvent, function() {
             if(this.options.debug && root.console.debug) console.debug('Animation completed');
         
-            var removeOveride = el.getAttribute('data-animate-remove');
+            var removeOveride = el.getAttribute('data-animation-remove');
 
             // If remove animations on completon option is turned on
-            if(this.options.removeAnimations && (removeOveride !== "false")) {
+            if(removeOveride !== 'false' && this.options.removeAnimations) {
                 // Seperate each class held in the animation classes attribute
                 var animations = el.getAttribute('data-animation-classes').split(' ');
 
@@ -396,7 +396,7 @@
             var el = els[i];
             // See whether it has a reverse override
             var reverseOveride = el.getAttribute('data-animation-reverse');
-
+        
             // If element is in view
             if(this._isInView(el)) {
                 // ..and is not already set to visible
