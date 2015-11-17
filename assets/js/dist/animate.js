@@ -157,7 +157,7 @@
             if(elOffset > 1) elOffset = 1; 
             if(elOffset < 0) elOffset = 0;
             return Math.max(el.offsetHeight*elOffset);
-        } else if(!isNaN(this.options.offset)){
+        } else if(this.options.offset){
             return Math.max(el.offsetHeight*this.options.offset);
         }
     };
@@ -183,9 +183,17 @@
      * @return {String} Position of scroll
      * @return {Boolean}
      */
-    Animate.prototype._isInView = function(el, position) {
+    Animate.prototype._isInView = function(el) {
         // If the user has scrolled further than the distance from the element to the top of its parent
-        return this._getScrollPosition(position) > (this._getElemDistance(el) + this._getElementOffset(el)) ? true : false;
+        var hasEntered = function() {
+            return this._getScrollPosition('bottom') > (this._getElemDistance(el) + this._getElementOffset(el)) ? true : false;
+        }.bind(this);
+
+        var hasLeft = function() {
+            return this._getScrollPosition('top') > (this._getElemDistance(el) + this._getElementOffset(el)) ? true : false;
+        }.bind(this);
+
+        return hasEntered() & !hasLeft() ? true : false;
     };
 
     /**
@@ -228,6 +236,7 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._addAnimation = function(el){
+
         el.setAttribute('data-visibility', true);
         var animations = el.getAttribute('data-animation-classes').split(' ');
         var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10) || this.options.delay;
@@ -389,14 +398,14 @@
             // See whether it has a reverse override
             var reverseOveride = el.getAttribute('data-animation-reverse');
 
-            // If element is in view from the bottom of the viewport but not from the top
-            if(this._isInView(el, 'bottom') && !this._isInView(el, 'top')) {
+            // If element is in view
+            if(this._isInView(el)) {
                 // ..and is not already set to visible
                 if(!this._isVisible(el)){
                     // Add those snazzy animations
                     this._addAnimation(el);
                 }
-            } else if(this._isInView(el, 'top') && this._hasAnimated(el)) {
+            } else if(this._hasAnimated(el)) {
                 if(reverseOveride !== 'false' && this.options.reverse) {
                     this._removeAnimation(el);
                 }
