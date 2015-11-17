@@ -93,6 +93,54 @@ describe('Animate', function () {
         });
     });
 
+    describe('should have private methods that return correct data types', function() {
+        var el = document.createElement('div');
+
+        beforeEach(function() {
+            this.animate = new Animate();
+        });
+
+        afterEach(function() {
+            this.animate.kill();
+        });
+        it('_debounce() should return an function', function(){
+            var test = this.animate._debounce();
+            expect(test).toEqual(jasmine.any(Function));
+        });
+        it('_extend() should return an object', function(){
+            var test = this.animate._extend();
+            expect(test).toEqual(jasmine.any(Object));
+        });
+        it('_getElemDistance() should return an number', function(){
+            var test = this.animate._getElemDistance(el);
+            expect(test).toEqual(jasmine.any(Number));
+        });
+        it('_getElemOffset() should return an number', function(){
+            var test = this.animate._getElemOffset(el);
+            expect(test).toEqual(jasmine.any(Number));
+        });
+        it('_getScrollPosition() should return an number', function(){
+            var test = this.animate._getScrollPosition();
+            expect(test).toEqual(jasmine.any(Number));
+        });
+        it('_isInView() should return an boolean', function(){
+            var test = this.animate._isInView(el);
+            expect(test).toEqual(jasmine.any(Boolean));
+        });
+        it('_isVisible() should return an boolean', function(){
+            var test = this.animate._isVisible(el);
+            expect(test).toEqual(jasmine.any(Boolean));
+        });
+        it('_hasAnimated() should return an boolean', function(){
+            var test = this.animate._hasAnimated(el);
+            expect(test).toEqual(jasmine.any(Boolean));
+        });
+        it('_isType() should return an boolean', function(){
+            var test = this.animate._isType();
+            expect(test).toEqual(jasmine.any(Boolean));
+        });
+    });
+
     describe('should kill Animate', function() {
         beforeEach(function() {
             this.animate = new Animate();

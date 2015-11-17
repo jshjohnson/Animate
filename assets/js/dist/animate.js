@@ -148,7 +148,7 @@
      * @param  {Node} el Element to test for
      * @return {Number}    Height of element
      */
-    Animate.prototype._getElementOffset = function(el) {
+    Animate.prototype._getElemOffset = function(el) {
         // Get element offset override
         var elOffset = parseFloat(el.getAttribute('data-animation-offset'));
 
@@ -186,11 +186,11 @@
     Animate.prototype._isInView = function(el) {
         // If the user has scrolled further than the distance from the element to the top of its parent
         var hasEntered = function() {
-            return this._getScrollPosition('bottom') > (this._getElemDistance(el) + this._getElementOffset(el)) ? true : false;
+            return this._getScrollPosition('bottom') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
         }.bind(this);
 
         var hasLeft = function() {
-            return this._getScrollPosition('top') > (this._getElemDistance(el) + this._getElementOffset(el)) ? true : false;
+            return this._getScrollPosition('top') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
         }.bind(this);
 
         return hasEntered() & !hasLeft() ? true : false;
