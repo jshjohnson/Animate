@@ -156,7 +156,7 @@
             if(elOffset > 1) elOffset = 1; 
             if(elOffset < 0) elOffset = 0;
             return Math.max(el.offsetHeight*elOffset);
-        } else if(this.options.offset){
+        } else if(!isNaN(this.options.offset)){
             return Math.max(el.offsetHeight*this.options.offset);
         }
     };
@@ -227,7 +227,6 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._addAnimation = function(el){
-
         el.setAttribute('data-visibility', true);
         var animations = el.getAttribute('data-animation-classes').split(' ');
         var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10) || this.options.delay;
