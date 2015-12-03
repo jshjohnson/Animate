@@ -37,7 +37,8 @@ describe('Animate', function () {
         onLoad: jasmine.any(Boolean),
         onScroll: jasmine.any(Boolean),
         onResize: jasmine.any(Boolean),
-        callback: jasmine.any(Function)
+        callbackOnInit: jasmine.any(Function),
+        callbackOnAnimate: jasmine.any(Function)
     };
 
     describe('should initialize Animate', function() {

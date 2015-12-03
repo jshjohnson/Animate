@@ -1,3 +1,4 @@
+/*! animate.js v1.1.6 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(function() {
@@ -13,10 +14,11 @@
     'use strict';
 
     var Animate = function(userOptions){
+        var el = root.document.createElement("fakeelement");
         var defaultOptions = {
             animatedClass: 'js-animated',
             offset: 0.5,
-            delay: 0, 
+            delay: 0,
             target: '[data-animate]',
             removeAnimations: true,
             reverse: false,
@@ -24,14 +26,14 @@
             onLoad: true,
             onScroll: true,
             onResize: false,
-            callback: function(){}
+            callbackOnInit: function(){},
+            callbackOnAnimate: function(){}
         };
 
         this.throttledEvent = this._debounce(function() {
             this.render();
         }.bind(this), 15);
 
-        var el = root.document.createElement("fakeelement");
         this.supports = 'querySelector' in root.document && 'addEventListener' in root && 'classList' in el;
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
@@ -153,7 +155,7 @@
 
         if(!isNaN(elOffset)) {
             // If elOffset isn't between 0 and 1, round it up or down
-            if(elOffset > 1) elOffset = 1; 
+            if(elOffset > 1) elOffset = 1;
             if(elOffset < 0) elOffset = 0;
             return Math.max(el.offsetHeight*elOffset);
         } else if(!isNaN(this.options.offset)){
@@ -297,7 +299,7 @@
         // When animation event has finished
         el.addEventListener(animationEvent, function() {
             if(this.options.debug && root.console.debug) console.debug('Animation completed');
-        
+
             var removeOveride = el.getAttribute('data-animation-remove');
 
             // If remove animations on completon option is turned on
@@ -317,8 +319,8 @@
             el.setAttribute('data-animated', true);
 
             // If valid callback has been passed, run it with the element as a parameter
-            if(this.options.callback && this._isType('Function', this.options.callback)) {
-                this.options.callback(el);
+            if(this.options.callbackOnAnimate && this._isType('Function', this.options.callbackOnAnimate)) {
+                this.options.callbackOnAnimate(el);
             } else {
                 console.error('Callback is not a function');
             }
@@ -352,6 +354,13 @@
 
         if(this.options.onScroll) {
             root.addEventListener('scroll', this.throttledEvent, false);
+        }
+
+        // If valid callback has been passed, run it with the element as a parameter
+        if(this.options.callbackOnInit && this._isType('Function', this.options.callbackOnInit)) {
+            this.options.callbackOnInit();
+        } else {
+            console.error('Callback is not a function');
         }
 
         this.initialised = true;
@@ -396,7 +405,7 @@
             var el = els[i];
             // See whether it has a reverse override
             var reverseOveride = el.getAttribute('data-animation-reverse');
-            
+
             // If element is in view
             if(this._isInView(el)) {
                 // ..and is not already set to visible

@@ -17,8 +17,9 @@ Trigger animations on elements when they are in view.
         onLoad: true,
         onScroll: true,
         onResize: false,
-        callback: function (element) {
-            console.log(element)
+        callbackOnInit: function(){},
+        callbackOnAnimate: function(element){
+            console.log(element);
         }
     });
     animate.init();
@@ -112,8 +113,13 @@ Type: `Boolean` Default: `false`
 
 Whether to fire on resize.
 
-#### callback
+#### callbackOnInit
 Type: `Function` Default: `function(){}`
+
+Function to run once Animate.js initialises 
+
+#### callbackOnAnimate
+Type: `Function` Default: `function(){}` Previously: `callback` (<1.1.8)
 
 Function to run once animation has completed (pass parameter to access the animated element).
 
