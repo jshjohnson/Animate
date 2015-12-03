@@ -25,6 +25,16 @@ Trigger animations on elements when they are in view.
     animate.init();
 </script>
 ```
+##### Recent changes (< v1.1.8)
+```diff
++   callbackOnAnimate: function(element){
+        console.log(element);
+    }
+-   callback: function(element){
+        console.log(element);
+    }
+```
+
 ## Installation
 To install via NPM, run `npm install --save-dev animate.js` 
 
@@ -119,7 +129,6 @@ Type: `Function` Default: `function(){}`
 Function to run once Animate.js initialises 
 
 #### callbackOnAnimate 
-##### (Previously (<1.1.8): callback)
 Type: `Function` Default: `function(){}`
 
 Function to run once animation has completed (pass parameter to access the animated element).
