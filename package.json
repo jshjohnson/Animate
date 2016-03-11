@@ -1,13 +1,13 @@
 {
   "name": "animate.js",
-  "version": "1.1.6",
+  "version": "1.1.8",
   "description": "Tiny (5KB) vanilla JS script to trigger animations on elements when they are within the viewport",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:jshjohnson/animate.js.git"
   },
   "author": "Josh Johnson",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jshjohnson/animate.js/issues"
   },
@@ -36,7 +36,4 @@
     "karma-spec-reporter": "0.0.13",
     "opn": "^3.0.2"
   },
-  "dependencies": {
-    "opn": "^3.0.2"
-  }
 }

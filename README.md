@@ -17,13 +17,24 @@ Trigger animations on elements when they are in view.
         onLoad: true,
         onScroll: true,
         onResize: false,
-        callback: function (element) {
-            console.log(element)
+        callbackOnInit: function(){},
+        callbackOnAnimate: function(element){
+            console.log(element);
         }
     });
     animate.init();
 </script>
 ```
+##### Recent changes (< v1.1.8)
+```diff
++   callbackOnAnimate: function(element){
+        console.log(element);
+    }
+-   callback: function(element){
+        console.log(element);
+    }
+```
+
 ## Installation
 To install via NPM, run `npm install --save-dev animate.js` 
 
@@ -112,7 +123,12 @@ Type: `Boolean` Default: `false`
 
 Whether to fire on resize.
 
-#### callback
+#### callbackOnInit
+Type: `Function` Default: `function(){}`
+
+Function to run once Animate.js initialises 
+
+#### callbackOnAnimate 
 Type: `Function` Default: `function(){}`
 
 Function to run once animation has completed (pass parameter to access the animated element).
