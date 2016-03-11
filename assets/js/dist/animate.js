@@ -1,4 +1,4 @@
-/*! animate.js v1.1.5 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.1.6 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(function() {
