@@ -1,4 +1,4 @@
-# Animate.js [![Build Status](https://travis-ci.org/jshjohnson/animate.svg?branch=develop)](https://travis-ci.org/jshjohnson/animate) [![Dependency Status](https://david-dm.org/Rowno/grunt-mocha-cli.svg)](https://david-dm.org/Rowno/grunt-mocha-cli)
+# Animate.js [![Build Status](https://travis-ci.org/jshjohnson/Animate.svg?branch=develop)](https://travis-ci.org/jshjohnson/Animate) [![Dependency Status](https://david-dm.org/Rowno/grunt-mocha-cli.svg)](https://david-dm.org/Rowno/grunt-mocha-cli)
 
 Trigger animations on elements when they are in view.
 
