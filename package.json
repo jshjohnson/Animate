@@ -1,6 +1,6 @@
 {
   "name": "animate.js",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Tiny (5KB) vanilla JS script to trigger animations on elements when they are within the viewport",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
     "url": "https://github.com/jshjohnson/animate.js/issues"
   },
   "homepage": "https://github.com/jshjohnson/animate.js",
-  "main": "./assets/js/dist/animate.js",
+  "main": "./assets/js/dist/animate.min.js",
   "browserDependencies": {},
   "devDependencies": {
     "gulp": "~3.9.0",
