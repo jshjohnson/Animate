@@ -127,7 +127,7 @@
     /**
      * Get an element's distance from the top of the page
      * @private
-     * @param  {Node} el Element to test for
+     * @param  {HTMLElement} el Element to test for
      * @return {Number} Elements Distance from top of page
      */
     Animate.prototype._getElemDistance = function(el) {
@@ -144,7 +144,7 @@
     /**
      * Determine element height multiplied by any offsets
      * @private
-     * @param  {Node} el Element to test for
+     * @param  {HTMLElement} el Element to test for
      * @return {Number}    Height of element
      */
     Animate.prototype._getElemOffset = function(el) {
@@ -175,13 +175,18 @@
         }
     };
 
+    /**
+     * Determines whether we have already scrolled past the element
+     * @param  {HTMLElement}  el Element to test
+     * @return {Boolean}
+     */
     Animate.prototype._isAboveScrollPos = function(el) {
-        return this._getScrollPosition('bottom') > (root.scrollY || root.pageYOffset);
+        return (el.offsetTop + this._getElemOffset(el)) < (root.scrollY || root.pageYOffset);
     };
 
     /**
      * Determine whether an element is within the viewport
-     * @param  {Node}  el Element to test for
+     * @param  {HTMLElement}  el Element to test for
      * @return {String} Position of scroll
      * @return {Boolean}
      */
@@ -196,7 +201,7 @@
     /**
      * Tests whether a DOM node's visibility attribute is set to true
      * @private
-     * @param  {Node}  el Element to test
+     * @param  {HTMLElement}  el Element to test
      * @return {Boolean}
      */
     Animate.prototype._isVisible = function(el){
@@ -207,7 +212,7 @@
     /**
      * Tests whether a DOM node has already been animated
      * @private
-     * @param  {Node}  el Element to test
+     * @param  {HTMLElement}  el Element to test
      * @return {Boolean}
      */
     Animate.prototype._hasAnimated = function(el){
@@ -230,7 +235,7 @@
     /**
      * Add animation to given element
      * @private
-     * @param {Node} el Element to target
+     * @param {HTMLElement} el Element to target
      */
     Animate.prototype._addAnimation = function(el){
         if(!this._isVisible(el)){
@@ -264,7 +269,7 @@
     /**
      * Remove animation from given element
      * @private
-     * @param {Node} el Element to target
+     * @param {HTMLElement} el Element to target
      */
     Animate.prototype._removeAnimation = function(el){
         var classes = el.getAttribute('data-animation-classes');
@@ -297,7 +302,7 @@
     /**
      * Add class & data attribute to element on animation completion
      * @private
-     * @param  {Node} el Element to target
+     * @param  {HTMLElement} el Element to target
      */
     Animate.prototype._completeAnimation = function(el){
         // Store animation event

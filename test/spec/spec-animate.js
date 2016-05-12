@@ -125,6 +125,10 @@ describe('Animate', function () {
             var test = this.animate._getScrollPosition();
             expect(test).toEqual(jasmine.any(Number));
         });
+        it('_isAboveScrollPos() should return a boolean', function() {
+            var test = this.animate._isAboveScrollPos(el);
+            expect(test).toEqual(jasmine.any(Boolean));
+        });
         it('_isInView() should return an boolean', function(){
             var test = this.animate._isInView(el);
             expect(test).toEqual(jasmine.any(Boolean));
