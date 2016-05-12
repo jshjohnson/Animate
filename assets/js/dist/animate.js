@@ -1,4 +1,4 @@
-/*! animate.js v1.1.9 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.2.0 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
     if ( typeof define === 'function' && define.amd ) {
         define([], factory(root));
@@ -32,7 +32,7 @@
             this.render();
         }.bind(this), 15);
 
-        this.supports = 'querySelector' in root.document && 'addEventListener' in root && 'classList' in el;
+        this.supports = 'querySelector' in root.document && 'addEventListener' in root && 'classList' in el && Function.prototype.bind;
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = root.document.querySelectorAll(this.options.target);
         this.initialised = false;
@@ -335,20 +335,10 @@
         }.bind(this));
     };
 
-
     /**
-     * Initalises event listeners
-     * @public
+     * Trigger event listeners
      */
-    Animate.prototype.init = function(){
-        if(this.options.debug && root.console.debug) {
-            console.debug('Animate.js successfully initialised. Found ' + this.elements.length + ' elements to animate');
-        }
-
-        // If browser doesn't cut the mustard, let it fail silently
-        if(!this.supports) return;
-
-        // Fire up event listeners
+    Animate.prototype.addEventListeners = function() {
         if(this.options.onLoad) {
             root.document.addEventListener('DOMContentLoaded', function(){
                 this.render();
@@ -362,6 +352,24 @@
         if(this.options.onScroll) {
             root.addEventListener('scroll', this.throttledEvent, false);
         }
+    }
+
+
+    /**
+     * Initalises event listeners
+     * @public
+     */
+    Animate.prototype.init = function(){
+        if(this.options.debug && root.console.debug) {
+            console.debug('Animate.js successfully initialised. Found ' + this.elements.length + ' elements to animate');
+        }
+
+        // If browser doesn't cut the mustard, let it fail silently
+        if(!this.supports) return;
+
+        this.initialised = true;
+
+        this.addEventListeners();
 
         // If valid callback has been passed, run it with the element as a parameter
         if(this.options.callbackOnInit && this._isType('Function', this.options.callbackOnInit)) {
@@ -369,8 +377,7 @@
         } else {
             console.error('Callback is not a function');
         }
-
-        this.initialised = true;
+        
     };
 
     /**
