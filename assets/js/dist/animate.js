@@ -1,8 +1,8 @@
-/*! animate.js v1.2.0 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.2.1 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
-    if ( typeof define === 'function' && define.amd ) {
+    if (typeof define === 'function' && define.amd) {
         define([], factory(root));
-    } else if ( typeof exports === 'object' ) {
+    } else if (typeof exports === 'object') {
         module.exports = factory(root);
     } else {
         root.Animate = factory(root);
@@ -19,6 +19,7 @@
             delay: 0,
             target: '[data-animate]',
             removeAnimations: true,
+            scrolled: false,
             reverse: false,
             debug: false,
             onLoad: true,
@@ -153,8 +154,7 @@
 
         if(!isNaN(elOffset)) {
             // If elOffset isn't between 0 and 1, round it up or down
-            if(elOffset > 1) elOffset = 1;
-            if(elOffset < 0) elOffset = 0;
+            elOffset = Math.min(Math.max(elOffset, 0), 1);
             return Math.max(el.offsetHeight*elOffset);
         } else if(!isNaN(this.options.offset)){
             return Math.max(el.offsetHeight*this.options.offset);
@@ -176,6 +176,10 @@
         }
     };
 
+    Animate.prototype._isAboveScrollPos = function(el) {
+        return this._getScrollPosition('bottom') > (root.scrollY || root.pageYOffset);
+    };
+
     /**
      * Determine whether an element is within the viewport
      * @param  {Node}  el Element to test for
@@ -184,15 +188,10 @@
      */
     Animate.prototype._isInView = function(el) {
         // If the user has scrolled further than the distance from the element to the top of its parent
-        var hasEntered = function() {
-            return this._getScrollPosition('bottom') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
-        }.bind(this);
+        var hasEntered = this._getScrollPosition('bottom') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
+        var hasLeft = this._getScrollPosition('top') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
 
-        var hasLeft = function() {
-            return this._getScrollPosition('top') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
-        }.bind(this);
-
-        return hasEntered() & !hasLeft() ? true : false;
+        return hasEntered & !hasLeft ? true : false;
     };
 
     /**
@@ -235,29 +234,31 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._addAnimation = function(el){
-        var classes = el.getAttribute('data-animation-classes');
-        if(classes) {
-            el.setAttribute('data-visibility', true);
-            var animations = classes.split(' ');
-            var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10) || this.options.delay;
+        if(!this._isVisible(el)){
+            var classes = el.getAttribute('data-animation-classes');
+            if(classes) {
+                el.setAttribute('data-visibility', true);
+                var animations = classes.split(' ');
+                var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10) || this.options.delay;
 
-            if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
-                setTimeout(function() {
+                if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
+                    setTimeout(function() {
+                        if(this.options.debug && root.console.debug) console.debug('Animation added');
+                        animations.forEach(function(animation) {
+                            el.classList.add(animation);
+                        });
+                    }.bind(this), animationDelay);
+                } else {
                     if(this.options.debug && root.console.debug) console.debug('Animation added');
-                    animations.forEach(function(animation) {
-                        el.classList.add(animation);
+                    animations.forEach(function(animation){
+                       el.classList.add(animation);
                     });
-                }.bind(this), animationDelay);
-            } else {
-                if(this.options.debug && root.console.debug) console.debug('Animation added');
-                animations.forEach(function(animation){
-                   el.classList.add(animation);
-                });
-            }
+                }
 
-            this._completeAnimation(el);
-        } else {
-            console.error('No animation classes were given');
+                this._completeAnimation(el);
+            } else {
+                console.error('No animation classes were given');
+            }
         }
     };
 
@@ -335,6 +336,16 @@
         }.bind(this));
     };
 
+    Animate.prototype.removeEventListeners = function() {
+        if(this.options.onResize) {
+            root.removeEventListener('resize', this.throttledEvent, false);
+        }
+
+        if(this.options.onScroll) {
+            root.removeEventListener('scroll', this.throttledEvent, false);
+        }
+    };
+
     /**
      * Trigger event listeners
      */
@@ -352,8 +363,7 @@
         if(this.options.onScroll) {
             root.addEventListener('scroll', this.throttledEvent, false);
         }
-    }
-
+    };
 
     /**
      * Initalises event listeners
@@ -390,14 +400,7 @@
         // If we haven't initialised, there is nothing to kill.
         if (!this.initialised) return;
 
-        // Kill event listeners
-        if(this.options.onResize) {
-            root.removeEventListener('resize', this.throttledEvent, false);
-        }
-
-        if(this.options.onScroll) {
-            root.removeEventListener('scroll', this.throttledEvent, false);
-        }
+        this.removeEventListeners();
 
         // Reset settings
         this.options = null;
@@ -419,18 +422,18 @@
             var el = els[i];
             // See whether it has a reverse override
             var reverseOveride = el.getAttribute('data-animation-reverse');
+            var animateScrolled = el.getAttribute('data-animation-scrolled');
 
             // If element is in view
             if(this._isInView(el)) {
-                // ..and is not already set to visible
-                if(!this._isVisible(el)){
-                    // Add those snazzy animations
-                    this._addAnimation(el);
-                }
+                // Add those snazzy animations
+                this._addAnimation(el);
             } else if(this._hasAnimated(el)) {
                 if(reverseOveride !== 'false' && this.options.reverse) {
                     this._removeAnimation(el);
                 }
+            } else if(this._isAboveScrollPos(el) && (this.options.scrolled || animateScrolled)) {
+                 this._addAnimation(el);
             }
         }
     };

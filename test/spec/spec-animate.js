@@ -32,6 +32,7 @@ describe('Animate', function () {
         delay: jasmine.any(Number), 
         target: jasmine.any(String),
         removeAnimations: jasmine.any(Boolean),
+        scrolled: jasmine.any(Boolean),
         reverse: jasmine.any(Boolean),
         debug: jasmine.any(Boolean),
         onLoad: jasmine.any(Boolean),
