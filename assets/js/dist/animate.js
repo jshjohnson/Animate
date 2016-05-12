@@ -235,26 +235,30 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._addAnimation = function(el){
+        var classes = el.getAttribute('data-animation-classes');
+        if(classes) {
+            el.setAttribute('data-visibility', true);
+            var animations = classes.split(' ');
+            var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10) || this.options.delay;
 
-        el.setAttribute('data-visibility', true);
-        var animations = el.getAttribute('data-animation-classes').split(' ');
-        var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10) || this.options.delay;
-
-        if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
-            setTimeout(function() {
+            if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
+                setTimeout(function() {
+                    if(this.options.debug && root.console.debug) console.debug('Animation added');
+                    animations.forEach(function(animation) {
+                        el.classList.add(animation);
+                    });
+                }.bind(this), animationDelay);
+            } else {
                 if(this.options.debug && root.console.debug) console.debug('Animation added');
-                animations.forEach(function(animation) {
-                    el.classList.add(animation);
+                animations.forEach(function(animation){
+                   el.classList.add(animation);
                 });
-            }.bind(this), animationDelay);
-        } else {
-            if(this.options.debug && root.console.debug) console.debug('Animation added');
-            animations.forEach(function(animation){
-               el.classList.add(animation);
-            });
-        }
+            }
 
-        this._completeAnimation(el);
+            this._completeAnimation(el);
+        } else {
+            console.error('No animation classes were given');
+        }
     };
 
     /**
@@ -263,26 +267,31 @@
      * @param {Node} el Element to target
      */
     Animate.prototype._removeAnimation = function(el){
-        el.setAttribute('data-visibility', false);
-        el.removeAttribute('data-animated');
-        var animations = el.getAttribute('data-animation-classes').split(' ');
-        var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10);
-        animations.push(this.options.animatedClass);
+        var classes = el.getAttribute('data-animation-classes');
 
-        if(animationDelay && this._isType('Number', animationDelay)) {
-            setTimeout(function() {
+        if(classes) {
+            el.setAttribute('data-visibility', false);
+            el.removeAttribute('data-animated');
+            var animations = classes.split(' ');
+            var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10);
+            animations.push(this.options.animatedClass);
+
+            if(animationDelay && this._isType('Number', animationDelay)) {
+                setTimeout(function() {
+                    if(this.options.debug && root.console.debug) console.debug('Animation removed');
+                    animations.forEach(function(animation) {
+                        el.classList.remove(animation);
+                    });
+                }.bind(this), animationDelay);
+            } else {
                 if(this.options.debug && root.console.debug) console.debug('Animation removed');
-                animations.forEach(function(animation) {
-                    el.classList.remove(animation);
+                animations.forEach(function(animation){
+                   el.classList.remove(animation);
                 });
-            }.bind(this), animationDelay);
+            }
         } else {
-            if(this.options.debug && root.console.debug) console.debug('Animation removed');
-            animations.forEach(function(animation){
-               el.classList.remove(animation);
-            });
+            console.error('No animation classes were given');
         }
-
     };
 
     /**
