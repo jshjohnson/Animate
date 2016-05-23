@@ -1,4 +1,4 @@
-/*! animate.js v1.2.2 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.2.3 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory(root));
@@ -182,7 +182,7 @@
      * @return {Boolean}
      */
     Animate.prototype._isAboveScrollPos = function(el) {
-        return (el.offsetTop + this._getElemOffset(el)) < (root.scrollY || root.pageYOffset);
+        return (this._getElemDistance(el) + this._getElemOffset(el)) < (root.scrollY || root.pageYOffset);
     };
 
     /**

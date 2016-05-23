@@ -181,7 +181,7 @@
      * @return {Boolean}
      */
     Animate.prototype._isAboveScrollPos = function(el) {
-        return (el.offsetTop + this._getElemOffset(el)) < (root.scrollY || root.pageYOffset);
+        return (this._getElemDistance(el) + this._getElemOffset(el)) < (root.scrollY || root.pageYOffset);
     };
 
     /**
