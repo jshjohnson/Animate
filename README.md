@@ -11,7 +11,8 @@ Trigger animations on elements when they are in view.
         animatedClass: 'js-animated',
         offset: 0.5,
         delay: 0,
-        removeAnimations: true,
+        remove: true,
+        scrolled: false,
         reverse: false,
         debug: false,
         onLoad: true,
@@ -24,15 +25,6 @@ Trigger animations on elements when they are in view.
     });
     animate.init();
 </script>
-```
-##### Recent changes (< v1.1.8)
-```diff
-+   callbackOnAnimate: function(element){
-        console.log(element);
-    }
--   callback: function(element){
-        console.log(element);
-    }
 ```
 
 ## Installation
@@ -93,15 +85,20 @@ Type: `Number` Default: `0`
 
 Milisecond delay before animation is added to element in view.
 
-####  removeAnimations
+####  remove
 Type: `Boolean` Default: `true`
 
-Whether animation classes set via the `data-animation-classes` attribute should removed when the animations complete.
+Whether animation classes should removed when the animations complete.
 
 ####  reverse
 Type: `Boolean` Default: `false`
 
 Once the element has left the top of the viewport (by the same offset), remove the animations from element. When the element comes back into view, it will animate again.
+
+####  scrolled
+Type: `Boolean` Default: `false`
+
+Animate any elements that a user has already scrolled past.
 
 #### debug
 Type: `Boolean` Default: `false`

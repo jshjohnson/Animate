@@ -18,7 +18,7 @@
             offset: 0.5,
             delay: 0,
             target: '[data-animate]',
-            removeAnimations: true,
+            remove: true,
             scrolled: false,
             reverse: false,
             debug: false,
@@ -316,7 +316,7 @@
             var removeOveride = el.getAttribute('data-animation-remove');
 
             // If remove animations on completon option is turned on
-            if(removeOveride !== 'false' && this.options.removeAnimations) {
+            if(removeOveride !== 'false' && this.options.remove) {
                 // Seperate each class held in the animation classes attribute
                 var animations = el.getAttribute('data-animation-classes').split(' ');
 

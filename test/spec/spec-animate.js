@@ -31,7 +31,7 @@ describe('Animate', function () {
         offset: jasmine.any(Number),
         delay: jasmine.any(Number), 
         target: jasmine.any(String),
-        removeAnimations: jasmine.any(Boolean),
+        remove: jasmine.any(Boolean),
         scrolled: jasmine.any(Boolean),
         reverse: jasmine.any(Boolean),
         debug: jasmine.any(Boolean),

@@ -38,14 +38,17 @@
             animatedClass: 'visible',
             offset: 0.5,
             delay: 0,
-            removeAnimations: true,
+            remove: true,
             reverse: true,
             scrolled: true,
             debug: true,
             onLoad: true,
             onScroll: true,
             onResize: false,
-            callback: function (element) {
+            callbackOnInit: function() {
+                console.log('Initialised');
+            },
+            callbackOnAnimate: function(element) {
                 console.log(element)
             }
         });
