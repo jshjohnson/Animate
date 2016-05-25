@@ -126,7 +126,7 @@ Type: `Function` Default: `function(){}`
 Function to run once Animate.js initialises 
 
 #### callbackOnAnimate 
-Type: `Function` Default: `function(){}`
+Type: `Function` Default: `function(el){}`
 
 Function to run once animation has completed (pass parameter to access the animated element).
 
