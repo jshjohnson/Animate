@@ -2,6 +2,8 @@
 
 Trigger animations on elements when they are in view.
 
+[Demo](https://joshuajohnson.co.uk/Animate/)
+
 ## Setup
 ```html
 <script src="/assets/js/dist/animate.js"></script>
