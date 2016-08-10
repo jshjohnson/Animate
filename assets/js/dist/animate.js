@@ -1,13 +1,13 @@
 /*! animate.js v1.2.5 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define([], factory(root));
-    } else if (typeof exports === 'object') {
+    if (typeof define === "function" && define.amd) {
+        define([], factory);
+    } else if (typeof exports === "object") {
         module.exports = factory(root);
     } else {
         root.Animate = factory(root);
     }
-})(typeof global !== 'undefined' ? global : this.window || this.global, function (root) {
+})(typeof global !== 'undefined' ? global : this.window || this.global, function(root) {
 
     'use strict';
 

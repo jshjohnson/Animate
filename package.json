@@ -1,6 +1,6 @@
 {
   "name": "animate.js",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Tiny vanilla JS plugin to trigger animations on elements when they are within the viewport",
   "repository": {
     "type": "git",
