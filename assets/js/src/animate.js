@@ -1,17 +1,18 @@
+/*! animate.js v1.2.5 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
-    if (typeof define === "function" && define.amd) {
-        define([], factory);
+    if (typeof define === 'function' && define.amd) {
+        define(factory);
     } else if (typeof exports === "object") {
         module.exports = factory(root);
     } else {
-        root.Animate = factory(root);
+        root.Animate = factory();
     }
-})(typeof global !== 'undefined' ? global : this.window || this.global, function(root) {
+})(this, function() {
 
     'use strict';
 
     var Animate = function(userOptions){
-        var el = root.document.createElement("fakeelement");
+        var el = document.createElement("fakeelement");
         var defaultOptions = {
             animatedClass: 'js-animated',
             offset: 0.5,
@@ -32,9 +33,9 @@
             this.render();
         }.bind(this), 15);
 
-        this.supports = 'querySelector' in root.document && 'addEventListener' in root && 'classList' in el && Function.prototype.bind;
+        this.supports = 'querySelector' in document && 'addEventListener' in window && 'classList' in el && Function.prototype.bind;
         this.options = this._extend(defaultOptions, userOptions || {});
-        this.elements = root.document.querySelectorAll(this.options.target);
+        this.elements = document.querySelectorAll(this.options.target);
         this.initialised = false;
     };
 
@@ -108,7 +109,7 @@
      */
     Animate.prototype._whichAnimationEvent = function(){
         var t;
-        var el = root.document.createElement("fakeelement");
+        var el = document.createElement("fakeelement");
 
         var animations = {
             "animation"      : "animationend",
@@ -168,10 +169,10 @@
     Animate.prototype._getScrollPosition = function(position) {
         if(position === 'bottom') {
             // Scroll position from the bottom of the viewport
-            return Math.max((root.scrollY || root.pageYOffset) + (root.innerHeight || root.document.documentElement.clientHeight));
+            return Math.max((window.scrollY || window.pageYOffset) + (window.innerHeight || document.documentElement.clientHeight));
         } else {
             // Scroll position from the top of the viewport
-            return (root.scrollY || root.pageYOffset);
+            return (window.scrollY || window.pageYOffset);
         }
     };
 
@@ -181,7 +182,7 @@
      * @return {Boolean}
      */
     Animate.prototype._isAboveScrollPos = function(el) {
-        return (this._getElemDistance(el) + this._getElemOffset(el)) < (root.scrollY || root.pageYOffset);
+        return (this._getElemDistance(el) + this._getElemOffset(el)) < (window.scrollY || window.pageYOffset);
     };
 
     /**
@@ -247,13 +248,13 @@
 
                 if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
                     setTimeout(function() {
-                        if(this.options.debug && root.console.debug) console.debug('Animation added');
+                        if(this.options.debug && window.console.debug) console.debug('Animation added');
                         animations.forEach(function(animation) {
                             el.classList.add(animation);
                         });
                     }.bind(this), animationDelay);
                 } else {
-                    if(this.options.debug && root.console.debug) console.debug('Animation added');
+                    if(this.options.debug && window.console.debug) console.debug('Animation added');
                     animations.forEach(function(animation){
                        el.classList.add(animation);
                     });
@@ -283,13 +284,13 @@
 
             if(animationDelay && this._isType('Number', animationDelay)) {
                 setTimeout(function() {
-                    if(this.options.debug && root.console.debug) console.debug('Animation removed');
+                    if(this.options.debug && window.console.debug) console.debug('Animation removed');
                     animations.forEach(function(animation) {
                         el.classList.remove(animation);
                     });
                 }.bind(this), animationDelay);
             } else {
-                if(this.options.debug && root.console.debug) console.debug('Animation removed');
+                if(this.options.debug && window.console.debug) console.debug('Animation removed');
                 animations.forEach(function(animation){
                    el.classList.remove(animation);
                 });
@@ -310,7 +311,7 @@
 
         // When animation event has finished
         el.addEventListener(animationEvent, function() {
-            if(this.options.debug && root.console.debug) console.debug('Animation completed');
+            if(this.options.debug && window.console.debug) console.debug('Animation completed');
 
             var removeOveride = el.getAttribute('data-animation-remove');
 
@@ -342,11 +343,11 @@
 
     Animate.prototype.removeEventListeners = function() {
         if(this.options.onResize) {
-            root.removeEventListener('resize', this.throttledEvent, false);
+            window.removeEventListener('resize', this.throttledEvent, false);
         }
 
         if(this.options.onScroll) {
-            root.removeEventListener('scroll', this.throttledEvent, false);
+            window.removeEventListener('scroll', this.throttledEvent, false);
         }
     };
 
@@ -355,17 +356,17 @@
      */
     Animate.prototype.addEventListeners = function() {
         if(this.options.onLoad) {
-            root.document.addEventListener('DOMContentLoaded', function(){
+            document.addEventListener('DOMContentLoaded', function(){
                 this.render();
             }.bind(this));
         }
 
         if(this.options.onResize) {
-            root.addEventListener('resize', this.throttledEvent, false);
+            window.addEventListener('resize', this.throttledEvent, false);
         }
 
         if(this.options.onScroll) {
-            root.addEventListener('scroll', this.throttledEvent, false);
+            window.addEventListener('scroll', this.throttledEvent, false);
         }
     };
 
@@ -374,7 +375,7 @@
      * @public
      */
     Animate.prototype.init = function(){
-        if(this.options.debug && root.console.debug) {
+        if(this.options.debug && window.console.debug) {
             console.debug('Animate.js successfully initialised. Found ' + this.elements.length + ' elements to animate');
         }
 
@@ -399,7 +400,7 @@
      * @public
      */
     Animate.prototype.kill = function(){
-        if(this.options.debug && root.console.debug) console.debug('Animation.js nuked');
+        if(this.options.debug && window.console.debug) console.debug('Animation.js nuked');
 
         // If we haven't initialised, there is nothing to kill.
         if (!this.initialised) return;
