@@ -15,13 +15,12 @@
         var el = document.createElement("fakeelement");
         var defaultOptions = {
             animatedClass: 'js-animated',
-            offset: 0.5,
+            offset: [0.5],
             delay: 0,
             target: '[data-animate]',
             remove: true,
             scrolled: false,
             reverse: false,
-            debug: false,
             onLoad: true,
             onScroll: true,
             onResize: false,
@@ -37,6 +36,15 @@
         this.options = this._extend(defaultOptions, userOptions || {});
         this.elements = document.querySelectorAll(this.options.target);
         this.initialised = false;
+
+        this.verticalOffset = this.options.offset;
+        this.horizontalOffset = this.options.offset;
+
+        // Offset can be [y, x] or the same value can be used for both
+        if(this._isType('Array', this.options.offset)) {
+            this.verticalOffset = this.options.offset[0];
+            this.horizontalOffset = this.options.offset[1] ? this.options.offset[1] : this.options.offset[0];
+        }
     };
 
     // Returns a function, that, as long as it continues to be invoked, will not
@@ -126,63 +134,15 @@
     };
 
     /**
-     * Get an element's distance from the top of the page
-     * @private
-     * @param  {HTMLElement} el Element to test for
-     * @return {Number} Elements Distance from top of page
-     */
-    Animate.prototype._getElemDistance = function(el) {
-        var location = 0;
-        if (el.offsetParent) {
-            do {
-                location += el.offsetTop;
-                el = el.offsetParent;
-            } while (el);
-        }
-        return location >= 0 ? location : 0;
-    };
-
-    /**
-     * Determine element height multiplied by any offsets
-     * @private
-     * @param  {HTMLElement} el Element to test for
-     * @return {Number}    Height of element
-     */
-    Animate.prototype._getElemOffset = function(el) {
-        // Get element offset override
-        var elOffset = parseFloat(el.getAttribute('data-animation-offset'));
-
-        if(!isNaN(elOffset)) {
-            // If elOffset isn't between 0 and 1, round it up or down
-            elOffset = Math.min(Math.max(elOffset, 0), 1);
-            return Math.max(el.offsetHeight*elOffset);
-        } else if(!isNaN(this.options.offset)){
-            return Math.max(el.offsetHeight*this.options.offset);
-        }
-    };
-
-    /**
-     * Get scroll position based on top/bottom position
-     * @private
-     * @return {String} Position of scroll
-     */
-    Animate.prototype._getScrollPosition = function(position) {
-        if(position === 'bottom') {
-            // Scroll position from the bottom of the viewport
-            return Math.max((window.scrollY || window.pageYOffset) + (window.innerHeight || document.documentElement.clientHeight));
-        } else {
-            // Scroll position from the top of the viewport
-            return (window.scrollY || window.pageYOffset);
-        }
-    };
-
-    /**
      * Determines whether we have already scrolled past the element
      * @param  {HTMLElement}  el Element to test
      * @return {Boolean}
      */
     Animate.prototype._isAboveScrollPos = function(el) {
-        return (this._getElemDistance(el) + this._getElemOffset(el)) < (window.scrollY || window.pageYOffset);
+        var dimensions = el.getBoundingClientRect();
+        var scrollPos = (window.scrollY || window.pageYOffset);
+
+        return (dimensions.top + (dimensions.height * this.verticalOffset) < scrollPos);
     };
 
     /**
@@ -192,11 +152,22 @@
      * @return {Boolean}
      */
     Animate.prototype._isInView = function(el) {
-        // If the user has scrolled further than the distance from the element to the top of its parent
-        var hasEntered = this._getScrollPosition('bottom') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
-        var hasLeft = this._getScrollPosition('top') > (this._getElemDistance(el) + this._getElemOffset(el)) ? true : false;
+        // Dimensions 
+        var dimensions = el.getBoundingClientRect();
+        var viewportHeight = (window.innerHeight || document.documentElement.clientHeight); 
+        var viewportWidth = (window.innerWidth || document.documentElement.clientWidth);
+        
+        // Vertical
+        var isInViewFromTop = (dimensions.bottom - (dimensions.height * this.verticalOffset)) > 0;   
+        var isInViewFromBottom = (dimensions.top + (dimensions.height * this.verticalOffset)) < viewportHeight;
+        var isInViewVertically = isInViewFromTop && isInViewFromBottom;
 
-        return hasEntered & !hasLeft ? true : false;
+        // Horizontal
+        var isInViewFromLeft = (dimensions.right - (dimensions.width * this.horizontalOffset)) > 0;   
+        var isInViewFromRight = (dimensions.left + (dimensions.width * this.horizontalOffset)) < viewportWidth;
+        var isInViewHorizontally = isInViewFromLeft && isInViewFromRight;
+
+        return (isInViewVertically && isInViewHorizontally) ? true : false;
     };
 
     /**
@@ -248,13 +219,11 @@
 
                 if(animationDelay && this._isType('Number', animationDelay) && animationDelay !== 0) {
                     setTimeout(function() {
-                        if(this.options.debug && window.console.debug) console.debug('Animation added');
                         animations.forEach(function(animation) {
                             el.classList.add(animation);
                         });
                     }.bind(this), animationDelay);
                 } else {
-                    if(this.options.debug && window.console.debug) console.debug('Animation added');
                     animations.forEach(function(animation){
                        el.classList.add(animation);
                     });
@@ -284,13 +253,11 @@
 
             if(animationDelay && this._isType('Number', animationDelay)) {
                 setTimeout(function() {
-                    if(this.options.debug && window.console.debug) console.debug('Animation removed');
                     animations.forEach(function(animation) {
                         el.classList.remove(animation);
                     });
                 }.bind(this), animationDelay);
             } else {
-                if(this.options.debug && window.console.debug) console.debug('Animation removed');
                 animations.forEach(function(animation){
                    el.classList.remove(animation);
                 });
@@ -311,8 +278,6 @@
 
         // When animation event has finished
         el.addEventListener(animationEvent, function() {
-            if(this.options.debug && window.console.debug) console.debug('Animation completed');
-
             var removeOveride = el.getAttribute('data-animation-remove');
 
             // If remove animations on completon option is turned on
@@ -375,10 +340,6 @@
      * @public
      */
     Animate.prototype.init = function(){
-        if(this.options.debug && window.console.debug) {
-            console.debug('Animate.js successfully initialised. Found ' + this.elements.length + ' elements to animate');
-        }
-
         // If browser doesn't cut the mustard, let it fail silently
         if(!this.supports) return;
 
@@ -400,8 +361,6 @@
      * @public
      */
     Animate.prototype.kill = function(){
-        if(this.options.debug && window.console.debug) console.debug('Animation.js nuked');
-
         // If we haven't initialised, there is nothing to kill.
         if (!this.initialised) return;
 
@@ -438,7 +397,7 @@
                     this._removeAnimation(el);
                 }
             } else if(this._isAboveScrollPos(el) && (this.options.scrolled || animateScrolled)) {
-                 this._addAnimation(el);
+                this._addAnimation(el);
             }
         }
     };

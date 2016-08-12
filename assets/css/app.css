@@ -1,4 +1,4 @@
-/*! animate.js v1.0.0 | (c) 2015 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.2.7 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 /**     
  * To do list app
  */
@@ -393,7 +393,6 @@ body {
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 1.6rem;
   color: #FFFFFF;
-  overflow-x: hidden;
   background-color: #333333;
   background: linear-gradient(to left bottom, #333333, #262626);
   background-repeat: no-repeat;

@@ -26,22 +26,6 @@ describe('Animate', function () {
         };
     }
 
-    var optionsTest = {
-        animatedClass: jasmine.any(String),
-        offset: jasmine.any(Number),
-        delay: jasmine.any(Number), 
-        target: jasmine.any(String),
-        remove: jasmine.any(Boolean),
-        scrolled: jasmine.any(Boolean),
-        reverse: jasmine.any(Boolean),
-        debug: jasmine.any(Boolean),
-        onLoad: jasmine.any(Boolean),
-        onScroll: jasmine.any(Boolean),
-        onResize: jasmine.any(Boolean),
-        callbackOnInit: jasmine.any(Function),
-        callbackOnAnimate: jasmine.any(Function)
-    };
-
     describe('should initialize Animate', function() {
         beforeEach(function() {
             this.animate = new Animate();
@@ -56,7 +40,18 @@ describe('Animate', function () {
             expect(this.animate.options).toBeDefined();
         });
         it("options object should be correct data types", function(){
-            expect(this.animate.options).toEqual(optionsTest);
+            expect(this.animate.options.animatedClass).toEqual(jasmine.any(String));
+            expect(this.animate.options.offset).toEqual(jasmine.any(Array) || jasmine.any(Number));
+            expect(this.animate.options.delay).toEqual(jasmine.any(Number));
+            expect(this.animate.options.target).toEqual(jasmine.any(String));
+            expect(this.animate.options.remove).toEqual(jasmine.any(Boolean));
+            expect(this.animate.options.scrolled).toEqual(jasmine.any(Boolean));
+            expect(this.animate.options.reverse).toEqual(jasmine.any(Boolean));
+            expect(this.animate.options.onLoad).toEqual(jasmine.any(Boolean));
+            expect(this.animate.options.onScroll).toEqual(jasmine.any(Boolean));
+            expect(this.animate.options.onResize).toEqual(jasmine.any(Boolean));
+            expect(this.animate.options.callbackOnInit).toEqual(jasmine.any(Function));
+            expect(this.animate.options.callbackOnAnimate).toEqual(jasmine.any(Function));
         });
         it("calls the init() function", function() {
             spyOn(this.animate, "init");
@@ -97,11 +92,9 @@ describe('Animate', function () {
 
     describe('should have private methods that return correct data types', function() {
         var el = document.createElement('div');
-
         beforeEach(function() {
             this.animate = new Animate();
         });
-
         afterEach(function() {
             this.animate.kill();
         });
@@ -112,18 +105,6 @@ describe('Animate', function () {
         it('_extend() should return an object', function(){
             var test = this.animate._extend();
             expect(test).toEqual(jasmine.any(Object));
-        });
-        it('_getElemDistance() should return an number', function(){
-            var test = this.animate._getElemDistance(el);
-            expect(test).toEqual(jasmine.any(Number));
-        });
-        it('_getElemOffset() should return an number', function(){
-            var test = this.animate._getElemOffset(el);
-            expect(test).toEqual(jasmine.any(Number));
-        });
-        it('_getScrollPosition() should return an number', function(){
-            var test = this.animate._getScrollPosition();
-            expect(test).toEqual(jasmine.any(Number));
         });
         it('_isAboveScrollPos() should return a boolean', function() {
             var test = this.animate._isAboveScrollPos(el);

@@ -29,7 +29,6 @@ body {
     font-family: $font-family-base;
     font-size: $font-size-base;
     color: $brand-text;
-    overflow-x: hidden;
     background-color: $brand-body-bg;
     background: linear-gradient(to left bottom,$brand-body-bg,darken($brand-body-bg, 5%));
     background-repeat: no-repeat;
