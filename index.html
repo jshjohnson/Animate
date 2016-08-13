@@ -20,10 +20,10 @@
                 <img src="assets/images/logo.svg" class="logo" alt="Animate.js logo">
             </a>
         </header>
-        <div class="box box--zero-top visible" data-animate data-animation-classes="animated tada" data-animation-offset="0.5"></div>
+        <div class="box box--zero-top visible" data-animate data-animation-classes="animated tada"></div>
         <div class="box visible" data-animate data-animation-classes="animated shake"></div>
         <div class="box visible" data-animate data-animation-classes="animated jello"></div>
-        <div class="box visible" data-animate data-animation-classes="animated wobble"></div>
+        <div class="box visible" data-animate data-animation-classes="animated wobble" data-animation-offset="0.5, 1"></div>
         <div class="box visible" data-animate data-animation-classes="animated rubberBand"></div>
         <div class="box visible" data-animate data-animation-classes="animated swing" data-animation-scrolled="true"></div>
         <footer class="push-top" alt="Animate.js logo">
@@ -38,9 +38,9 @@
             animatedClass: 'visible',
             offset: [0.5, 0.5],
             delay: 0,
-            remove: true,
+            remove: false,
             reverse: true,
-            scrolled: true,
+            scrolled: false,
             debug: true,
             onLoad: true,
             onScroll: true,

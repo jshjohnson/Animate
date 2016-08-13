@@ -145,6 +145,22 @@
         return (dimensions.top + (dimensions.height * this.verticalOffset) < scrollPos);
     };
 
+    Animate.prototype._getElementOffset = function(el) {
+        var elementOffset = el.getAttribute('data-animation-offset');
+        var elementOffsetArray = [this.verticalOffset, this.horizontalOffset];
+
+        if(elementOffset) {
+            var stringArray = elementOffset.split(',');
+            if(stringArray.length === 1) {
+                elementOffsetArray = [parseFloat(stringArray[0]), parseFloat(stringArray[0])];
+            } else {
+                elementOffsetArray = [parseFloat(stringArray[0]), parseFloat(stringArray[1])];
+            }
+        }
+
+        return elementOffsetArray;
+    };
+
     /**
      * Determine whether an element is within the viewport
      * @param  {HTMLElement}  el Element to test for
@@ -156,15 +172,20 @@
         var dimensions = el.getBoundingClientRect();
         var viewportHeight = (window.innerHeight || document.documentElement.clientHeight); 
         var viewportWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+        // Offset
+        var elementOffset = this._getElementOffset(el);
+        var verticalOffset = elementOffset[0];
+        var horizontalOffset = elementOffset[1];
         
         // Vertical
-        var isInViewFromTop = (dimensions.bottom - (dimensions.height * this.verticalOffset)) > 0;   
-        var isInViewFromBottom = (dimensions.top + (dimensions.height * this.verticalOffset)) < viewportHeight;
+        var isInViewFromTop = (dimensions.bottom - (dimensions.height * verticalOffset)) > 0;   
+        var isInViewFromBottom = (dimensions.top + (dimensions.height * verticalOffset)) < viewportHeight;
         var isInViewVertically = isInViewFromTop && isInViewFromBottom;
 
         // Horizontal
-        var isInViewFromLeft = (dimensions.right - (dimensions.width * this.horizontalOffset)) > 0;   
-        var isInViewFromRight = (dimensions.left + (dimensions.width * this.horizontalOffset)) < viewportWidth;
+        var isInViewFromLeft = (dimensions.right - (dimensions.width * horizontalOffset)) > 0;   
+        var isInViewFromRight = (dimensions.left + (dimensions.width * horizontalOffset)) < viewportWidth;
         var isInViewHorizontally = isInViewFromLeft && isInViewFromRight;
 
         return (isInViewVertically && isInViewHorizontally) ? true : false;
@@ -322,7 +343,7 @@
     Animate.prototype.addEventListeners = function() {
         if(this.options.onLoad) {
             document.addEventListener('DOMContentLoaded', function(){
-                this.render();
+                this.render(true);
             }.bind(this));
         }
 
@@ -376,7 +397,7 @@
      * @public
      * @return {}
      */
-    Animate.prototype.render = function(){
+    Animate.prototype.render = function(onLoad){
         // Grab all elements in the DOM with the correct target
         var els = this.elements;
 
@@ -384,20 +405,26 @@
         for (var i = els.length - 1; i >= 0; i--) {
             // Store element at location 'i'
             var el = els[i];
-            // See whether it has a reverse override
-            var reverseOveride = el.getAttribute('data-animation-reverse');
-            var animateScrolled = el.getAttribute('data-animation-scrolled');
 
             // If element is in view
             if(this._isInView(el)) {
                 // Add those snazzy animations
                 this._addAnimation(el);
             } else if(this._hasAnimated(el)) {
+                // See whether it has a reverse override
+                var reverseOveride = el.getAttribute('data-animation-reverse');
+
                 if(reverseOveride !== 'false' && this.options.reverse) {
                     this._removeAnimation(el);
                 }
-            } else if(this._isAboveScrollPos(el) && (this.options.scrolled || animateScrolled)) {
-                this._addAnimation(el);
+            } else if(onLoad) {
+                var animateScrolled = el.getAttribute('data-animation-scrolled');
+
+                // If this render has been trigged on load and the element is above our current
+                // scroll position and the `scrolled` option is set, animate it.
+                if((this.options.scrolled || animateScrolled) && this._isAboveScrollPos(el)) {
+                    this._addAnimation(el);
+                }
             }
         }
     };
