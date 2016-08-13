@@ -11,7 +11,7 @@ Trigger animations on elements when they are in view 👓.
     var animate = new Animate({
         target: '[data-animate]',
         animatedClass: 'js-animated',
-        offset: 0.5,
+        offset: [0.5, 0.5],
         delay: 0,
         remove: true,
         scrolled: false,
@@ -32,7 +32,105 @@ Trigger animations on elements when they are in view 👓.
 ## Installation
 To install via NPM, run `npm install --save-dev animate.js` 
 
-## Animating elements
+## Options
+#### target
+Type: `String` Default: `[data-animate]`
+
+Element(s) reference to target (`querySelectorAll` is called against this value). Once this element is in view, add animations.
+
+#### animatedClass
+Type: `String` Default: `js-animated`
+
+Class to be added to element once animation has completed.
+
+#### offset
+Type: `Array/Number` Default: `[0.5, 0.5]`
+
+The vertical and horizontal percentages of the element that needs to be in the viewport before the animation triggers. If a single number is passed instead of an array, that number will be used for both the vertical and horizontally offset.
+
+Examples:
+
+```js
+// Trigger animations when 50% of an elements height 
+// is within the viewport and 100% of its width:
+
+var animate = new Animate({
+    target: '[data-animate]',
+    animatedClass: 'visible',
+    offset: [0.5, 1],
+});
+
+// Trigger animations when 100% of an elements height 
+// is within the viewport and 25% of its width:
+
+var animate = new Animate({
+    target: '[data-animate]',
+    animatedClass: 'visible',
+    offset: [1, 0.25],
+});
+
+// Trigger animations when 50% of an elements height 
+// is within the viewport and 50% of its width:
+
+var animate = new Animate({
+    target: '[data-animate]',
+    animatedClass: 'visible',
+    offset: 0.5,
+});
+```
+
+####  delay
+Type: `Number` Default: `0`
+
+Milisecond delay before animation is added to element in view.
+
+####  remove
+Type: `Boolean` Default: `true`
+
+Whether animation classes should removed when the animations complete.
+
+####  reverse
+Type: `Boolean` Default: `false`
+
+Once the element has left the top of the viewport (by the same offset), remove the animations from element. When the element comes back into view, it will animate again.
+
+####  scrolled
+Type: `Boolean` Default: `false`
+
+Animate any elements that a user has already scrolled past on load. This will only trigger if the `onLoad` option (see below) is `true`.
+
+#### debug
+Type: `Boolean` Default: `false`
+
+Debugging information in console.
+
+#### onLoad
+Type: `Boolean` Default: `true`
+
+Whether to fire on DOMContentLoaded.
+
+#### onScroll
+Type: `Boolean` Default: `true`
+
+Whether to fire on scroll.
+
+#### onResize
+Type: `Boolean` Default: `false`
+
+Whether to fire on resize.
+
+#### callbackOnInit
+Type: `Function` Default: `function(){}`
+
+Function to run once Animate.js initialises 
+
+#### callbackOnAnimate 
+Type: `Function` Default: `function(el){}`
+
+Function to run once animation has completed (pass parameter to access the animated element).
+
+## Element overrides
+
 ##### `data-animate`
 
 Default way of targeting an element to animate (no value required). This can be overridden to be a custom attribute or class.
@@ -65,72 +163,6 @@ Overide the plugin `reverse` option per element.
 <div data-animate data-animation-classes="animated bounce" data-animation-offset="0.2"></div>
 <div data-animate data-animation-classes="animated bounce" data-animation-remove="true"></div>
 ```
-
-## Options
-#### target
-Type: `String` Default: `[data-animate]`
-
-Element/s to target. Once this element is in view, add animations.
-
-#### animatedClass
-Type: `String` Default: `js-animated`
-
-Class to be added to element once animation has completed.
-
-#### offset
-Type: `Number` Default: `0.5` (50%)
-
-Percentage of element that needs to be in the viewport before the animation triggers.
-
-####  delay
-Type: `Number` Default: `0`
-
-Milisecond delay before animation is added to element in view.
-
-####  remove
-Type: `Boolean` Default: `true`
-
-Whether animation classes should removed when the animations complete.
-
-####  reverse
-Type: `Boolean` Default: `false`
-
-Once the element has left the top of the viewport (by the same offset), remove the animations from element. When the element comes back into view, it will animate again.
-
-####  scrolled
-Type: `Boolean` Default: `false`
-
-Animate any elements that a user has already scrolled past.
-
-#### debug
-Type: `Boolean` Default: `false`
-
-Debugging information in console.
-
-#### onLoad
-Type: `Boolean` Default: `true`
-
-Whether to fire on DOMContentLoaded.
-
-#### onScroll
-Type: `Boolean` Default: `true`
-
-Whether to fire on scroll.
-
-#### onResize
-Type: `Boolean` Default: `false`
-
-Whether to fire on resize.
-
-#### callbackOnInit
-Type: `Function` Default: `function(){}`
-
-Function to run once Animate.js initialises 
-
-#### callbackOnAnimate 
-Type: `Function` Default: `function(el){}`
-
-Function to run once animation has completed (pass parameter to access the animated element).
 
 ## Methods
 #### init();

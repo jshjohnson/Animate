@@ -1,4 +1,4 @@
-/*! animate.js v1.2.7 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.3.0 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(factory);
@@ -15,7 +15,7 @@
         var el = document.createElement("fakeelement");
         var defaultOptions = {
             animatedClass: 'js-animated',
-            offset: [0.5],
+            offset: [0.5, 0.5],
             delay: 0,
             target: '[data-animate]',
             remove: true,
@@ -145,6 +145,12 @@
         return (dimensions.top + (dimensions.height * this.verticalOffset) < scrollPos);
     };
 
+    /**
+     * Determines the offset for a particular element considering 
+     * any attribute overrides. Falls back to config options otherwise
+     * @param  {HTMLElement} el Element to get offset for 
+     * @return {Arrray}    An offset array of [Y,X] offsets
+     */
     Animate.prototype._getElementOffset = function(el) {
         var elementOffset = el.getAttribute('data-animation-offset');
         var elementOffsetArray = [this.verticalOffset, this.horizontalOffset];
