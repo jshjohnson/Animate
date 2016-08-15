@@ -55,7 +55,7 @@ gulp.task('html', function () {
  * Compile our styles, prefix the result, rename and move
  */
 gulp.task('styles', function () {
-    gulp.src(paths.styles) 
+    gulp.src(paths.styles)
         .pipe(plugins.sass().on('error', sass.logError))
         .pipe(plugins.autoprefixer('last 2 versions', '> 1%', 'ie 8'))
         .pipe(plugins.header(banner, { package : package }))
@@ -86,10 +86,12 @@ gulp.task('scripts', function() {
  * Make sure our JS doesn't suck balls
  */
 gulp.task('lint', function () {
-    return gulp.src(paths.scripts)
+    return gulp.src(paths.scripts[0])
         .pipe(plugins.plumber())
-        .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('jshint-stylish'));
+        .pipe(plugins.eslint({
+            configFile: '.eslintrc'
+        }))
+        .pipe(plugins.eslint.format());
 });
 
 /**
@@ -121,6 +123,6 @@ gulp.task('watch', function() {
 });
 
 
-gulp.task('dev', ['test', 'connect', 'watch']);
+gulp.task('dev', ['lint', 'test', 'connect', 'watch']);
 gulp.task('build', ['lint', 'scripts', 'test']);
 gulp.task('default', ['dev']);
