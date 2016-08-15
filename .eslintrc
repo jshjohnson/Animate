@@ -4,7 +4,8 @@
   },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "amd": true
   },
   "rules": {
     "quotes": [2, "single"],
@@ -17,6 +18,9 @@
     "no-console": ["error", { allow: ["warn", "error"] }],
     "consistent-return": "off",
     "no-param-reassign": ["error", { "props": false }],
-    "no-unused-vars": ["error", { "args": "none" }]
+    "no-unused-vars": ["error", { "args": "none" }],
+    "func-names": ["error", "never"],
+    "space-before-function-paren": "off",
+    "vars-on-top": "off"
   },
 }

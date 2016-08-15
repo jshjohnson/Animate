@@ -10,7 +10,7 @@
 }(this, function() {
     'use strict';
 
-    var Animate = function(userOptions){
+    var Animate = function(userOptions) {
         var el = document.createElement('fakeelement');
         var defaultOptions = {
             animatedClass: 'js-animated',
@@ -279,8 +279,8 @@
             el.removeAttribute('data-animated');
             var animations = classes.split(' ');
             var animationDelay = parseInt(el.getAttribute('data-animation-delay'), 10);
-            var removeAnimation = function(animation){
-               el.classList.remove(animation);
+            var removeAnimation = function(animation) {
+                el.classList.remove(animation);
             };
 
             animations.push(this.options.animatedClass);
@@ -288,7 +288,7 @@
             if (animationDelay && this._isType('Number', animationDelay)) {
                 setTimeout(function() {
                     animations.forEach(removeAnimation);
-                }.bind(this), animationDelay);
+                }, animationDelay);
             } else {
                 animations.forEach(removeAnimation);
             }
@@ -336,6 +336,10 @@
         }.bind(this));
     };
 
+    /**
+     * Remove event listeners
+     * @public
+     */
     Animate.prototype.removeEventListeners = function() {
         if (this.options.onResize) {
             window.removeEventListener('resize', this.throttledEvent, false);
@@ -347,7 +351,8 @@
     };
 
     /**
-     * Trigger event listeners
+     * Add event listeners
+     * @public
      */
     Animate.prototype.addEventListeners = function() {
         if (this.options.onLoad) {
@@ -366,7 +371,7 @@
     };
 
     /**
-     * Initalises event listeners
+     * Initalises Animate.js and adds event listeners
      * @public
      */
     Animate.prototype.init = function() {
