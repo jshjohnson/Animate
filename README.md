@@ -16,7 +16,6 @@ Trigger animations on elements when they are in view 👓.
         remove: true,
         scrolled: false,
         reverse: false,
-        debug: false,
         onLoad: true,
         onScroll: true,
         onResize: false,
