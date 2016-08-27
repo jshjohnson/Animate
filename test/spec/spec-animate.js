@@ -50,6 +50,7 @@ describe('Animate', function () {
             expect(this.animate.options.onLoad).toEqual(jasmine.any(Boolean));
             expect(this.animate.options.onScroll).toEqual(jasmine.any(Boolean));
             expect(this.animate.options.onResize).toEqual(jasmine.any(Boolean));
+            expect(this.animate.options.disableFilter).toBeNull();
             expect(this.animate.options.callbackOnInit).toEqual(jasmine.any(Function));
             expect(this.animate.options.callbackOnAnimate).toEqual(jasmine.any(Function));
         });

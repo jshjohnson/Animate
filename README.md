@@ -8,7 +8,7 @@ Trigger animations on elements when they are in view 👓.
 ```html
 <script src="/assets/js/dist/animate.js"></script>
 <script>
-    var animate = new Animate({
+    var animate = new Animate({        
         target: '[data-animate]',
         animatedClass: 'js-animated',
         offset: [0.5, 0.5],
@@ -16,14 +16,12 @@ Trigger animations on elements when they are in view 👓.
         remove: true,
         scrolled: false,
         reverse: false,
-        debug: false,
         onLoad: true,
         onScroll: true,
         onResize: false,
-        callbackOnInit: function(){},
-        callbackOnAnimate: function(element){
-            console.log(element);
-        }
+        disableFilter: false,
+        callbackOnInit: function() {},
+        callbackOnAnimate: function(el) {},
     });
     animate.init();
 </script>
@@ -48,12 +46,11 @@ Type: `Array/Number` Default: `[0.5, 0.5]`
 
 The vertical and horizontal percentages of the element that needs to be in the viewport before the animation triggers. If a single number is passed instead of an array, that number will be used for both the vertical and horizontally offset.
 
-Examples:
+*Examples*
 
 ```js
 // Trigger animations when 50% of an elements height 
 // is within the viewport and 100% of its width:
-
 var animate = new Animate({
     target: '[data-animate]',
     animatedClass: 'visible',
@@ -62,7 +59,6 @@ var animate = new Animate({
 
 // Trigger animations when 100% of an elements height 
 // is within the viewport and 25% of its width:
-
 var animate = new Animate({
     target: '[data-animate]',
     animatedClass: 'visible',
@@ -71,7 +67,6 @@ var animate = new Animate({
 
 // Trigger animations when 50% of an elements height 
 // is within the viewport and 50% of its width:
-
 var animate = new Animate({
     target: '[data-animate]',
     animatedClass: 'visible',
@@ -118,6 +113,30 @@ Whether to fire on scroll.
 Type: `Boolean` Default: `false`
 
 Whether to fire on resize.
+
+### disableFilter
+Type: `Function` Default: `null`
+
+Function to determine whether Animate should animate elements.
+
+*Example*
+
+```js
+// Function to determine whether we are on a mobile device
+var isMobile = function() {
+    if (window.matchMedia("(max-width: 480px)").matches) {
+        return true;
+    } else {
+        return false;
+    }
+};
+
+// Disable Animate.js if isMobile returns true
+var animate = new Animate({
+    onResize: true,
+    disableFilter: isMobile,
+});
+```
 
 #### callbackOnInit
 Type: `Function` Default: `function(){}`
@@ -176,6 +195,7 @@ Adds/removes animations without the need for event listeners.
 Animate.js is supported in modern browsers from IE9 and above (i.e. browsers that support CSS animations). Due to discrepencies in support for `Element.classList`, I would recommend including the very good [classList polyfill](https://github.com/eligrey/classList.js/) before you include animate.js. I would also suggest using Modernizr to feature detect CSS animations/transitions and apply override styling for browsers that do not support those features.
 
 Using SCSS, this may look like this:
+
 ```css
 .animate {
     opacity: 0;
@@ -187,6 +207,7 @@ Using SCSS, this may look like this:
 
 ## Development
 To setup a local environment: clone this repo, navigate into it's directory in a terminal window and run the following command:
+
 * ```npm install```
 
 ### Gulp tasks

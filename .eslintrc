@@ -21,6 +21,7 @@
     "no-unused-vars": ["error", { "args": "none" }],
     "func-names": ["error", "never"],
     "space-before-function-paren": "off",
-    "vars-on-top": "off"
+    "vars-on-top": "off",
+    "comma-dangle": "off",
   },
 }

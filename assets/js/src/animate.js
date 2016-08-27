@@ -12,23 +12,20 @@
     var Animate = function(userOptions) {
         var el = document.createElement('fakeelement');
         var defaultOptions = {
+            target: '[data-animate]',
             animatedClass: 'js-animated',
             offset: [0.5, 0.5],
             delay: 0,
-            target: '[data-animate]',
             remove: true,
             scrolled: false,
             reverse: false,
             onLoad: true,
             onScroll: true,
             onResize: false,
+            disableFilter: null,
             callbackOnInit: function() {},
-            callbackOnAnimate: function() {}
+            callbackOnAnimate: function() {},
         };
-
-        this.throttledEvent = this._debounce(function() {
-            this.render();
-        }.bind(this), 15);
 
         this.supports = 'querySelector' in document && 'addEventListener' in window && 'classList' in el && Function.prototype.bind;
         this.options = this._extend(defaultOptions, userOptions || {});
@@ -43,6 +40,10 @@
             this.verticalOffset = this.options.offset[0];
             this.horizontalOffset = this.options.offset[1] ? this.options.offset[1] : this.options.offset[0];
         }
+
+        this.throttledEvent = this._debounce(function() {
+            this.render();
+        }.bind(this), 15);
     };
 
     // Returns a function, that, as long as it continues to be invoked, will not
@@ -410,32 +411,41 @@
      * @return {}
      */
     Animate.prototype.render = function(onLoad) {
-        // Grab all elements in the DOM with the correct target
-        var els = this.elements;
+        if (this.initialised) {
+            // If a disability filter function has been passed...
+            if (this.options.disableFilter && this._isType('Function', this.options.disableFilter)) {
+                var test = this.options.disableFilter();
+                // ...and it passes, kill render
+                if (test === true) return;
+            }
 
-        // Loop through all elements
-        for (var i = els.length - 1; i >= 0; i--) {
-            // Store element at location 'i'
-            var el = els[i];
+            // Grab all elements in the DOM with the correct target
+            var els = this.elements;
 
-            // If element is in view
-            if (this._isInView(el)) {
-                // Add those snazzy animations
-                this._addAnimation(el);
-            } else if (this._hasAnimated(el)) {
-                // See whether it has a reverse override
-                var reverseOveride = el.getAttribute('data-animation-reverse');
+            // Loop through all elements
+            for (var i = els.length - 1; i >= 0; i--) {
+                // Store element at location 'i'
+                var el = els[i];
 
-                if (reverseOveride !== 'false' && this.options.reverse) {
-                    this._removeAnimation(el);
-                }
-            } else if (onLoad) {
-                var animateScrolled = el.getAttribute('data-animation-scrolled');
-
-                // If this render has been trigged on load and the element is above our current
-                // scroll position and the `scrolled` option is set, animate it.
-                if ((this.options.scrolled || animateScrolled) && this._isAboveScrollPos(el)) {
+                // If element is in view
+                if (this._isInView(el)) {
+                    // Add those snazzy animations
                     this._addAnimation(el);
+                } else if (this._hasAnimated(el)) {
+                    // See whether it has a reverse override
+                    var reverseOveride = el.getAttribute('data-animation-reverse');
+
+                    if (reverseOveride !== 'false' && this.options.reverse) {
+                        this._removeAnimation(el);
+                    }
+                } else if (onLoad) {
+                    var animateScrolled = el.getAttribute('data-animation-scrolled');
+
+                    // If this render has been trigged on load and the element is above our current
+                    // scroll position and the `scrolled` option is set, animate it.
+                    if ((this.options.scrolled || animateScrolled) && this._isAboveScrollPos(el)) {
+                        this._addAnimation(el);
+                    }
                 }
             }
         }
