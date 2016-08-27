@@ -94,11 +94,6 @@ Type: `Boolean` Default: `false`
 
 Animate any elements that a user has already scrolled past on load. This will only trigger if the `onLoad` option (see below) is `true`.
 
-#### debug
-Type: `Boolean` Default: `false`
-
-Debugging information in console.
-
 #### onLoad
 Type: `Boolean` Default: `true`
 
