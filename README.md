@@ -4,6 +4,10 @@ Trigger animations on elements when they are in view 👓.
 
 [Demo](https://joshuajohnson.co.uk/Animate/)
 
+----
+###Interested in writing your own JavaScript plugins? Check out [ES6.io](https://ES6.io/friend/JOHNSON) for great tutorials!
+----
+
 ## Setup
 ```html
 <script src="/assets/js/dist/animate.js"></script>
