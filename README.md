@@ -1,4 +1,4 @@
-# Animate.js [![Build Status](https://travis-ci.org/jshjohnson/Animate.svg?branch=develop)](https://travis-ci.org/jshjohnson/Animate)
+# Animate.js [![Build Status](https://travis-ci.org/jshjohnson/Animate.svg?branch=develop)](https://travis-ci.org/jshjohnson/Animate)[![Project Sponsored By ES6.io](https://img.shields.io/badge/👍_Project_Sponsored_By-ES6.io Tutorials-brightgreen.svg)](https://ES6.io/friend/JOHNSON)
 
 Trigger animations on elements when they are in view 👓.
 
