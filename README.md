@@ -5,7 +5,7 @@ Trigger animations on elements when they are in view 👓.
 [Demo](https://joshuajohnson.co.uk/Animate/)
 
 ----
-###Interested in writing your own JavaScript plugins? Check out [ES6.io](https://ES6.io/friend/JOHNSON) for great tutorials!
+### Interested in writing your own JavaScript plugins? Check out [ES6.io](https://ES6.io/friend/JOHNSON) for great tutorials!
 ----
 
 ## Setup
