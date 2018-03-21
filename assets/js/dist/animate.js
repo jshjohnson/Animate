@@ -155,7 +155,7 @@
      * Determines the offset for a particular element considering
      * any attribute overrides. Falls back to config options otherwise
      * @param  {HTMLElement} el Element to get offset for
-     * @return {Arrray}    An offset array of [Y,X] offsets
+     * @return {Array}    An offset array of [Y,X] offsets
      */
     Animate.prototype._getElementOffset = function(el) {
         var elementOffset = el.getAttribute('data-animation-offset');
@@ -325,11 +325,11 @@
 
         // When animation event has finished
         el.addEventListener(animationEvent, function() {
-            var removeOveride = el.getAttribute('data-animation-remove');
+            var removeOverride = el.getAttribute('data-animation-remove');
 
-            // If remove animations on completon option is turned on
-            if (removeOveride !== 'false' && this.options.remove) {
-                // Seperate each class held in the animation classes attribute
+            // If remove animations on completion option is turned on
+            if (removeOverride !== 'false' && this.options.remove) {
+                // Separate each class held in the animation classes attribute
                 var animations = el.getAttribute('data-animation-classes').split(' ');
                 var removeAnimation = function(animation) {
                     el.classList.remove(animation);
@@ -339,7 +339,7 @@
                 animations.forEach(removeAnimation);
             }
 
-            // Add animtion complete class
+            // Add animation complete class
             el.classList.add(this.options.animatedClass);
             // Set animated attribute to true
             el.setAttribute('data-animated', true);
@@ -383,7 +383,7 @@
     };
 
     /**
-     * Initalises Animate.js and adds event listeners
+     * Initializes Animate.js and adds event listeners
      * @public
      */
     Animate.prototype.init = function() {
@@ -440,15 +440,15 @@
                     this._addAnimation(el);
                 } else if (this._hasAnimated(el)) {
                     // See whether it has a reverse override
-                    var reverseOveride = el.getAttribute('data-animation-reverse');
+                    var reverseOverride = el.getAttribute('data-animation-reverse');
 
-                    if (reverseOveride !== 'false' && this.options.reverse) {
+                    if (reverseOverride !== 'false' && this.options.reverse) {
                         this._removeAnimation(el);
                     }
                 } else if (onLoad) {
                     var animateScrolled = el.getAttribute('data-animation-scrolled');
 
-                    // If this render has been trigged on load and the element is above our current
+                    // If this render has been triggered on load and the element is above our current
                     // scroll position and the `scrolled` option is set, animate it.
                     if ((this.options.scrolled || animateScrolled) && this._isAboveScrollPos(el)) {
                         this._addAnimation(el);
