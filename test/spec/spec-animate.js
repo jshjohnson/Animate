@@ -64,21 +64,21 @@ describe('Animate', function () {
             this.animate.init();
             expect(this.animate.initialised).toEqual(true);
         });
-        it("shoud fire scroll event listener if set", function() {
+        it("should fire scroll event listener if set", function() {
             spyOn(window, 'addEventListener');
             this.animate.init();
             if(this.animate.options.onScroll === true) {
                 expect(window.addEventListener).toHaveBeenCalledWith('scroll', jasmine.any(Function), false);
             }
         });
-        it("shoud fire resize event listener if set", function() {
+        it("should fire resize event listener if set", function() {
             spyOn(window, 'addEventListener');
             this.animate.init();
             if(this.animate.options.onResize === true) {
                 expect(window.addEventListener).toHaveBeenCalledWith('resize', jasmine.any(Function), false);
             }
         });
-        it("shoud fire DOMContentLoaded event listener if set", function() {
+        it("should fire DOMContentLoaded event listener if set", function() {
             spyOn(document, 'addEventListener');
             this.animate.init();
             if(this.animate.options.onLoad === true) {
