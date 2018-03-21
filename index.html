@@ -48,6 +48,10 @@
             callbackOnInit: function() {
                 console.log('Initialised');
             },
+            callbackOnInView: function(element) {
+                var animationType = element.getAttribute('data-animation-classes').replace('animated', '').trim();
+                console.log(animationType + ' in view.');
+            },
             callbackOnAnimate: function(element) {
                 console.log(element)
             }

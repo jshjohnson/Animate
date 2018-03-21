@@ -25,6 +25,7 @@
             onResize: false,
             disableFilter: null,
             callbackOnInit: function() {},
+            callbackOnInView: function() {},
             callbackOnAnimate: function() {},
         };
 
@@ -243,6 +244,8 @@
      */
     Animate.prototype._addAnimation = function(el) {
         if (!this._isVisible(el)) {
+            this._doCallback(this.options.callbackOnInView, el);
+
             var classes = el.getAttribute('data-animation-classes');
             if (classes) {
                 el.setAttribute('data-visibility', true);
@@ -274,7 +277,6 @@
      */
     Animate.prototype._removeAnimation = function(el) {
         var classes = el.getAttribute('data-animation-classes');
-
         if (classes) {
             el.setAttribute('data-visibility', false);
             el.removeAttribute('data-animated');
@@ -295,6 +297,20 @@
             }
         } else {
             console.error('No animation classes were given');
+        }
+    };
+
+    /**
+     * If valid callback has been passed, run it with optional element as a parameter
+     * @private
+     * @param  {Function}         fn Callback function
+     */
+    Animate.prototype._doCallback = function(fn) {
+        var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+        if (fn && this._isType('Function', fn)) {
+            fn(el);
+        } else {
+            console.error('Callback is not a function');
         }
     };
 
@@ -328,12 +344,7 @@
             // Set animated attribute to true
             el.setAttribute('data-animated', true);
 
-            // If valid callback has been passed, run it with the element as a parameter
-            if (this.options.callbackOnAnimate && this._isType('Function', this.options.callbackOnAnimate)) {
-                this.options.callbackOnAnimate(el);
-            } else {
-                console.error('Callback is not a function');
-            }
+            this._doCallback(this.options.callbackOnAnimate, el);
         }.bind(this));
     };
 
@@ -383,12 +394,7 @@
 
         this.addEventListeners();
 
-        // If valid callback has been passed, run it with the element as a parameter
-        if (this.options.callbackOnInit && this._isType('Function', this.options.callbackOnInit)) {
-            this.options.callbackOnInit();
-        } else {
-            console.error('Callback is not a function');
-        }
+        this._doCallback(this.options.callbackOnInit);
     };
 
     /**

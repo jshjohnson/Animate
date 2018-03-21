@@ -52,6 +52,7 @@ describe('Animate', function () {
             expect(this.animate.options.onResize).toEqual(jasmine.any(Boolean));
             expect(this.animate.options.disableFilter).toBeNull();
             expect(this.animate.options.callbackOnInit).toEqual(jasmine.any(Function));
+            expect(this.animate.options.callbackOnInView).toEqual(jasmine.any(Function));
             expect(this.animate.options.callbackOnAnimate).toEqual(jasmine.any(Function));
         });
         it("calls the init() function", function() {
