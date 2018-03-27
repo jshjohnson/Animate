@@ -15,7 +15,7 @@
     "no-underscore-dangle": "off",
     "no-new": 0,
     "max-len": "off",
-    "no-console": ["error", { allow: ["warn", "error"] }],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "consistent-return": "off",
     "no-param-reassign": ["error", { "props": false }],
     "no-unused-vars": ["error", { "args": "none" }],
@@ -23,5 +23,6 @@
     "space-before-function-paren": "off",
     "vars-on-top": "off",
     "comma-dangle": "off",
-  },
+    "no-restricted-syntax": "off"
+  }
 }
