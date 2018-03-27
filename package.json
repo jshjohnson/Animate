@@ -13,6 +13,8 @@
   },
   "scripts": {
     "test": "gulp test",
+    "dev": "gulp dev",
+    "build": "gulp build",
     "prepush": "npm run test"
   },
   "homepage": "https://github.com/jshjohnson/animate.js",
@@ -34,7 +36,7 @@
     "gulp-plumber": "~0.6.2",
     "gulp-rename": "~1.1.0",
     "gulp-sass": "^2.0.4",
-    "gulp-uglify": "~0.3.0",
+    "gulp-uglify": "~3.0.0",
     "husky": "^0.14.3",
     "jasmine-core": "^2.3.4",
     "jshint-stylish": "^0.2.0",
