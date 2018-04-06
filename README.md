@@ -25,6 +25,7 @@ Trigger animations on elements when they are in view 👓.
         onResize: false,
         disableFilter: false,
         callbackOnInit: function() {},
+        callbackOnInView: function(el) {},
         callbackOnAnimate: function(el) {},
     });
     animate.init();
@@ -140,7 +141,12 @@ var animate = new Animate({
 #### callbackOnInit
 Type: `Function` Default: `function(){}`
 
-Function to run once Animate.js initialises 
+Function to run once Animate.js initialises
+
+#### callbackOnInView
+Type: `Function` Default: `function(el){}`
+
+Function to run once the element is in the viewport (pass parameter to access the element).
 
 #### callbackOnAnimate 
 Type: `Function` Default: `function(el){}`
