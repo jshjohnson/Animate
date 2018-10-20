@@ -221,7 +221,7 @@ To setup a local environment: clone this repo, navigate into it's directory in a
 * ```gulp build```
 
 ## Contributions
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using Gulp...bla bla bla
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using Gulp.
 
 ## License
 MIT License 
