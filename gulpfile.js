@@ -3,7 +3,7 @@ var gulp    = require('gulp'),
     package = require('./package.json'),
     sass = require('gulp-sass'),
     Server = require('karma').Server;
-    opn = require('opn');
+opn = require('opn');
 
 var paths = {
     output : 'assets/scripts/dist/',
@@ -20,13 +20,13 @@ var paths = {
 };
 
 var banner = [
-  '/*! ',
-  '<%= package.name %> ',
-  'v<%= package.version %> | ',
-  '(c) ' + new Date().getFullYear() + ' <%= package.author %> |',
-  ' <%= package.homepage %>',
-  ' */',
-  '\n'
+    '/*! ',
+    '<%= package.name %> ',
+    'v<%= package.version %> | ',
+    '(c) ' + new Date().getFullYear() + ' <%= package.author %> |',
+    ' <%= package.homepage %>',
+    ' */',
+    '\n'
 ].join('');
 
 /**
@@ -107,7 +107,7 @@ gulp.task('test', function (done) {
 /**
  * Watch for file changes and re-run tests on each change
  */
- gulp.task('tdd', function (done) {
+gulp.task('tdd', function (done) {
     new Server({
         configFile: __dirname + '/test/karma.conf.js'
     }, done).start();
@@ -123,6 +123,6 @@ gulp.task('watch', function() {
 });
 
 
-gulp.task('dev', ['lint', 'test', 'connect', 'watch']);
-gulp.task('build', ['lint', 'scripts', 'test']);
-gulp.task('default', ['dev']);
+gulp.task('dev', gulp.series('lint', 'test', 'connect', 'watch'));
+gulp.task('build', gulp.series('lint', 'scripts', 'test'));
+gulp.task('default', gulp.series('dev'));
