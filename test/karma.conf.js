@@ -12,14 +12,9 @@ module.exports = function(config) {
             'karma-spec-reporter',
             'karma-phantomjs-launcher',
             'karma-jasmine',
-            'karma-coverage',
             'karma-htmlfile-reporter'
         ],
-        reporters: ['spec', 'coverage', 'html'],
-        coverageReporter: {
-            type : 'html',
-            dir : 'coverage/'
-        },
+        reporters: ['spec', 'html'],
         htmlReporter: {
             outputFile: 'results/unit-tests.html'
         }
