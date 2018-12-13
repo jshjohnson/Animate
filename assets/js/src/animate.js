@@ -366,14 +366,12 @@
      * @public
      */
     Animate.prototype.addEventListeners = function() {
-        if (this.options.onLoad) {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', function() {
-                    this.render(true);
-                }.bind(this));
-            } else {
-                this.render(true); // Call render immediately if document already loaded
-            }
+        if (this.options.onLoad && (document.readyState === 'loading')) {
+            document.addEventListener('DOMContentLoaded', function() {
+                this.render(true);
+            }.bind(this));
+        } else if (this.options.onLoad) {
+            this.render(true); // Call render immediately if document already loaded
         }
 
         if (this.options.onResize) {

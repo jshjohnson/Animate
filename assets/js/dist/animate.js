@@ -1,4 +1,4 @@
-/*! animate.js v1.4.0 | (c) 2018 Josh Johnson | https://github.com/jshjohnson/animate.js */
+/*! animate.js v1.4.1 | (c) 2018 Josh Johnson | https://github.com/jshjohnson/animate.js */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(factory);
@@ -367,10 +367,12 @@
      * @public
      */
     Animate.prototype.addEventListeners = function() {
-        if (this.options.onLoad) {
+        if (this.options.onLoad && (document.readyState === 'loading')) {
             document.addEventListener('DOMContentLoaded', function() {
                 this.render(true);
             }.bind(this));
+        } else if (this.options.onLoad) {
+            this.render(true); // Call render immediately if document already loaded
         }
 
         if (this.options.onResize) {
