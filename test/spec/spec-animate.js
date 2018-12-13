@@ -80,9 +80,12 @@ describe('Animate', function () {
         });
         it("should fire DOMContentLoaded event listener if set", function() {
             spyOn(document, 'addEventListener');
+            spyOn(this.animate, 'render');
             this.animate.init();
-            if(this.animate.options.onLoad === true) {
+            if(this.animate.options.onLoad === true && document.readyState !== 'complete') {
                 expect(document.addEventListener).toHaveBeenCalledWith('DOMContentLoaded', jasmine.any(Function));
+            } else {
+                expect(this.animate.render).toHaveBeenCalled();
             }
         });
         it('should expose public functions', function() {
