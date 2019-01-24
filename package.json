@@ -28,7 +28,7 @@
     "eslint-plugin-react": "^6.1.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
-    "gulp-connect": "^5.6.1",
+    "gulp-connect": "^5.7.0",
     "gulp-csso": "^3.0.1",
     "gulp-eslint": "^5.0.0",
     "gulp-header": "^1.0.2",
