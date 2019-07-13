@@ -1,13 +1,22 @@
 {
-  "extends": ["airbnb", "prettier"],
-  "plugins": ["prettier"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
   "env": {
     "browser": true
   },
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true, "trailingComma": "all" }],
     "curly": ["error", "all"],
     "no-underscore-dangle": "off",
-    "func-names": "off"
+    "func-names": "off",
+    "no-plusplus": ["error", {
+      "allowForLoopAfterthoughts": true
+    }],
+    "no-restricted-syntax": "off"
   }
 }

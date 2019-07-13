@@ -3,10 +3,16 @@
   "version": "1.4.1",
   "description": "Tiny vanilla JS plugin to trigger animations on elements when they are within the viewport",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "lodash-es": "^4.17.14"
+  },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.3",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.12.0",
     "eslint": "^5.3.0",
     "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-airbnb-base": "^13.2.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -14,13 +20,13 @@
     "eslint-plugin-react": "^7.14.2",
     "prettier": "^1.18.2",
     "rollup": "^1.16.7",
-    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.22.0",
     "tslib": "^1.10.0",
     "typescript": "^3.5.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint $(find src -name '*.js')",
+    "lint": "eslint $(find src -name '*.ts')",
     "build": "rollup -c rollup.config.js"
   },
   "repository": {
