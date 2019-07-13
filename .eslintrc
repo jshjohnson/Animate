@@ -10,6 +10,13 @@
   "env": {
     "browser": true
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
+  },
   "rules": {
     "curly": ["error", "all"],
     "no-underscore-dangle": "off",

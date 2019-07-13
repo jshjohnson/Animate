@@ -1,6 +1,9 @@
 import debounce from "lodash-es/debounce";
 import merge from "lodash-es/merge";
 
+import getBrowserAnimationPrefix from "./utils/getBrowserAnimationPrefix";
+import isType from "./utils/isType";
+
 interface Animate {
   options: AnimateOptions;
   elements: NodeListOf<Element>;
@@ -50,7 +53,7 @@ class Animate implements Animate {
     this.elements = document.querySelectorAll(this.options.target);
     this.initialised = false;
 
-    if (Animate.isType("string", this.options.offset)) {
+    if (isType("string", this.options.offset)) {
       const splitOffset = (this.options.offset as string).split(",");
 
       this.verticalOffset = parseInt(splitOffset[0], 10);
@@ -66,36 +69,6 @@ class Animate implements Animate {
     this.throttledEvent = debounce((): void => {
       this.render();
     }, 15);
-  }
-
-  /**
-   * Determines when an animation has completed
-   * @author  David Walsh
-   * @link https://davidwalsh.name/css-animation-callback
-   * @private
-   * @return {String} Appropriate 'animationEnd' event for browser to handle
-   */
-  private static whichAnimationEvent(): string | void {
-    const el = document.createElement("temp");
-
-    const browserPrefixes = {
-      animation: "animationend",
-      OAnimation: "oAnimationEnd",
-      MozAnimation: "animationend",
-      WebkitAnimation: "webkitAnimationEnd"
-    };
-
-    let prefix: keyof typeof browserPrefixes;
-
-    for (prefix in browserPrefixes) {
-      if (Object.prototype.hasOwnProperty.call(browserPrefixes, prefix)) {
-        if (el.style[prefix as keyof CSSStyleDeclaration] !== undefined) {
-          return browserPrefixes[prefix];
-        }
-      }
-    }
-
-    return null;
   }
 
   /**
@@ -197,18 +170,6 @@ class Animate implements Animate {
   }
 
   /**
-   * Test whether an object is of a give type
-   * @private
-   * @param  {String}  type Type to test for e.g. 'String', 'Array'
-   * @param  {Object}  obj  Object to test type against
-   * @return {Boolean}      Whether object is of a type
-   */
-  private static isType(type: string, obj: any): boolean {
-    const test = Object.prototype.toString.call(obj).slice(8, -1);
-    return obj !== null && obj !== undefined && test === type;
-  }
-
-  /**
    * Add animation to given element
    * @private
    * @param {Element} el Element to target
@@ -227,7 +188,7 @@ class Animate implements Animate {
 
         if (
           animationDelay &&
-          Animate.isType("Number", animationDelay) &&
+          isType("Number", animationDelay) &&
           animationDelay !== 0
         ) {
           setTimeout((): void => {
@@ -266,7 +227,7 @@ class Animate implements Animate {
 
       animations.push(this.options.animatedClass);
 
-      if (animationDelay && Animate.isType("Number", animationDelay)) {
+      if (animationDelay && isType("Number", animationDelay)) {
         setTimeout((): void => {
           animations.forEach((animation): void => {
             el.classList.remove(animation);
@@ -292,7 +253,7 @@ class Animate implements Animate {
     fn: (el?: Element) => void,
     el: Element = null
   ): void {
-    if (fn && Animate.isType("Function", fn)) {
+    if (fn && isType("Function", fn)) {
       fn(el);
     } else {
       console.error("Callback is not a function");
@@ -306,7 +267,7 @@ class Animate implements Animate {
    */
   private completeAnimation(el: Element): void {
     // Store animation event
-    const animationEvent = Animate.whichAnimationEvent();
+    const animationEvent = getBrowserAnimationPrefix();
 
     if (animationEvent) {
       // When animation event has finished
@@ -409,7 +370,7 @@ class Animate implements Animate {
       // If a disability filter function has been passed...
       if (
         this.options.disableFilter &&
-        Animate.isType("Function", this.options.disableFilter)
+        isType("Function", this.options.disableFilter)
       ) {
         const test = this.options.disableFilter();
         // ...and it passes, kill render
