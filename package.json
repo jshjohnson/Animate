@@ -3,42 +3,6 @@
   "version": "1.4.1",
   "description": "Tiny vanilla JS plugin to trigger animations on elements when they are within the viewport",
   "main": "index.js",
-  "dependencies": {
-    "lodash-es": "^4.17.14"
-  },
-  "devDependencies": {
-    "@types/lodash-es": "^4.17.3",
-    "@typescript-eslint/eslint-plugin": "^1.12.0",
-    "@typescript-eslint/parser": "^1.12.0",
-    "eslint": "^5.3.0",
-    "eslint-config-airbnb": "^17.1.1",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.14.2",
-    "http-server": "^0.11.1",
-    "node-sass": "^4.12.0",
-    "nodemon": "^1.19.1",
-    "prettier": "^1.18.2",
-    "rollup": "^1.16.7",
-    "rollup-plugin-commonjs": "^10.0.1",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-typescript2": "^0.22.0",
-    "rollup-plugin-uglify": "^6.0.2",
-    "tslib": "^1.10.0",
-    "typescript": "^3.5.3"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint $(find src -name '*.ts')",
-    "dev": "nodemon --config .nodemonrc",
-    "serve": "http-server dist -p 3000",
-    "build": "npm run build:js && npm run build:css",
-    "build:js": "rollup -c rollup.config.js",
-    "build:css": "node-sass src/scss/app.scss dist/css/app.css"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jshjohnson/Animate.git"
@@ -48,5 +12,51 @@
   "bugs": {
     "url": "https://github.com/jshjohnson/Animate/issues"
   },
-  "homepage": "https://github.com/jshjohnson/Animate#readme"
+  "homepage": "https://github.com/jshjohnson/Animate#readme",
+  "scripts": {
+    "lint": "eslint $(find src -name '*.ts')",
+    "test": "mocha $(find src -name '*.test.ts')",
+    "test:watch": "npm run test -- --watch",
+    "dev": "nodemon --config .nodemonrc",
+    "serve": "http-server dist -p 3000",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "rollup -c rollup.config.js",
+    "build:css": "node-sass src/scss/app.scss dist/css/app.css"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.14"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/lodash-es": "^4.17.3",
+    "@types/mocha": "^5.2.7",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.12.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.2",
+    "http-server": "^0.11.1",
+    "mocha": "^6.1.4",
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "rollup": "^1.16.7",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.22.0",
+    "rollup-plugin-uglify": "^6.0.2",
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0",
+    "ts-node": "^8.3.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.5.3"
+  }
 }

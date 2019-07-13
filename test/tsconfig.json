@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "ES2015",
+    "module": "commonjs",
     "allowJs": true,
     "checkJs": true,
-    "rootDir": "./src",
+    "rootDir": "../src",
     "outDir": "dist",
     "noImplicitAny": true,
     "removeComments": true,
@@ -11,7 +11,7 @@
     "sourceMap": true
   },
   "include": [
-    "src/js/*"
+    "../src/js/**/*.test.ts"
   ],
   "exclude": [
     "node_modules",
