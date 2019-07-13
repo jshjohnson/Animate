@@ -280,7 +280,6 @@ class Animate implements Animate {
 
   public init(): void {
     this.initialised = true;
-
     this.addEventListeners();
 
     Animate.doCallback(this.options.callbackOnInit);
