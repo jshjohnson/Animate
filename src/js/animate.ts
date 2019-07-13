@@ -1,33 +1,33 @@
-import debounce from 'lodash-es/debounce'
-import merge from 'lodash-es/merge'
+import debounce from 'lodash-es/debounce';
+import merge from 'lodash-es/merge';
 
-import getBrowserAnimationPrefix from './utils/getBrowserAnimationPrefix'
-import isType from './utils/isType'
+import getBrowserAnimationPrefix from './utils/getBrowserAnimationPrefix';
+import isType from './utils/isType';
 
 interface Animate {
-  options: AnimateOptions
-  elements: NodeListOf<Element>
-  initialised: boolean
-  verticalOffset: number
-  horizontalOffset: number
-  throttledEvent: () => void
+  options: AnimateOptions;
+  elements: NodeListOf<Element>;
+  initialised: boolean;
+  verticalOffset: number;
+  horizontalOffset: number;
+  throttledEvent: () => void;
 }
 
 interface AnimateOptions {
-  target: string
-  animatedClass: string
-  offset: number[] | string
-  delay: number
-  remove: boolean
-  scrolled: boolean
-  reverse: boolean
-  onLoad: boolean
-  onScroll: boolean
-  onResize: boolean
-  disableFilter: () => boolean | void
-  callbackOnInit: () => void
-  callbackOnInView: () => void
-  callbackOnAnimate: () => void
+  target: string;
+  animatedClass: string;
+  offset: number[] | string;
+  delay: number;
+  remove: boolean;
+  scrolled: boolean;
+  reverse: boolean;
+  onLoad: boolean;
+  onScroll: boolean;
+  onResize: boolean;
+  disableFilter: () => boolean | void;
+  callbackOnInit: () => void;
+  callbackOnInView: () => void;
+  callbackOnAnimate: () => void;
 }
 
 /**
@@ -52,109 +52,110 @@ class Animate implements Animate {
       callbackOnInit(): void {},
       callbackOnInView(): void {},
       callbackOnAnimate(): void {},
-    }
+    };
 
-    this.options = merge(defaultOptions, options || {})
-    this.elements = document.querySelectorAll(this.options.target)
-    this.initialised = false
+    this.options = merge(defaultOptions, options || {});
+    this.elements = document.querySelectorAll(this.options.target);
+    this.initialised = false;
 
     if (isType('string', this.options.offset)) {
-      const splitOffset = (this.options.offset as string).split(',')
+      const splitOffset = (this.options.offset as string).split(',');
 
-      this.verticalOffset = parseInt(splitOffset[0], 10)
-      this.horizontalOffset = parseInt(splitOffset[1], 10)
+      this.verticalOffset = parseInt(splitOffset[0], 10);
+      this.horizontalOffset = parseInt(splitOffset[1], 10);
     } else {
-      const [verticalOffset, horizontalOffset] = this.options.offset as number[]
+      const [verticalOffset, horizontalOffset] = this.options
+        .offset as number[];
 
-      this.verticalOffset = verticalOffset as number
-      this.horizontalOffset = horizontalOffset as number
+      this.verticalOffset = verticalOffset as number;
+      this.horizontalOffset = horizontalOffset as number;
     }
 
     this.throttledEvent = debounce((): void => {
-      this.render()
-    }, 15)
+      this.render();
+    }, 15);
   }
 
   private isAboveScrollPos(el: Element): boolean {
-    const dimensions = el.getBoundingClientRect()
-    const scrollPos = window.scrollY || window.pageYOffset
+    const dimensions = el.getBoundingClientRect();
+    const scrollPos = window.scrollY || window.pageYOffset;
 
-    return dimensions.top + dimensions.height * this.verticalOffset < scrollPos
+    return dimensions.top + dimensions.height * this.verticalOffset < scrollPos;
   }
 
   private getElementOffset(el: Element): number[] {
-    const elementOffset = el.getAttribute('data-animation-offset')
-    let elementOffsetArray = [this.verticalOffset, this.horizontalOffset]
+    const elementOffset = el.getAttribute('data-animation-offset');
+    let elementOffsetArray = [this.verticalOffset, this.horizontalOffset];
 
     if (elementOffset) {
-      const stringArray = elementOffset.split(',')
+      const stringArray = elementOffset.split(',');
       if (stringArray.length === 1) {
         elementOffsetArray = [
           parseFloat(stringArray[0]),
           parseFloat(stringArray[0]),
-        ]
+        ];
       } else {
         elementOffsetArray = [
           parseFloat(stringArray[0]),
           parseFloat(stringArray[1]),
-        ]
+        ];
       }
     }
 
-    return elementOffsetArray
+    return elementOffsetArray;
   }
 
   private isInView(el: Element): boolean {
     // Dimensions
-    const dimensions = el.getBoundingClientRect()
+    const dimensions = el.getBoundingClientRect();
     const viewportHeight =
-      window.innerHeight || document.documentElement.clientHeight
+      window.innerHeight || document.documentElement.clientHeight;
     const viewportWidth =
-      window.innerWidth || document.documentElement.clientWidth
+      window.innerWidth || document.documentElement.clientWidth;
 
     // Offset
-    const elementOffset = this.getElementOffset(el)
-    const verticalOffset = elementOffset[0]
-    const horizontalOffset = elementOffset[1]
+    const elementOffset = this.getElementOffset(el);
+    const verticalOffset = elementOffset[0];
+    const horizontalOffset = elementOffset[1];
 
     // Vertical
     const isInViewFromTop =
-      dimensions.bottom - dimensions.height * verticalOffset > 0
+      dimensions.bottom - dimensions.height * verticalOffset > 0;
     const isInViewFromBottom =
-      dimensions.top + dimensions.height * verticalOffset < viewportHeight
-    const isInViewVertically = isInViewFromTop && isInViewFromBottom
+      dimensions.top + dimensions.height * verticalOffset < viewportHeight;
+    const isInViewVertically = isInViewFromTop && isInViewFromBottom;
 
     // Horizontal
     const isInViewFromLeft =
-      dimensions.right - dimensions.width * horizontalOffset > 0
+      dimensions.right - dimensions.width * horizontalOffset > 0;
     const isInViewFromRight =
-      dimensions.left + dimensions.width * horizontalOffset < viewportWidth
-    const isInViewHorizontally = isInViewFromLeft && isInViewFromRight
+      dimensions.left + dimensions.width * horizontalOffset < viewportWidth;
+    const isInViewHorizontally = isInViewFromLeft && isInViewFromRight;
 
-    return isInViewVertically && isInViewHorizontally
+    return isInViewVertically && isInViewHorizontally;
   }
 
   private static isVisible(el: Element): boolean {
-    const visibility = el.getAttribute('data-visibility')
-    return visibility === 'true'
+    const visibility = el.getAttribute('data-visibility');
+    return visibility === 'true';
   }
 
   private static hasAnimated(el: Element): boolean {
-    const animated = el.getAttribute('data-animated')
-    return animated === 'true'
+    const animated = el.getAttribute('data-animated');
+    return animated === 'true';
   }
 
   private addAnimation(el: Element): void {
     if (!Animate.isVisible(el)) {
-      Animate.doCallback(this.options.callbackOnInView, el)
+      Animate.doCallback(this.options.callbackOnInView, el);
 
-      const classes = el.getAttribute('data-animation-classes')
+      const classes = el.getAttribute('data-animation-classes');
       if (classes) {
-        el.setAttribute('data-visibility', 'true')
-        const animations = classes.split(' ')
+        el.setAttribute('data-visibility', 'true');
+        const animations = classes.split(' ');
         const animationDelay =
           parseInt(el.getAttribute('data-animation-delay'), 10) ||
-          this.options.delay
+          this.options.delay;
 
         if (
           animationDelay &&
@@ -163,48 +164,48 @@ class Animate implements Animate {
         ) {
           setTimeout((): void => {
             animations.forEach((animation): void => {
-              el.classList.add(animation)
-            })
-          }, animationDelay)
+              el.classList.add(animation);
+            });
+          }, animationDelay);
         } else {
           animations.forEach((animation): void => {
-            el.classList.add(animation)
-          })
+            el.classList.add(animation);
+          });
         }
 
-        this.completeAnimation(el)
+        this.completeAnimation(el);
       } else {
-        console.error('No animation classes were given')
+        console.error('No animation classes were given');
       }
     }
   }
 
   private removeAnimation(el: Element): void {
-    const classes = el.getAttribute('data-animation-classes')
+    const classes = el.getAttribute('data-animation-classes');
     if (classes) {
-      el.setAttribute('data-visibility', 'false')
-      el.removeAttribute('data-animated')
-      const animations = classes.split(' ')
+      el.setAttribute('data-visibility', 'false');
+      el.removeAttribute('data-animated');
+      const animations = classes.split(' ');
       const animationDelay = parseInt(
         el.getAttribute('data-animation-delay'),
         10,
-      )
+      );
 
-      animations.push(this.options.animatedClass)
+      animations.push(this.options.animatedClass);
 
       if (animationDelay && isType('Number', animationDelay)) {
         setTimeout((): void => {
           animations.forEach((animation): void => {
-            el.classList.remove(animation)
-          })
-        }, animationDelay)
+            el.classList.remove(animation);
+          });
+        }, animationDelay);
       } else {
         animations.forEach((animation): void => {
-          el.classList.remove(animation)
-        })
+          el.classList.remove(animation);
+        });
       }
     } else {
-      console.error('No animation classes were given')
+      console.error('No animation classes were given');
     }
   }
 
@@ -213,89 +214,89 @@ class Animate implements Animate {
     el: Element = null,
   ): void {
     if (fn && isType('Function', fn)) {
-      fn(el)
+      fn(el);
     } else {
-      console.error('Callback is not a function')
+      console.error('Callback is not a function');
     }
   }
 
   private completeAnimation(el: Element): void {
     // Store animation event
-    const animationEvent = getBrowserAnimationPrefix()
+    const animationEvent = getBrowserAnimationPrefix();
 
     if (animationEvent) {
       // When animation event has finished
       el.addEventListener(animationEvent, (): void => {
-        const removeOverride = el.getAttribute('data-animation-remove')
+        const removeOverride = el.getAttribute('data-animation-remove');
 
         // If remove animations on completion option is turned on
         if (removeOverride !== 'false' && this.options.remove) {
           // Separate each class held in the animation classes attribute
           const animations = el
             .getAttribute('data-animation-classes')
-            .split(' ')
+            .split(' ');
 
           // Remove each animation from element
           animations.forEach((animation): void => {
-            el.classList.remove(animation)
-          })
+            el.classList.remove(animation);
+          });
         }
 
         // Add animation complete class
-        el.classList.add(this.options.animatedClass)
+        el.classList.add(this.options.animatedClass);
         // Set animated attribute to true
-        el.setAttribute('data-animated', 'true')
+        el.setAttribute('data-animated', 'true');
 
-        Animate.doCallback(this.options.callbackOnAnimate, el)
-      })
+        Animate.doCallback(this.options.callbackOnAnimate, el);
+      });
     }
   }
 
   public removeEventListeners(): void {
     if (this.options.onResize) {
-      window.removeEventListener('resize', this.throttledEvent, false)
+      window.removeEventListener('resize', this.throttledEvent, false);
     }
 
     if (this.options.onScroll) {
-      window.removeEventListener('scroll', this.throttledEvent, false)
+      window.removeEventListener('scroll', this.throttledEvent, false);
     }
   }
 
   public addEventListeners(): void {
     if (this.options.onLoad) {
       document.addEventListener('DOMContentLoaded', (): void => {
-        this.render(true)
-      })
+        this.render(true);
+      });
     }
 
     if (this.options.onResize) {
-      window.addEventListener('resize', this.throttledEvent, false)
+      window.addEventListener('resize', this.throttledEvent, false);
     }
 
     if (this.options.onScroll) {
-      window.addEventListener('scroll', this.throttledEvent, false)
+      window.addEventListener('scroll', this.throttledEvent, false);
     }
   }
 
   public init(): void {
-    this.initialised = true
+    this.initialised = true;
 
-    this.addEventListeners()
+    this.addEventListeners();
 
-    Animate.doCallback(this.options.callbackOnInit)
+    Animate.doCallback(this.options.callbackOnInit);
   }
 
   public kill(): void {
     // If we haven't initialised, there is nothing to kill.
     if (!this.initialised) {
-      return
+      return;
     }
 
-    this.removeEventListeners()
+    this.removeEventListeners();
 
     // Reset settings
-    this.options = null
-    this.initialised = false
+    this.options = null;
+    this.initialised = false;
   }
 
   public render(onLoad?: boolean): void {
@@ -305,34 +306,34 @@ class Animate implements Animate {
         this.options.disableFilter &&
         isType('Function', this.options.disableFilter)
       ) {
-        const test = this.options.disableFilter()
+        const test = this.options.disableFilter();
         // ...and it passes, kill render
         if (test === true) {
-          return
+          return;
         }
       }
 
       // Grab all elements in the DOM with the correct target
-      const els = this.elements
+      const els = this.elements;
 
       // Loop through all elements
       for (let i = els.length - 1; i >= 0; i--) {
         // Store element at location 'i'
-        const el = els[i]
+        const el = els[i];
 
         // If element is in view
         if (this.isInView(el)) {
           // Add those snazzy animations
-          this.addAnimation(el)
+          this.addAnimation(el);
         } else if (Animate.hasAnimated(el)) {
           // See whether it has a reverse override
-          const reverseOverride = el.getAttribute('data-animation-reverse')
+          const reverseOverride = el.getAttribute('data-animation-reverse');
 
           if (reverseOverride !== 'false' && this.options.reverse) {
-            this.removeAnimation(el)
+            this.removeAnimation(el);
           }
         } else if (onLoad) {
-          const animateScrolled = el.getAttribute('data-animation-scrolled')
+          const animateScrolled = el.getAttribute('data-animation-scrolled');
 
           // If this render has been triggered on load and the element is above our current
           // scroll position and the `scrolled` option is set, animate it.
@@ -340,7 +341,7 @@ class Animate implements Animate {
             (this.options.scrolled || animateScrolled) &&
             this.isAboveScrollPos(el)
           ) {
-            this.addAnimation(el)
+            this.addAnimation(el);
           }
         }
       }
@@ -348,4 +349,4 @@ class Animate implements Animate {
   }
 }
 
-export default Animate
+export default Animate;
