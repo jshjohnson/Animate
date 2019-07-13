@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "allowJs": true,
+    "checkJs": true,
+    "rootDir": "./src",
+    "outDir": "dist",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true
+  },
+  "include": [
+    "src/js/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
