@@ -12,7 +12,6 @@
     "url": "https://github.com/jshjohnson/animate.js/issues"
   },
   "scripts": {
-    "test": "gulp test",
     "dev": "gulp dev",
     "build": "gulp build",
     "prepush": "npm run test"
