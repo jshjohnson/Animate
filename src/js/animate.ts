@@ -300,7 +300,6 @@ class Animate implements Animate {
 
   public render(onLoad?: boolean): void {
     if (this.initialised) {
-      // If a disability filter function has been passed...
       if (
         this.options.disableFilter &&
         isType('Function', this.options.disableFilter)
