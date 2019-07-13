@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "system",
+    "module": "ES2015",
     "allowJs": true,
     "checkJs": true,
     "rootDir": "./src",
