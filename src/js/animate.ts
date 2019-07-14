@@ -2,11 +2,10 @@ import debounce from 'lodash-es/debounce';
 import merge from 'lodash-es/merge';
 
 import getBrowserAnimationPrefix from './utils/getBrowserAnimationPrefix';
-import isType from './utils/isType';
 
 interface Animate {
   options: AnimateOptions;
-  elements: NodeListOf<Element>;
+  elements: Element[];
   initialised: boolean;
   verticalOffset: number;
   horizontalOffset: number;
@@ -55,10 +54,10 @@ class Animate implements Animate {
     };
 
     this.options = merge(defaultOptions, options || {});
-    this.elements = document.querySelectorAll(this.options.target);
+    this.elements = Array.from(document.querySelectorAll(this.options.target));
     this.initialised = false;
 
-    if (isType('string', this.options.offset)) {
+    if (typeof this.options.offset === 'string') {
       const splitOffset = (this.options.offset as string).split(',');
 
       this.verticalOffset = parseInt(splitOffset[0], 10);
@@ -146,66 +145,73 @@ class Animate implements Animate {
   }
 
   private addAnimation(el: Element): void {
-    if (!Animate.isVisible(el)) {
-      Animate.doCallback(this.options.callbackOnInView, el);
-
-      const classes = el.getAttribute('data-animation-classes');
-      if (classes) {
-        el.setAttribute('data-visibility', 'true');
-        const animations = classes.split(' ');
-        const animationDelay =
-          parseInt(el.getAttribute('data-animation-delay'), 10) ||
-          this.options.delay;
-
-        if (
-          animationDelay &&
-          isType('Number', animationDelay) &&
-          animationDelay !== 0
-        ) {
-          setTimeout((): void => {
-            animations.forEach((animation): void => {
-              el.classList.add(animation);
-            });
-          }, animationDelay);
-        } else {
-          animations.forEach((animation): void => {
-            el.classList.add(animation);
-          });
-        }
-
-        this.completeAnimation(el);
-      } else {
-        console.error('No animation classes were given');
-      }
+    if (Animate.isVisible(el)) {
+      return;
     }
+
+    Animate.doCallback(this.options.callbackOnInView, el);
+
+    const classes = el.getAttribute('data-animation-classes');
+
+    if (!classes) {
+      console.error('No animation classes were given');
+      return;
+    }
+
+    el.setAttribute('data-visibility', 'true');
+
+    const animations = classes.split(' ');
+    const animationDelay =
+      parseInt(el.getAttribute('data-animation-delay'), 10) ||
+      this.options.delay;
+
+    if (
+      animationDelay &&
+      typeof animationDelay === 'number' &&
+      animationDelay !== 0
+    ) {
+      setTimeout((): void => {
+        animations.forEach((animation): void => {
+          el.classList.add(animation);
+        });
+      }, animationDelay);
+    } else {
+      animations.forEach((animation): void => {
+        el.classList.add(animation);
+      });
+    }
+
+    this.completeAnimation(el);
   }
 
   private removeAnimation(el: Element): void {
     const classes = el.getAttribute('data-animation-classes');
-    if (classes) {
-      el.setAttribute('data-visibility', 'false');
-      el.removeAttribute('data-animated');
-      const animations = classes.split(' ');
-      const animationDelay = parseInt(
-        el.getAttribute('data-animation-delay'),
-        10,
-      );
 
-      animations.push(this.options.animatedClass);
+    if (!classes) {
+      console.error('No animation classes were given');
+      return;
+    }
 
-      if (animationDelay && isType('Number', animationDelay)) {
-        setTimeout((): void => {
-          animations.forEach((animation): void => {
-            el.classList.remove(animation);
-          });
-        }, animationDelay);
-      } else {
+    el.setAttribute('data-visibility', 'false');
+    el.removeAttribute('data-animated');
+    const animations = classes.split(' ');
+    const animationDelay = parseInt(
+      el.getAttribute('data-animation-delay'),
+      10,
+    );
+
+    animations.push(this.options.animatedClass);
+
+    if (animationDelay && typeof animationDelay === 'number') {
+      setTimeout((): void => {
         animations.forEach((animation): void => {
           el.classList.remove(animation);
         });
-      }
+      }, animationDelay);
     } else {
-      console.error('No animation classes were given');
+      animations.forEach((animation): void => {
+        el.classList.remove(animation);
+      });
     }
   }
 
@@ -213,7 +219,7 @@ class Animate implements Animate {
     fn: (el?: Element) => void,
     el: Element = null,
   ): void {
-    if (fn && isType('Function', fn)) {
+    if (fn && typeof fn === 'function') {
       fn(el);
     } else {
       console.error('Callback is not a function');
@@ -224,56 +230,61 @@ class Animate implements Animate {
     // Store animation event
     const animationEvent = getBrowserAnimationPrefix();
 
-    if (animationEvent) {
-      // When animation event has finished
-      el.addEventListener(animationEvent, (): void => {
-        const removeOverride = el.getAttribute('data-animation-remove');
-
-        // If remove animations on completion option is turned on
-        if (removeOverride !== 'false' && this.options.remove) {
-          // Separate each class held in the animation classes attribute
-          const animations = el
-            .getAttribute('data-animation-classes')
-            .split(' ');
-
-          // Remove each animation from element
-          animations.forEach((animation): void => {
-            el.classList.remove(animation);
-          });
-        }
-
-        // Add animation complete class
-        el.classList.add(this.options.animatedClass);
-        // Set animated attribute to true
-        el.setAttribute('data-animated', 'true');
-
-        Animate.doCallback(this.options.callbackOnAnimate, el);
-      });
+    if (!animationEvent) {
+      return;
     }
+
+    // When animation event has finished
+    el.addEventListener(animationEvent, (): void => {
+      const removeOverride = el.getAttribute('data-animation-remove');
+
+      if (removeOverride !== 'false' && this.options.remove) {
+        // Separate each class held in the animation classes attribute
+        const animations = el.getAttribute('data-animation-classes').split(' ');
+
+        animations.forEach((animation): void => {
+          el.classList.remove(animation);
+        });
+      }
+
+      el.classList.add(this.options.animatedClass);
+      el.setAttribute('data-animated', 'true');
+
+      Animate.doCallback(this.options.callbackOnAnimate, el);
+    });
   }
 
   public removeEventListeners(): void {
-    if (this.options.onResize) {
+    const { onResize, onScroll } = this.options;
+
+    if (onResize) {
       window.removeEventListener('resize', this.throttledEvent, false);
     }
 
-    if (this.options.onScroll) {
+    if (onScroll) {
       window.removeEventListener('scroll', this.throttledEvent, false);
     }
   }
 
   public addEventListeners(): void {
-    if (this.options.onLoad) {
-      document.addEventListener('DOMContentLoaded', (): void => {
+    const { onLoad, onResize, onScroll } = this.options;
+
+    if (onLoad) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', (): void => {
+          this.render(true);
+        });
+      } else {
+        // Call render immediately if document already loaded
         this.render(true);
-      });
+      }
     }
 
-    if (this.options.onResize) {
+    if (onResize) {
       window.addEventListener('resize', this.throttledEvent, false);
     }
 
-    if (this.options.onScroll) {
+    if (onScroll) {
       window.addEventListener('scroll', this.throttledEvent, false);
     }
   }
@@ -286,64 +297,53 @@ class Animate implements Animate {
   }
 
   public kill(): void {
-    // If we haven't initialised, there is nothing to kill.
     if (!this.initialised) {
       return;
     }
 
     this.removeEventListeners();
-
-    // Reset settings
     this.options = null;
     this.initialised = false;
   }
 
   public render(onLoad?: boolean): void {
-    if (this.initialised) {
-      if (
-        this.options.disableFilter &&
-        isType('Function', this.options.disableFilter)
-      ) {
-        const test = this.options.disableFilter();
-        // ...and it passes, kill render
-        if (test === true) {
-          return;
-        }
-      }
+    if (!this.initialised) {
+      return;
+    }
 
-      // Grab all elements in the DOM with the correct target
-      const els = this.elements;
-
-      // Loop through all elements
-      for (let i = els.length - 1; i >= 0; i--) {
-        // Store element at location 'i'
-        const el = els[i];
-
-        // If element is in view
-        if (this.isInView(el)) {
-          // Add those snazzy animations
-          this.addAnimation(el);
-        } else if (Animate.hasAnimated(el)) {
-          // See whether it has a reverse override
-          const reverseOverride = el.getAttribute('data-animation-reverse');
-
-          if (reverseOverride !== 'false' && this.options.reverse) {
-            this.removeAnimation(el);
-          }
-        } else if (onLoad) {
-          const animateScrolled = el.getAttribute('data-animation-scrolled');
-
-          // If this render has been triggered on load and the element is above our current
-          // scroll position and the `scrolled` option is set, animate it.
-          if (
-            (this.options.scrolled || animateScrolled) &&
-            this.isAboveScrollPos(el)
-          ) {
-            this.addAnimation(el);
-          }
-        }
+    if (
+      this.options.disableFilter &&
+      typeof this.options.disableFilter === 'function'
+    ) {
+      const test = this.options.disableFilter();
+      // ...and it passes, kill render
+      if (test === true) {
+        return;
       }
     }
+
+    this.elements.forEach((el): void => {
+      if (this.isInView(el)) {
+        this.addAnimation(el);
+      } else if (Animate.hasAnimated(el)) {
+        const reverseOverride = el.getAttribute('data-animation-reverse');
+
+        if (reverseOverride !== 'false' && this.options.reverse) {
+          this.removeAnimation(el);
+        }
+      } else if (onLoad) {
+        const animateScrolled = el.getAttribute('data-animation-scrolled');
+
+        // If this render has been triggered on load and the element is above our current
+        // scroll position and the `scrolled` option is set, animate it.
+        if (
+          (this.options.scrolled || animateScrolled) &&
+          this.isAboveScrollPos(el)
+        ) {
+          this.addAnimation(el);
+        }
+      }
+    });
   }
 }
 
