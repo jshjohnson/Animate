@@ -10,7 +10,7 @@ export default {
   output: {
     format: 'umd',
     name: 'Animate',
-    dir: 'dist/js',
+    file: 'dist/js/animate.min.js',
   },
   plugins: [resolve(), commonjs(), typescript(), uglify()],
 }
