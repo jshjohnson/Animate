@@ -1,6 +1,6 @@
 # Animate.js ![Build Status](https://travis-ci.org/jshjohnson/Animate.svg?branch=master)
 
-A tiny library (~6kb) to trigger animations on elements when they come into view 👓.
+A tiny library (~6kb) written in TypeScript to trigger animations on elements when they come into view 👓.
 
 [Demo](https://joshuajohnson.co.uk/Animate/)
 
