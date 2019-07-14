@@ -27,15 +27,13 @@
     "serve": "http-server dist -p 3000",
     "build": "npm run build:js && npm run build:css",
     "build:js": "rollup -c rollup.config.js",
-    "build:css": "node-sass src/scss/app.scss dist/css/app.css",
+    "build:css": "node-sass src/scss/app.scss dist/css/app.css && csso dist/css/app.css -o dist/css/app.min.css",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
-  "bundlesize": [
-    {
-      "path": "dist/js/animate.min.js",
-      "maxSize": "10 kB"
-    }
-  ],
+  "bundlesize": [{
+    "path": "dist/js/animate.min.js",
+    "maxSize": "10 kB"
+  }],
   "dependencies": {
     "lodash-es": "^4.17.14"
   },
@@ -48,6 +46,7 @@
     "bundlesize": "^0.18.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "csso-cli": "^2.0.2",
     "eslint": "^5.3.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-airbnb-base": "^13.2.0",
