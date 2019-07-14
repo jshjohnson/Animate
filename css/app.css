@@ -1,6 +1,8 @@
-/*! animate.js v1.2.7 | (c) 2016 Josh Johnson | https://github.com/jshjohnson/animate.js */
 /**     
  * To do list app
+ */
+/**     
+ * Mixins 
  */
 /**     
  * Mixins 
@@ -383,7 +385,7 @@ html, body {
 
 html {
   font-size: 62.5%;
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 100%;
   position: relative; }
 
