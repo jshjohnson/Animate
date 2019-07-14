@@ -4,6 +4,16 @@ import typescript from 'rollup-plugin-typescript2'
 import {
   uglify
 } from 'rollup-plugin-uglify'
+import license from 'rollup-plugin-license';
+
+const banner = [
+  '/*! ',
+  '<%= pkg.name %> ',
+  'v<%= pkg.version %> | ',
+  `(c) <%= moment().format('YYYY-MM-DD') %> <%= pkg.author %> |`,
+  ' <%= pkg.homepage %>',
+  ' */',
+].join('');
 
 export default {
   input: './src/js/animate.ts',
@@ -12,5 +22,7 @@ export default {
     name: 'Animate',
     file: 'dist/js/animate.min.js',
   },
-  plugins: [resolve(), commonjs(), typescript(), uglify()],
+  plugins: [resolve(), commonjs(), typescript(), uglify(), license({
+    banner,
+  })],
 }

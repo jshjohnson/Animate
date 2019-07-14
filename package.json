@@ -30,10 +30,12 @@
     "build:css": "node-sass src/scss/app.scss dist/css/app.css && csso dist/css/app.css -o dist/css/app.min.css",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
-  "bundlesize": [{
-    "path": "dist/js/animate.min.js",
-    "maxSize": "10 kB"
-  }],
+  "bundlesize": [
+    {
+      "path": "dist/js/animate.min.js",
+      "maxSize": "10 kB"
+    }
+  ],
   "dependencies": {
     "lodash-es": "^4.17.14"
   },
@@ -63,6 +65,7 @@
     "prettier": "^1.18.2",
     "rollup": "^1.16.7",
     "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-license": "^0.9.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.22.0",
     "rollup-plugin-uglify": "^6.0.2",
