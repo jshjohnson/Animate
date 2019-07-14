@@ -1,6 +1,6 @@
-# Animate.js ![Build Status](https://travis-ci.org/jshjohnson/Animate.svg?branch=develop)
+# Animate.js ![Build Status](https://travis-ci.org/jshjohnson/Animate.svg?branch=master)
 
-Trigger animations on elements when they are in view 👓.
+A tiny library (~6kb) to trigger animations on elements when they come into view 👓.
 
 [Demo](https://joshuajohnson.co.uk/Animate/)
 
@@ -33,7 +33,7 @@ Trigger animations on elements when they are in view 👓.
 ```
 
 ## Installation
-To install via NPM, run `npm install --save-dev animate.js` 
+To install via NPM, run `npm install animate.js` 
 
 ## Options
 #### target
@@ -216,12 +216,12 @@ To setup a local environment: clone this repo, navigate into it's directory in a
 * ```npm install```
 
 ### Gulp tasks
-* ```gulp dev```
-* ```gulp test```
-* ```gulp build```
+* ```npm run dev```
+* ```npm run test```
+* ```npm run build```
 
 ## Contributions
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using Gulp...bla bla bla
+In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using Gulp...bla bla bla
 
 ## License
 MIT License 
