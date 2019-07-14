@@ -27,7 +27,7 @@ jobs:
     script: echo "Deploying to Github pages..."
     deploy:
       provider: pages
-      github_token: kmZmRRvbIW5jyeVtacYOOfPpdm8yTwQp9zHXv6Q4k2ghwb3jm0QLxwD06xF8z779K46gUKkjhraYw6j6+FPLdiuz4s5Bf2jgyWoZSJqfNTq5qc8msuX66RH2G3RsVTJyip7Tpu2gJ9IA29jL0NxIwpPdDW377i4A99qTpJqt3UEpl1ftgcxrgbMWtS08XqYFyfzjN2iZbq3AjhBXebxwyAvhdVmilJwJ1b/raRYXEgDJszr8Nres08oCRToBRtApbZUUworJHxHexN64C5ftruW1Qc84OaKKtZZByssYXlHHnFjeMg+L9YwjMCqBP4s+YmmzeP5VSVp3l1aJdnYYfaeCoFqG8yPb2OAn6eJT+AGilvMxXE+Qo4XUuptzVnZl37RffrS0etl13/e93EeEmhAluHR2Dz6PAZvnQftc2Pol/w0w5y788v/UKlHXLI/zV0GAMmBVvdGMdod/ah4r43EGRY8NugrkK4RcnUH/dF/969++t0F41R8o85Qd2zOqUb00sIHbTZO8QY8ZI5sPkSJXdTalo6jMGAwYkjiuxEZys/CWiizDirfIGQJ+FevdUoUiqRmhiNFilEV1CPUL6bLC/iwyy2MdXlA65h1xkNcJwdl0Y6/TAzooKa8JdrCFSBgVE+bErVhwhmC/dAKsbl5HTy/fB0f63Mjv3zkMO+0=
+      github_token: $GITHUB_TOKEN
       skip_cleanup: true
       keep_history: true
       local_dir: "./dist"
