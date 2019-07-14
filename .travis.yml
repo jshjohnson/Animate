@@ -22,8 +22,6 @@ jobs:
       api_key:
         secure: EcmiIhEPyxsf5NYSod6lRi3AGYaQgV5sFaer7FOYjYnrtMV9s/igpWxSrztzm5YBUgtAPltj0wkIpPv4CXikFm3LwNoP2MBqTy2pSB+E99YAJc6kOJpGhF6Luav5cICIWi6EUvUHqOKrvWxiX5l0tqPuDaCNvNVVi1vF0t8oo9nfME4+wnkieKqA3bvc3ye4hzy/nr0vunanRYir35nQRdOUem2lnMlcl4d6DxCyOMapOfki1Gq04+mNQ+X30oT03u/CRoFu+8osm6J4YKPnsWXudy1j9Vk/TZ81iEzbS5tgbdzlLL18pMIl048pd9BrHXM47lhlbchqPF12ERGwnGxf7XmkPJ2uwi7d6VAhtLKwZJ40+hYoAIadL7UayGK92H+x3l9Q/6bg5J87ZYs0+ZyYJ0I/rfCX5zH6Nu2FRacHHBGCg4pHUWa6rLzbsESNYTi5EQPauGMmJEZ7/jlhN+gH8foc5yYGWua9ZD3ALlB9jY+KKnogxzLQSfBwTOaETOIuNnQoxhIb9u6rOdaX3ZLszdesB2TGbECowK3X9r+4nreyVt5Cg7WEodEvQy7JftS6I9dmrU68BZ+bLcTJ/DIDCm8whsZ6xbPXh2GPpzFjpYTKdsJ/5Rs0z1+3d3jjOfHLBSsdpKveECPatFjLYwBf65x09KNG9EfQD7Vhbqw=
       skip_cleanup: true
-      on:
-        tags: true
   - stage: Publishing to GitHub
     if: branch = master
     script: echo "Publishing to Github..."
@@ -34,7 +32,6 @@ jobs:
       skip_cleanup: true
       on:
         repo: jshjohnson/Animate
-        tags: true
   - stage: Deploying
     if: branch = master
     script: npm run deploy
