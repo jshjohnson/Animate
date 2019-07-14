@@ -1,9 +1,26 @@
 language: node_js
 node_js:
-  - "node"
-before_install:
-  - '[ "${TRAVIS_NODE_VERSION}" != "0.8" ] || npm install -g npm@1.4.28'
-  - npm install -g npm@latest
+  - "10"
+cache:
+  directories:
+    - ~/.npm
+    - ~/.cache
 install:
-  - npm install
-script: npm run test
+  - npm ci
+jobs:
+  include:
+    - stage: Linting
+      script: npm run lint
+
+    - stage: Tests
+      script: npm run test
+      
+    - stage: Publishing
+      script: echo "Publishing to npm ..."
+      deploy:
+        provider: npm
+        email: NPM_EMAIL_ADDRESS
+        api_key: NPM_AUTH_TOKEN
+        
+    - stage: Deploying
+      script: npm run deploy
