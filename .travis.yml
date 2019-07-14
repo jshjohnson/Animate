@@ -19,8 +19,8 @@ jobs:
       script: echo "Publishing to npm ..."
       deploy:
         provider: npm
-        email: NPM_EMAIL_ADDRESS
-        api_key: NPM_AUTH_TOKEN
+        email: $NPM_EMAIL_ADDRESS
+        api_key: $NPM_AUTH_TOKEN
         
     - stage: Deploying
       script: npm run deploy
