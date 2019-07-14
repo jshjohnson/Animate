@@ -16,11 +16,13 @@ jobs:
       script: npm run test
       
     - stage: Publishing
-      script: echo "Publishing to npm ..."
+      if: branch = master
+      script: npm run build
       deploy:
         provider: npm
         email: $NPM_EMAIL_ADDRESS
-        api_key: $NPM_AUTH_TOKEN
+        api_key: $NPM_API_KEY
         
     - stage: Deploying
+      if: branch = master
       script: npm run deploy
