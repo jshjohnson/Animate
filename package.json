@@ -33,9 +33,14 @@
   "bundlesize": [
     {
       "path": "dist/js/animate.min.js",
-      "maxSize": "10 kB"
+      "maxSize": "7.5 kB"
     }
   ],
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  },
   "dependencies": {
     "lodash-es": "^4.17.14"
   },
@@ -58,6 +63,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
     "http-server": "^0.11.1",
+    "husky": "^3.0.9",
     "mocha": "^6.1.4",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
