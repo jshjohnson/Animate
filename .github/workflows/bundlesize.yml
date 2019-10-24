@@ -6,7 +6,6 @@ on:
       - 'src/scripts/**'
       - 'src/styles/**'
       - 'package-lock.json'
-      - '.browserslistrc'
 
 jobs:
   measure:
@@ -25,7 +24,6 @@ jobs:
                 npm ci
                 npm run build
         env:
-          CYPRESS_INSTALL_BINARY: 0
           HUSKY_SKIP_INSTALL: true
 
       # we don't need to build here, as even minized assets expected to be commited
