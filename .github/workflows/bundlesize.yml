@@ -1,4 +1,4 @@
-name: BundleSize
+name: Bundlesize
 
 on:
   pull_request:
