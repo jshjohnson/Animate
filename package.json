@@ -2,7 +2,7 @@
   "name": "animate.js",
   "version": "2.0.1",
   "description": "Tiny vanilla JS plugin to trigger animations on elements when they are within the viewport",
-  "main": "./dist/js/animate.min.js",
+  "main": "./dist/scripts/animate.min.js",
   "files": [
     "src",
     "dist"
@@ -19,23 +19,28 @@
   "homepage": "https://github.com/jshjohnson/Animate#readme",
   "scripts": {
     "lint": "eslint $(find src -name '*.ts')",
-    "test": "npm run test:unit && npm run test:bundlesize",
+    "test": "npm run test:unit",
     "test:unit": "mocha $(find src -name '*.test.ts')",
     "test:unit:watch": "npm run test -- --watch",
-    "test:bundlesize": "bundlesize",
+    "bundlesize": "bundlesize",
     "dev": "nodemon --config .nodemonrc",
     "serve": "http-server dist -p 3000",
     "build": "npm run build:js && npm run build:css",
     "build:js": "rollup -c rollup.config.js",
-    "build:css": "node-sass src/scss/app.scss dist/css/app.css && csso dist/css/app.css -o dist/css/app.min.css",
+    "build:css": "node-sass src/styles/app.scss dist/styles/app.css && csso dist/styles/app.css -o dist/styles/app.min.css",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "bundlesize": [
     {
-      "path": "dist/js/animate.min.js",
-      "maxSize": "10 kB"
+      "path": "dist/scripts/animate.min.js",
+      "maxSize": "7.5 kB"
     }
   ],
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
+  },
   "dependencies": {
     "lodash-es": "^4.17.14"
   },
@@ -58,6 +63,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
     "http-server": "^0.11.1",
+    "husky": "^3.0.9",
     "mocha": "^6.1.4",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
