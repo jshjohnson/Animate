@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "extends": [
     "airbnb-base",
     "plugin:@typescript-eslint/recommended",
@@ -19,6 +19,7 @@
     }
   },
   "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true, "trailingComma": "all" }],
     "curly": ["error", "all"],
     "no-underscore-dangle": "off",
     "func-names": "off",
@@ -27,6 +28,15 @@
     }],
     "no-restricted-syntax": "off",
     "no-console": "off",
-    "import/no-extraneous-dependencies": "off"
-  }
+    "import/no-extraneous-dependencies": "off",
+    "@typescript-eslint/no-var-requires": "off"
+  },
+  "overrides": [
+    {
+      "files": "*.spec.ts",
+      "rules": {
+        "no-unused-expressions": 0
+      }
+    }
+  ]
 }
