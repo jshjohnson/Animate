@@ -3,13 +3,13 @@
  * @return {String} Appropriate 'animationEnd' event for browser to handle
  */
 export default function getBrowserAnimationPrefix(): string | void {
-  const el = document.createElement("temp");
+  const el = document.createElement('temp');
 
   const browserPrefixes = {
-    animation: "animationend",
-    OAnimation: "oAnimationEnd",
-    MozAnimation: "animationend",
-    WebkitAnimation: "webkitAnimationEnd"
+    animation: 'animationend',
+    OAnimation: 'oAnimationEnd',
+    MozAnimation: 'animationend',
+    WebkitAnimation: 'webkitAnimationEnd',
   };
 
   let prefix: keyof typeof browserPrefixes;
