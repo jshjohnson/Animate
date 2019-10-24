@@ -16,11 +16,11 @@ const banner = [
 ].join('');
 
 export default {
-  input: './src/js/animate.ts',
+  input: './src/scripts/animate.ts',
   output: {
     format: 'umd',
     name: 'Animate',
-    file: 'dist/js/animate.min.js',
+    file: 'dist/scripts/animate.min.js',
   },
   plugins: [resolve(), commonjs(), typescript(), uglify(), license({
     banner,

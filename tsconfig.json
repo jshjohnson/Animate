@@ -11,7 +11,7 @@
     "sourceMap": true
   },
   "include": [
-    "src/js/*"
+    "src/scripts/*"
   ],
   "exclude": [
     "node_modules",

@@ -2,7 +2,7 @@
   "name": "animate.js",
   "version": "2.0.1",
   "description": "Tiny vanilla JS plugin to trigger animations on elements when they are within the viewport",
-  "main": "./dist/js/animate.min.js",
+  "main": "./dist/scripts/animate.min.js",
   "files": [
     "src",
     "dist"
@@ -27,12 +27,12 @@
     "serve": "http-server dist -p 3000",
     "build": "npm run build:js && npm run build:css",
     "build:js": "rollup -c rollup.config.js",
-    "build:css": "node-sass src/scss/app.scss dist/css/app.css && csso dist/css/app.css -o dist/css/app.min.css",
+    "build:css": "node-sass src/styles/app.scss dist/styles/app.css && csso dist/styles/app.css -o dist/styles/app.min.css",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "bundlesize": [
     {
-      "path": "dist/js/animate.min.js",
+      "path": "dist/scripts/animate.min.js",
       "maxSize": "7.5 kB"
     }
   ],
