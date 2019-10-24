@@ -19,10 +19,10 @@
   "homepage": "https://github.com/jshjohnson/Animate#readme",
   "scripts": {
     "lint": "eslint $(find src -name '*.ts')",
-    "test": "npm run test:unit && npm run test:bundlesize",
+    "test": "npm run test:unit",
     "test:unit": "mocha $(find src -name '*.test.ts')",
     "test:unit:watch": "npm run test -- --watch",
-    "test:bundlesize": "bundlesize",
+    "bundlesize": "bundlesize",
     "dev": "nodemon --config .nodemonrc",
     "serve": "http-server dist -p 3000",
     "build": "npm run build:js && npm run build:css",
