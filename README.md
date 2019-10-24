@@ -1,4 +1,4 @@
-# Animate.js ![Build Status](https://travis-ci.org/jshjohnson/Animate.svg?branch=master)
+# Animate.js [![Actions Status](https://github.com/jshjohnson/Animate/workflows/Unit%20Tests/badge.svg)](https://github.com/jshjohnson/Animate/actions) [![Actions Status](https://github.com/jshjohnson/Animate/workflows/Bundlesize/badge.svg)](https://github.com/jshjohnson/Animate/actions) [![npm](https://img.shields.io/npm/v/animate.js.svg)](https://www.npmjs.com/package/animate.js)
 
 A tiny library (~6kb) written in TypeScript to trigger animations on elements when they come into view 👓.
 
