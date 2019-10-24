@@ -25,7 +25,4 @@ jobs:
 
       - name: run eslint
         run: |
-          CHANGED_TS=$(git --no-pager diff --name-only ..origin/master | grep '^src\/scripts\/.*\.ts$' | paste -sd " " -)
-          if [[ -z $(sed -e 's/[[:space:]]*$//' <<<${CHANGED_TS}) ]]; then CHANGED_TS="src/scripts"; fi
-          echo $CHANGED_TS
-          node node_modules/eslint/bin/eslint.js $CHANGED_TS
+          npx eslint $(find src -name '*.ts')
