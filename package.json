@@ -68,7 +68,7 @@
     "http-server": "^0.11.1",
     "husky": "^3.0.9",
     "mocha": "^6.1.4",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
